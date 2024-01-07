@@ -1,0 +1,84 @@
+@import "./styles/mixins";
+@import "./styles/variables";
+@import "./styles/themes.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  // Remove bounce on scroll-x in browser
+  overflow-x: hidden;
+  overflow-y: hidden;
+  font-family: "Montserrat", sans-serif;
+  background-color: theme-var($--theme-background-primary);
+  color: theme-var($--theme-text-primary);
+}
+
+span,
+h1,
+h3,
+p,
+div,
+input,
+input::placeholder,
+button,
+h2 {
+  font-family: "Montserrat", sans-serif;
+}
+
+h2 {
+  font-weight: $font-weight-bolder;
+  font-size: $font-size-l;
+}
+
+h4 {
+  font-weight: $font-weight-normal;
+  line-height: $font-size-xl;
+}
+
+input {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  font-size: $font-size-m;
+}
+
+ul,
+li {
+  list-style-type: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}

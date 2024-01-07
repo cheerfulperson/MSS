@@ -1,12 +1,13 @@
 {
   "name": "mss",
+  "private": "true",
   "version": "1.0.0",
   "description": "Protection system against intrusion and fire factors",
-  "main": "index.js",
   "repository": "https://github.com/cheerfulperson/MSS.git",
   "author": "cheerfulperson <yagor.baradavkin@gmail.com>",
   "license": "MIT",
   "workspaces": [
-    "packages/*"
+    "pkg/api",
+    "pkg/esp"
   ]
 }

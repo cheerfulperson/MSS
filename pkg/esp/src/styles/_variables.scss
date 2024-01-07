@@ -1,0 +1,65 @@
+@import "animation.module.scss";
+@import "typography.module.scss";
+
+// Themes CSS Variables
+// @see https://material.io/develop/web/components/theme/
+// Equivalent to:
+// --theme-primary: #d75893;
+// --theme-secondary: #9b4dca;
+$--theme-primary: --theme-primary;
+$--theme-background-primary: --theme-background-primary;
+$--theme-background-secondary: --theme-background-secondary;
+$--theme-background-additional-1: --theme-background-additional-1;
+$--theme-background-additional-2: --theme-background-additional-2;
+$--theme-background-additional-3: --theme-background-additional-3;
+$--theme-background-neutral: --theme-background-neutral;
+
+$--theme-text-primary: --theme-text-primary;
+$--theme-text-disabled: --theme-text-secondary;
+$--theme-text-neutral: --theme-text-third;
+$--theme-eggplant: --theme-text-eggplant;
+
+$--theme-accent-first: --theme-accent-first;
+
+$--theme-bg-overlay: --theme-bg-overlay;
+
+$--theme-shadow-dark-box: --theme-shadow-dark-box;
+
+$theme-map-light: (
+  $--theme-background-primary: #ffffff,
+  $--theme-background-secondary: #efeeee,
+  $--theme-background-additional-1: #dbdada,
+  $--theme-background-additional-2: #bebdbd,
+  $--theme-background-additional-3: #b0afaf,
+  $--theme-background-neutral: #a3a3a3,
+
+  $--theme-text-primary: #010101,
+  $--theme-text-disabled: #4c4c4c,
+  $--theme-text-neutral: #676767,
+  $--theme-eggplant: #865bff,
+
+  $--theme-accent-first: #d34747,
+  $--theme-bg-overlay: #77777799,
+  $--theme-shadow-dark-box: #21212140,
+);
+
+// Override the light theme
+$theme-map-dark: (
+  $--theme-background-primary: #323232,
+  $--theme-background-secondary: #282828,
+  $--theme-background-additional-1: #393939,
+  $--theme-background-additional-2: #414141,
+  $--theme-background-additional-3: #454545,
+  $--theme-background-neutral: #676767,
+
+  $--theme-text-primary: #ffffff,
+  $--theme-text-disabled: #b9b9b9,
+  $--theme-text-neutral: #676767,
+  $--theme-eggplant: #865bff,
+
+  $--theme-accent-first: #d34747,
+  $--theme-bg-overlay: #77777799,
+  $--theme-shadow-dark-box: #21212140,
+);
+
+$theme-transition-duration: 500ms;
