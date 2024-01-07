@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./mc/static/",
+    "outDir": "./build/",
     "esModuleInterop": true,
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,

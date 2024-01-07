@@ -2,35 +2,35 @@
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 
-#include "FileRader.h"
+#include "StaticFiles.h"
 // #include "WM.h"
 
 #define STASSID "My Esp"
 
-const String domain = "www.esp.com";
 const byte DNS_PORT = 53;
-IPAddress apIP(192, 168, 1, 30);
+IPAddress apIP(192, 168, 1, 1);
 DNSServer dnsServer;
 ESP8266WebServer webServer(80);
-// WM my_wifi;
+StaticFiles staticFiles;
 
-char *connectHTML;
-char *connectJS;
+// WM my_wifi;
 
 void handleMainPage()
 {
+  String data = staticFiles.getConnectFIle("html");
   digitalWrite(LED_BUILTIN, HIGH);
 
-  webServer.send(200, "text/plain", connectHTML);
-    digitalWrite(LED_BUILTIN, 0);
+  webServer.send(200, "text/html; charset=utf-8", data);
+  digitalWrite(LED_BUILTIN, 0);
 }
 
 void getConnectJs()
 {
+  String data = staticFiles.getConnectFIle("js");
   digitalWrite(LED_BUILTIN, HIGH);
 
-  webServer.send(200, "text/plain", connectJS);
-    digitalWrite(LED_BUILTIN, 0);
+  webServer.send(200, "text/plain", data);
+  digitalWrite(LED_BUILTIN, 0);
 }
 
 void handleNotFound()
@@ -59,9 +59,7 @@ void setup()
   WiFi.mode(WIFI_STA);
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
   WiFi.softAP(STASSID);
-  connectHTML = readFile("ht");
-  connectJS = readFile("js");
-  Serial.println(connectHTML);
+  staticFiles.readConnectFiles();
   pinMode(LED_BUILTIN, OUTPUT);
   // modify TTL associated  with the domain name (in seconds)
   // default is 60 seconds
@@ -73,10 +71,10 @@ void setup()
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
 
   // start DNS server for a specific domain name
-  dnsServer.start(DNS_PORT, domain, apIP);
+  dnsServer.start(DNS_PORT, "www.esp.com", apIP);
 
   webServer.on("/", handleMainPage);
-  webServer.on("/index.js", getConnectJs);
+  // webServer.on("/index.js", getConnectJs);
   // simple HTTP server to see that DNS server is working
   webServer.onNotFound(handleNotFound);
   webServer.begin();
