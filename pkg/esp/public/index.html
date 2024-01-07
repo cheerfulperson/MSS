@@ -6,10 +6,21 @@
     <title>MSS</title>
   </head>
   <body>
-    <main id="root">
-      <div id="connectWiFiForm">
-        <%= htmlWebpackPlugin.options.fragment.connectWiFiForm %>
-      </div>
+    <%= htmlWebpackPlugin.options.fragment.header %>
+    <main id="root" class="Main">
+      <%= htmlWebpackPlugin.options.fragment.connectWiFiForm %>
     </main>
+    <template id="toggle">
+      <%= htmlWebpackPlugin.options.fragment.toggle %>
+    </template>
+    <template id="input">
+      <%= htmlWebpackPlugin.options.fragment.input %>
+    </template>
+    <template id="button">
+      <%= htmlWebpackPlugin.options.fragment.button %>
+    </template>
+    <template id="select">
+      <%= htmlWebpackPlugin.options.fragment.select %>
+    </template>
   </body>
 </html>

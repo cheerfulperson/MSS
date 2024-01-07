@@ -1,8 +1,4 @@
-@import "./styles/mixins";
 @import "./styles/variables";
-@import "./styles/themes.scss";
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -15,12 +11,15 @@ html,
 body,
 #root {
   height: 100%;
-  // Remove bounce on scroll-x in browser
   overflow-x: hidden;
   overflow-y: hidden;
-  font-family: "Montserrat", sans-serif;
-  background-color: theme-var($--theme-background-primary);
-  color: theme-var($--theme-text-primary);
+  font-family: "Arial";
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+.Main {
+  height: calc(100vh - $header-height);
 }
 
 span,
@@ -32,17 +31,12 @@ input,
 input::placeholder,
 button,
 h2 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 h2 {
-  font-weight: $font-weight-bolder;
-  font-size: $font-size-l;
-}
-
-h4 {
-  font-weight: $font-weight-normal;
-  line-height: $font-size-xl;
+  font-weight: 600;
+  font-size: 24px;
 }
 
 input {
@@ -51,7 +45,7 @@ input {
 
 a {
   text-decoration: none;
-  font-size: $font-size-m;
+  font-size: 16px;
 }
 
 ul,

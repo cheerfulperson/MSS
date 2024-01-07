@@ -7,6 +7,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import fs from 'fs';
+import {globSync} from 'glob';
 
 // in case you run into any typescript error when configuring `devServer`
 import "webpack-dev-server";
@@ -15,20 +16,13 @@ import DevConfig from "./webpack.config.dev";
 import ProdConfig from "./webpack.config.prod";
 
 function getFragmentContentList() {
-  const fragmentFolderPath = path.resolve(__dirname, 'src/fragments');
-  const fragmentFiles = fs.readdirSync(fragmentFolderPath).filter(item => {
-    const itemPath = path.join(fragmentFolderPath, item);
-
-    return fs.statSync(itemPath).isFile();
-  });
+  const fragmentFiles = globSync('src/**/*.html');
 
   const fileContentList = {};
 
-  fragmentFiles.forEach((filename) => {
-    const fileFullPath = path.resolve(fragmentFolderPath, filename);
-    const key = filename.split('.').shift();
+  fragmentFiles.forEach((fileFullPath) => {
+    const key = fileFullPath.split('\\').slice(-1)[0].split('.').shift();
 
-    // use getter
     Object.defineProperty(fileContentList, key, {
       get() {
         return fs.readFileSync(fileFullPath, 'utf-8');
