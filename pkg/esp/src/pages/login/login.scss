@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  &__form {
+    width: 100%;
+    max-width: 540px;
+    padding: 24px;
+    margin-top: 120px;
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  &__input {
+    margin-top: 16px;
+  }
+
+  &__button {
+    margin-top: 24px;
+  }
+
+  &__error {
+    color: $accent-first;
+  }
+}

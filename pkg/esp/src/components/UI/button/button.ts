@@ -1,4 +1,6 @@
-import { RenderResult, UIComponent } from "../../component";
+import { getNode } from "../../../utils";
+import { RenderResult, Component } from "../../../types";
+import ButtonHTML from "./button.html";
 import "./button.scss";
 
 interface IButtonProps {
@@ -8,22 +10,17 @@ interface IButtonProps {
   customAttr?: Record<string, string>;
 }
 
-export class Button extends UIComponent {
+export class Button<T extends HTMLElement = HTMLButtonElement> extends Component {
   private props: IButtonProps;
-
-  public id: string = "button";
-
+  public element: T = getNode<T>(ButtonHTML);
   public constructor(props?: IButtonProps) {
     super();
     this.props = props || {};
   }
 
-  public render<T extends HTMLElement = HTMLButtonElement>(): RenderResult<T> {
-    const node = (
-      document.getElementById(this.id) as HTMLTemplateElement
-    ).content.cloneNode(true) as HTMLElement;
-    const element = node.querySelector<T>(".Button");
-    element.insertAdjacentHTML("afterbegin", this.props.children);
+  public render(): RenderResult<T> {
+    const element = this.element;
+    element.insertAdjacentHTML("afterbegin", this.props.children || "");
     const customAttrs = this.props.customAttr || {};
     if (this.props.className) {
       element.classList.add(this.props.className);
@@ -35,7 +32,6 @@ export class Button extends UIComponent {
       element.setAttribute(attr, value);
     });
     return {
-      node,
       element,
     };
   }

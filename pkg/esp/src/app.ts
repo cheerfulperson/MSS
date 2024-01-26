@@ -1,15 +1,11 @@
-import { Component, ConnectWiFiForm, Header, UIComponent } from "./components";
-import { Button, Input, Select, Toggle } from "./components/UI";
+import { Button } from "./components/UI";
+import { Router } from "./routes";
 import "./global.scss";
 
 class App {
-  private components: Component[] = [new ConnectWiFiForm(), new Header()];
-  private uiComponents: UIComponent[] = [new Button(), new Input(), new Select(), new Toggle()];
-
+  private router = new Router();
   public init() {
-    this.components.forEach((el) => {
-      el.init();
-    });
+    this.router.init();
   }
 }
 

@@ -1,4 +1,7 @@
-import { RenderResult, UIComponent } from "../../component";
+import { RenderResult, Component } from "../../../types";
+import { getNode } from "../../../utils";
+
+import InputHTML from "./input.html";
 import "./input.scss";
 
 interface IInputProps {
@@ -15,30 +18,29 @@ interface InputResult {
   clearError: () => void;
 }
 
-export class Input extends UIComponent {
+export class Input<T extends HTMLElement = HTMLDivElement> extends Component {
   private props: IInputProps;
 
-  public id: string = "input";
+  public element: T = getNode<T>(InputHTML);
 
   constructor(props?: IInputProps) {
     super();
     this.props = props || {};
   }
 
-  public render<T extends HTMLElement = HTMLDivElement>(): RenderResult<T> & InputResult {
-    const { className, customAttrs, initialValue, label, onChange } = this.props;
-    const node = (document.getElementById(this.id) as HTMLTemplateElement).content.cloneNode(true) as HTMLElement;
-    const element = node.querySelector<T>(".Input");
-    const input = element.querySelector<HTMLInputElement>("input");
-    const labelEl = element.querySelector(".Input__label");
-    const errors = element.querySelector(".Input__errors");
+  public render(): RenderResult<T> & InputResult {
+    const { className, customAttrs = {}, initialValue, label, onChange } = this.props;
+    const element = this.element;
+    const input = element.querySelector<HTMLInputElement>("input")!;
+    const labelEl = element.querySelector(".Input__label")!;
+    const errors = element.querySelector(".Input__errors")!;
 
     if (label) {
       labelEl.textContent = label;
     }
     input.value = initialValue || "";
     if (className) {
-      input.classList.add(className);
+      element.classList.add(className);
     }
     if (onChange) {
       input.addEventListener("change", onChange);
@@ -58,7 +60,6 @@ export class Input extends UIComponent {
       clearError,
       element,
       input,
-      node,
       showError,
     };
   }

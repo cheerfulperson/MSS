@@ -5,7 +5,9 @@
   "main": "./src/index.ts",
   "scripts": {
     "start": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack serve --open --env mode=dev",
-    "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack --env mode=prod && cd ./mc && yarn make && cd ../",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack --env mode=prod",
+    "build:static": "yarn build && cd ./mc && yarn make && cd ../",
+    "cpp": "cd ./mc && yarn make && cd ../",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -22,7 +24,9 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
+    "dotenv": "^16.3.1",
     "glob": "^10.3.10",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.7.6",
     "sass": "^1.69.6",

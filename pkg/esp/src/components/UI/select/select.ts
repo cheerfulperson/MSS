@@ -1,47 +1,76 @@
-import { RenderResult, UIComponent } from "../../component";
+import { RenderResult, Component } from "../../../types";
+import { getNode } from "../../../utils";
+
+import HTML from "./select.html";
 import "./select.scss";
+
+export interface ISelectOption {
+  value: string;
+  text?: string;
+}
 
 interface ISelectProps {
   className?: string;
   customAttrs?: Record<string, string>;
   initialValue?: string;
   label?: string;
-  options?: Record<string, string>;
   onChange?: (e: InputEvent) => void;
+  options?: Array<ISelectOption>;
 }
 
-export class Select extends UIComponent {
+export class Select<T extends HTMLElement = HTMLDivElement> extends Component {
   private props: ISelectProps;
-
-  public id: string = 'select';
+  public element: T = getNode<T>(HTML);
+  public id: string = "select";
 
   constructor(props?: ISelectProps) {
     super();
     this.props = props || {};
   }
 
-  public render<T extends HTMLElement = HTMLDivElement>(): RenderResult<T> {
-    const { className, customAttrs, initialValue, label, onChange } = this.props;
-    const node = (document.getElementById(this.id) as HTMLTemplateElement).content.cloneNode(true) as HTMLElement;
-    const element = node.querySelector<T>(".Select");
-    const select = element.querySelector<HTMLSelectElement>("select");
-    const labelEl = element.querySelector(".Select__label");
-    const errors = element.querySelector(".Select__errors");
+  public setOptions(options: ISelectOption[]) {
+    const select = this.element.querySelector<HTMLSelectElement>("select")!;
+    select.innerHTML = "";
+    select.insertAdjacentHTML("beforeend", `<option value="">-</option>`);
+    options.forEach(({ value, text }) => {
+      select.insertAdjacentHTML("beforeend", `<option value="${value}">${text || value}</option>`);
+    });
+  }
+
+  public render(): RenderResult<T> {
+    const { className, customAttrs = {}, initialValue, label, options = [], onChange } = this.props;
+    const node = this.element;
+    const select = node.querySelector<HTMLSelectElement>("select")!;
+    const labelEl = node.querySelector(".Select__label")!;
+
+    if (label) {
+      labelEl.append(label);
+    } else {
+      labelEl.remove();
+    }
+
+    if (className) {
+      select.classList.add(className);
+    }
+
+    if (initialValue) {
+      select.value = initialValue;
+    }
 
     Object.entries(customAttrs).forEach(([attr, value]) => {
       select.setAttribute(attr, value);
     });
 
-    const showError = (err: string) => {
-      errors.textContent = err;
-    };
-    const clearError = () => {
-      errors.textContent = "";
-    };
+    this.setOptions(options);
+
+    select.addEventListener("change", (e) => {
+      if (onChange) {
+        onChange(e as InputEvent);
+      }
+    });
 
     return {
-      node,
-      element,
+      element: node,
     };
   }
 }

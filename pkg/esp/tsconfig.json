@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "./mc/static/",
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
     "module": "es6",

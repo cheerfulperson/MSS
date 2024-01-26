@@ -6,9 +6,6 @@ class StaticFiles
 public:
   char *getConnectFIle(const char *fileType);
   void readConnectFiles();
-
-protected:
-  char *readFile(const char *filename);
 };
 
 #endif

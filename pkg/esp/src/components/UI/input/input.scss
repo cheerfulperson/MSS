@@ -1,67 +1,22 @@
 @import "../../../styles/variables";
 
-.Toggle {
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: 64px;
-  height: 34px;
+.Input {
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
 
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+ &__field {
+  width: 100%;
+  max-width: $max-input-width;
+  outline: none;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: $background-secondary;
+  border: 2px solid $background-third;
+  transition: all 0.3s;
 
-  &__slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: $background-third;
-    transition: 0.4s;
-    border-radius: 30px;
+  &:focus {
+    border: 2px solid $eggplant;
   }
-
-  &__slider:before {
-    position: absolute;
-    content: "";
-    height: 30px;
-    width: 30px;
-    border-radius: 20px;
-    left: 2px;
-    bottom: 2px;
-    z-index: 2;
-    background-color: $text-primary;
-    transition: 0.4s;
-  }
-
-  &__sun svg {
-    position: absolute;
-    top: 5px;
-    left: 36px;
-    z-index: 1;
-    width: 24px;
-    height: 24px;
-  }
-
-  &__moon svg {
-    fill: #73c0fc;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 1;
-    width: 24px;
-    height: 24px;
-  }
-
-  &__input:checked + &__slider {
-    background-color: $eggplant;
-  }
-
-  &__input:checked + &__slider:before {
-    transform: translateX(30px);
-  }
+ }
 }

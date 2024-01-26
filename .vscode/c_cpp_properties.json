@@ -6,7 +6,9 @@
                 "i:/diplom/**",
                 "c:/Users/Egor/Documents/Arduino",
                 "c:/Program Files/Arduino IDE",
-                "C:/Users/Egor/Documents/Arduino/libraries/ESP8266WebServer/src"
+                "C:/Users/Egor/Documents/Arduino/libraries",
+                "C:/Users/Egor/Documents/Arduino/libraries/ArduinoJson",
+                "C:/Users/Egor/Documents/Arduino/libraries/FS/src"
             ],
             "defines": [
                 "_DEBUG",

@@ -1,0 +1,23 @@
+{
+  "config": {},
+  "networks": [
+    {
+      "ssid": "ssid"
+    },
+    {
+      "ssid": "ssid2"
+    },
+    {
+      "ssid": "ssid3"
+    },
+    {
+      "ssid": "ssid4"
+    },
+    {
+      "ssid": "ssid5"
+    }
+  ],
+  "connect": {
+    "status": "ok"
+  }
+}
