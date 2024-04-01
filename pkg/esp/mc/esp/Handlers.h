@@ -5,9 +5,12 @@
 #include <FSImpl.h>
 #include <LittleFS.h>
 #include <functional>
+#include <string.h>
 
 #include "StaticFiles.h"
 #include "Storage.h"
+#include "WiFiUtils.h"
+#include "AppSensors.h"
 
 #ifndef HANDLERS_H
 #define HANDLERS_H
@@ -20,10 +23,10 @@ enum class WebServerStatus : char
 
 struct TNetwork
 {
-  char *ssid;
+  char* ssid;
   int32_t rssi;
   uint8_t encryptionType;
-  uint8_t *bssid;
+  uint8_t* bssid;
   int32_t channel;
   bool hidden;
 };
@@ -38,7 +41,6 @@ public:
 
   void init();
   void handleClient();
-  void handleApiPostConfig(TCallback callback);
   // private:
   //   void handleMainPage();
   //   void handleConnectJs();

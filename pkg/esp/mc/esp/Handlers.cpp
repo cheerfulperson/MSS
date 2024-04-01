@@ -4,33 +4,47 @@ StaticFiles staticFiles;
 ESP8266WebServer webServer(80);
 Storage appStorage;
 DynamicJsonDocument JSONDoc(1024);
+WiFiUtils wifiUtils;
+AppSensors sensors;
 
-char *enryptionType(int i)
+char* enryptionType(int i)
 {
-  return (char *)"WPA2";
+  return (char*)"WPA2";
 }
 
 void handleMainPage()
 {
-  String data = staticFiles.getConnectFIle("html");
   digitalWrite(LED_BUILTIN, HIGH);
-
-  webServer.send(200, "text/html", data);
-  digitalWrite(LED_BUILTIN, 0);
+  webServer.send(200, "text/html", staticFiles.getConnectFIle("html"));
+  delay(500);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 void handleConnectJs()
 {
-  String data = staticFiles.getConnectFIle("js");
-  digitalWrite(LED_BUILTIN, HIGH);
-
-  if (!data)
-  {
-    webServer.send(500);
-  }
   webServer.sendHeader("Cache-Control", "no-cache");
-  webServer.send(200, "text/javascript; charset=utf-8", data);
-  digitalWrite(LED_BUILTIN, LOW);
+  webServer.send(200, "text/javascript; charset=utf-8", staticFiles.getConnectFIle("js"));
+}
+
+void handleApiGetSensors()
+{
+  float temp = sensors.getTemperature();
+  float dhtTemp = sensors.getDHTTemperature();
+  float co = sensors.getCOGassPPM();
+  float hum = sensors.getHumidity();
+  String bmpData = sensors.getBMPDataJson();
+  String ahtData = sensors.getAHT20DataJson();
+
+  String json;
+  DynamicJsonDocument doc(2048);
+  doc["temperature"] = temp;
+  doc["dhtTemperature"] = dhtTemp;
+  doc["co"] = co;
+  doc["humidity"] = hum;
+  doc["bmp"] = bmpData;
+  doc["aht"] = ahtData;
+  serializeJson(doc, json);
+  webServer.send(200, "application/json", json);
 }
 
 void handleApiGetNetworks()
@@ -38,7 +52,7 @@ void handleApiGetNetworks()
   String ssid;
   int32_t rssi;
   uint8_t encryptionType;
-  uint8_t *bssid;
+  uint8_t* bssid;
   int32_t channel;
   bool hidden;
 
@@ -50,7 +64,7 @@ void handleApiGetNetworks()
     webServer.send(200, "application/json", "{\"error\":\"not found\"}");
     return;
   }
-  JsonDocument doc;
+  DynamicJsonDocument doc(2024);
   JsonArray array = doc.to<JsonArray>();
   for (int i = 0; i < n; ++i)
   {
@@ -79,40 +93,53 @@ void handleApiConfig()
   webServer.send(200, "application/json", json);
 }
 
-void handleStatus(WebServerStatus status)
+void handleApiPostConfig()
 {
-  if (status == WebServerStatus::OK)
-  {
-    webServer.send(200, "application/json", "{\"status\": \"ok\"}");
-  }
-  if (status == WebServerStatus::ERROR)
-  {
-    webServer.send(400, "application/json", "{\"error\":\"Bad request\"}");
-  }
-}
+  webServer.on("/api/config", HTTP_POST, []()
+    {
+      if (webServer.hasArg("plain") == false)
+      {
+        webServer.send(400, "application/json", "{\"error\":\"Body not received\"}");
+        return;
+      }
+      String json = webServer.arg("plain");
+      Config config;
+      DynamicJsonDocument doc(1024);
+      deserializeJson(doc, json);
+      int passswordLength = strlen(doc["password"] | "") + 1;
+      int ssidLength = strlen(doc["ssid"] | "") + 1;
+      int serverUrlLength = strlen(doc["serverUrl"] | "") + 1;
+      if (ssidLength < 2 || passswordLength < 4) {
+        webServer.send(400, "application/json", "{\"error\":\"Bad password or ssid\"}");
+        return;
+      }
+      config.password = (char*)malloc(passswordLength);
+      config.ssid = (char*)malloc(ssidLength);
+      config.serverUrl = (char*)malloc(1);
+      strlcpy(config.password, doc["password"] | "", passswordLength);
+      strlcpy(config.ssid, doc["ssid"] | "", ssidLength);
+      strlcpy(config.serverUrl, doc["serverUrl"] | "", serverUrlLength);
+      appStorage.overwriteProperties(config);
+      Serial.println(config.password);
 
-void Handlers::handleApiPostConfig(TCallback fn)
-{
-  webServer.on("/api/config", HTTP_POST, [&fn]()
-               {
-                 if (webServer.hasArg("plain") == false)
-                 {
-                   webServer.send(400, "application/json", "{\"error\":\"Body not received\"}");
-                   return;
-                 }
-                 String json = webServer.arg("plain");
-                 webServer.send(200, "application/json", json);
-                 return;
-                 // Config config;
-                 // DynamicJsonDocument doc(2048);
-                 // deserializeJson(doc, json);
-                 // const char *password = doc["password"];
-                 // const char *ssid = doc["ssid"];
-                 // config.password = const_cast<char *>(password);
-                 // config.ssid = const_cast<char *>(ssid);
-                 // appStorage.overwriteProperties(config);
-                 // fn(config, handleStatus);
-               });
+      bool isConnected = wifiUtils.waitForConnect(config);
+      if (isConnected)
+      {
+        Serial.println("Connected");
+        String data = "{\"status\": \"ok\",";
+        data += "\"ip\": \"";
+        data += WiFi.localIP().toString();
+        data += "\"}";
+        Serial.println(WiFi.localIP().toString());
+        webServer.send(200, "application/json", data);
+        // Make sure data was send
+        delay(1000);
+        WiFi.mode(WIFI_STA);
+        return;
+      }
+      Serial.println("Bad request");
+      webServer.send(400, "application/json", "{\"error\":\"Bad request\"}");
+    });
 }
 
 void Handlers::handleClient()
@@ -122,17 +149,20 @@ void Handlers::handleClient()
 
 void Handlers::init()
 {
-  staticFiles.readConnectFiles();
-
+  appStorage.init();
+  sensors.init();
+  handleApiPostConfig();
   webServer.on("/api/config", HTTP_GET, handleApiConfig);
+  webServer.on("/api/sensors", HTTP_GET, handleApiGetSensors);
   webServer.on("/api/networks", HTTP_GET, handleApiGetNetworks);
   webServer.on("/api/check/fs", HTTP_GET, []()
-               {
-        char *msg = appStorage.hasConfigFile();
-        String data = "{\"exist\":" ;
-        data +=msg;
-        data += "}";
-     webServer.send(200, "application/json", data); });
+    {
+      String msg = appStorage.hasConfigFile();
+      String data = "{\"exist\":\"";
+      data += msg;
+      data += "\"}";
+      webServer.send(200, "application/json", data);
+    });
 
   // Static
   webServer.on("/", HTTP_GET, handleMainPage);

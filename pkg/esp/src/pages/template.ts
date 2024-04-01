@@ -12,6 +12,7 @@ interface IOnTreeRenderResult {
 interface IPageProps<T extends HTMLElement = HTMLElement> {
   html: string;
   onTreeRender?: TOnTreeRenderFunc<T>;
+  onTreeRemove?: () => void;
 }
 
 type TOnTreeRenderFunc<T extends HTMLElement = HTMLElement> = (props: IOnTreeRenderProps<T>) => IOnTreeRenderResult;
@@ -20,11 +21,13 @@ export type TTreeRenderElement = { selector: string; tree: Component[] } | Compo
 export class Page<T extends HTMLElement = HTMLElement> extends PageComponent {
   private elem: T;
   private onTreeRender?: TOnTreeRenderFunc<T>;
+  private onTreeRemove?: () => void;
 
-  public constructor({ html, onTreeRender }: IPageProps<T>) {
+  public constructor({ html, onTreeRender, onTreeRemove }: IPageProps<T>) {
     super();
     this.elem = getNode<T>(html);
     this.onTreeRender = onTreeRender;
+    this.onTreeRemove = onTreeRemove;
   }
 
   public render<T extends HTMLElement = HTMLFormElement>(): RenderResult<T> {
@@ -52,6 +55,10 @@ export class Page<T extends HTMLElement = HTMLElement> extends PageComponent {
     return { element: this.elem as unknown as T };
   }
   public remove(): void {
+    if (this.onTreeRemove) {
+      this.onTreeRemove();
+    }
     this.elem.remove();
+    // Array.from(this.elem.children).forEach((el) => el.remove());
   }
 }

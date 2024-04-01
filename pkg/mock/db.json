@@ -1,5 +1,14 @@
 {
-  "config": {},
+  "config": {
+    "ssid": "Thsa",
+    "password": "qwe"
+  },
+  "sensors": {
+    "temperature": 23,
+    "dhtTemperature": 25,
+    "humidity": 50,
+    "co": 800
+  },
   "networks": [
     {
       "ssid": "ssid"

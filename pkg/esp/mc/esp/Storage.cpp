@@ -1,96 +1,133 @@
 #include "Storage.h"
 
-DynamicJsonDocument JSONData(1024);
+DynamicJsonDocument JSONData(2048);
 
-const char *dirname = "/storage.txt";
+const char* STORAGE_PATH = "/storage.txt";
+bool isWrited = false;
 
-bool Storage::checkFile(const char *fileName)
-{
-  File file = LittleFS.open(dirname, "r");
-  if (!file)
-  {
-    return false;
+void writeFile(const char* path, String message);
+void writeFile(const char* path, const char* message);
+
+void writeFile(const char* path, String message) {
+  File file = LittleFS.open(path, "w+");
+  if (!file) {
+    return;
   }
+  if (file.print(message)) {
+    Serial.println("File written");
+  }
+  else {
+    Serial.println("Write failed");
+  }
+  delay(2000);  // Make sure the CREATE and LASTWRITE times are different
   file.close();
-  return true;
 }
 
-char *Storage::hasConfigFile()
-{
-  char json[1024];
-  File file = LittleFS.open(dirname, "w+");
-  if (!file)
-  {
-    return "not found";
+void writeFile(const char* path, const char* message) {
+  File file = LittleFS.open(path, "w+");
+  if (!file) {
+    return;
   }
-  char *filePath = (char *)file.name();
-  JSONData["password"] = "password";
-  JSONData["ssid"] = "ssid";
-  serializeJson(JSONData, json);
-  file.print(json);
-  delay(200);
+  if (file.print(message)) {
+    Serial.println("File written");
+  }
+  else {
+    Serial.println("Write failed");
+  }
+  delay(2000);  // Make sure the CREATE and LASTWRITE times are different
   file.close();
-  return filePath;
+}
+
+String readFile(const char* path) {
+  String json = "";
+  File file = LittleFS.open(path, "r+");
+  if (!file) {
+    return "";
+  }
+
+  while (file.available()) { json += char(file.read()); }
+  file.close();
+
+  return json;
+}
+
+bool Storage::checkFile(const char* fileN)
+{
+  Dir root = LittleFS.openDir("/");
+
+  while (root.next()) {
+    File file = root.openFile("r");
+
+    if (root.fileName() == fileN) {
+      file.close();
+      return true;
+    }
+    Serial.println(root.fileName());
+    Serial.println(fileN);
+    file.close();
+  }
+  return false;
+}
+
+String Storage::hasConfigFile()
+{
+  String json;
+  bool isExist = checkFile("storage.txt");
+
+  if (!isWrited) {
+    isWrited = true;
+    JsonDocument JSONData;
+    JSONData["password"] = "passsword";
+    JSONData["ssid"] = "ssid";
+    JSONData["serverUrl"] = "serverUrl";
+    serializeJson(JSONData, json);
+    writeFile(STORAGE_PATH, json);
+    return json;
+  }
+  if (isExist) {
+    String data = readFile(STORAGE_PATH);
+    // deserializeJson(JSONData, data);
+    // int ssidLength = strlen(JSONData["ssid"] | "") + 4;
+    // data = (char*)malloc(ssidLength);
+    // strlcpy(data, JSONData["ssid"] | "", ssidLength);
+    return data;
+  }
+  return "not found";
 }
 
 Config Storage::getProperties()
 {
   Config config;
-  char json[1024];
-  bool isExist = checkFile(dirname);
-  config.password = NULL;
-  config.ssid = NULL;
+  String data = readFile(STORAGE_PATH);
+  deserializeJson(JSONData, data);
+  int passswordLength = strlen(JSONData["password"] | "") + 4;
+  int ssidLength = strlen(JSONData["ssid"] | "") + 4;
+  int serverUrlLength = strlen(JSONData["serverUrl"] | "") + 4;
+  config.password = (char*)malloc(passswordLength);
+  config.ssid = (char*)malloc(ssidLength);
+  config.serverUrl = (char*)malloc(serverUrlLength);
+  strlcpy(config.serverUrl, JSONData["serverUrl"] | "", serverUrlLength);
+  strlcpy(config.password, JSONData["password"] | "", passswordLength);
+  strlcpy(config.ssid, JSONData["ssid"] | "", ssidLength);
 
-  if (!isExist)
-  {
-
-    File file = LittleFS.open(dirname, "w");
-    if (!file)
-    {
-      return config;
-    }
-    JSONData["password"] = config.password;
-    JSONData["ssid"] = config.ssid;
-    serializeJson(JSONData, json);
-    file.print(json);
-    delay(200);
-    file.close();
-    return config;
-  }
-  int i = 0;
-  File file = LittleFS.open(dirname, "r");
-  if (!file)
-  {
-    return config;
-  }
-  while (file.available())
-  {
-    json[i] = file.read();
-    i++;
-  }
-  DynamicJsonDocument doc(2048);
-  deserializeJson(doc, json);
-  file.close();
-  const char *password = doc["password"];
-  const char *ssid = doc["ssid"];
-  config.password = const_cast<char *>(password);
-  config.ssid = const_cast<char *>(ssid);
   return config;
 }
 
 void Storage::overwriteProperties(Config data)
 {
-  struct Config config = data;
-  char json[1024];
-  File file = LittleFS.open(dirname, "w");
-  if (!file)
-  {
+  String json;
+  JSONData["password"] = data.password;
+  JSONData["ssid"] = data.ssid;
+  JSONData["serverUrl"] = data.serverUrl;
+
+  serializeJson(JSONData, json);
+  writeFile(STORAGE_PATH, json);
+}
+
+void Storage::init()
+{
+  if (!LittleFS.begin()) {
+    Serial.println("LittleFS mount failed");
     return;
   }
-  JSONData["password"] = config.password;
-  JSONData["ssid"] = config.ssid;
-  serializeJson(JSONData, json);
-  file.print(json);
-  delay(200);
-  file.close();
 }

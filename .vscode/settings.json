@@ -1,5 +1,4 @@
 {
-  "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
     "*.excalidraw": "json",
     "*.excalidrawlib": "json",
@@ -82,6 +81,10 @@
     "xloctime": "cpp",
     "xmemory": "cpp",
     "xstddef": "cpp",
-    "xtr1common": "cpp"
+    "xtr1common": "cpp",
+    "string_view": "cpp",
+    "span": "cpp",
+    "*.tcc": "cpp",
+    "bitset": "cpp"
   }
 }

@@ -11,6 +11,7 @@ type TRouter = Record<ERoutes, TRouterConfig>;
 export enum ERoutes {
   ANY = "*",
   LOGIN = "/login",
+  MAIN = '/',
 }
 
 export const routes: TRouter = {
@@ -18,6 +19,9 @@ export const routes: TRouter = {
     component: LoginPage,
   },
   [ERoutes.ANY]: {
+    component: MainPage,
+  },
+  [ERoutes.MAIN]: {
     component: MainPage,
   },
 };

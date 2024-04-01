@@ -26,7 +26,9 @@
   &__button {
     margin-top: 24px;
   }
-
+  &__close {
+    margin-top: 12px;
+  }
   &__error {
     color: $accent-first;
   }

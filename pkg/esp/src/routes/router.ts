@@ -15,6 +15,9 @@ export class Router {
       LoadingPage.remove();
       const renderTree = (pathname: string) => {
         const routerConfig = Object.entries(routes);
+        routerConfig.forEach(([_, data]) => {
+          return data.component.remove();
+        });
         if (routerConfig.some(([path]) => path === pathname)) {
           return routerConfig.forEach(([path, data]) => {
             if (path === pathname) {
@@ -23,7 +26,6 @@ export class Router {
               }
               return appendToRoot(data.component.render().element);
             }
-            return data.component.remove();
           });
         }
         if (!isAuthorized) {
@@ -35,6 +37,7 @@ export class Router {
       renderTree(pathname);
 
       registerNewListener(({ pathname }) => {
+        console.log(pathname);
         renderTree(pathname);
       });
     });

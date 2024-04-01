@@ -4,8 +4,7 @@
 class StaticFiles
 {
 public:
-  char *getConnectFIle(const char *fileType);
-  void readConnectFiles();
+  const char* getConnectFIle(const char* fileType);
 };
 
 #endif

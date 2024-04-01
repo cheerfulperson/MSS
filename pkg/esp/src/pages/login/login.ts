@@ -1,5 +1,5 @@
 import { Button, ISelectOption, Input, Select } from "../../components";
-import { useAuth, useFetch } from "../../hooks";
+import { useAuth, useFetch, useLocation } from "../../hooks";
 import { Page, TTreeRenderElement } from "../template";
 
 import LoginHTML from "./login.html";
@@ -19,8 +19,11 @@ interface IBody {
 export const LoginPage = new Page<HTMLDivElement>({
   html: LoginHTML,
   onTreeRender(props) {
-    const { checkAuth } = useAuth();
+    const form = props.element.querySelector<HTMLFormElement>("form")!;
+    const errors = props.element.querySelector<HTMLSpanElement>(".Login__error")!;
+    const { checkAuth, isAuthorized } = useAuth();
     const { request } = useFetch();
+    const { goTo } = useLocation();
 
     let body: IBody = {
       ssid: null,
@@ -31,8 +34,6 @@ export const LoginPage = new Page<HTMLDivElement>({
       { value: "", text: "-" },
       { value: "Thsa", text: "Thsa" },
     ];
-    const form = props.element.querySelector<HTMLFormElement>("form")!;
-    const errors = props.element.querySelector<HTMLSpanElement>(".Login__error")!;
     const select = new Select({
       options,
       label: "Название сети:",
@@ -50,6 +51,14 @@ export const LoginPage = new Page<HTMLDivElement>({
       },
     });
     const button = new Button({ children: "Подключиться", className: "Login__button", customAttr: { type: "submit" } });
+    const buttonClose = new Button({
+      children: "На главную",
+      className: "Login__close",
+      onClick() {
+        goTo("/");
+      },
+      customAttr: { type: "button" },
+    });
 
     request<Array<string>>({ type: "get", path: "/networks" }).then((data) => {
       select.setOptions(
@@ -64,6 +73,8 @@ export const LoginPage = new Page<HTMLDivElement>({
           checkAuth((isAuth) => {
             if (!isAuth) {
               errors.textContent = "Не удалось подключиться к сети";
+            } else {
+              buttonClose.element.style.display = "block";
             }
           });
         })
@@ -72,10 +83,13 @@ export const LoginPage = new Page<HTMLDivElement>({
         });
     });
 
+    if (!isAuthorized) {
+      buttonClose.element.style.display = "none";
+    }
     const tree: TTreeRenderElement[] = [
       {
         selector: "form",
-        tree: [select, password, button],
+        tree: [select, password, button, buttonClose],
       },
     ];
     return {
