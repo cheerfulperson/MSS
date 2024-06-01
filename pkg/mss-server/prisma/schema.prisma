@@ -13,6 +13,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ButteryState {
+  CHARGING
+  DISCHARGING
+  FULL
+}
+
+enum FloorPlaneItemType {
+  DEVICE
+  DOOR
+  FLOOR
+  LITE
+  WALL
+  WINDOW
+}
+
+enum TreatLevel {
+  INFO
+  WARN
+  ALARM
+}
+
+enum ValueType {
+  BOOLEAN
+  NUMBER
+  STING
+}
+
 model Address {
   id        String   @id @default(cuid())
   address1  String
@@ -22,26 +49,175 @@ model Address {
   zip       String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  homes     Home[]
+  Homes     Home[]
+}
+
+model Algoritm {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  homeId    String
+  Home      Home     @relation(fields: [homeId], references: [id])
+}
+
+model Buttery {
+  id          String       @id @default(cuid())
+  maxCapacity Int
+  capacity    Int
+  state       ButteryState
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deviceId    String?
+  Device      Device?
+}
+
+model Device {
+  id               String             @id @default(cuid())
+  name             String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  butteryId        String?            @unique
+  Buttery          Buttery?           @relation(fields: [butteryId], references: [id], onDelete: Cascade)
+  floorPlaneItemId String?            @unique
+  FloorPlaneItem   FloorPlaneItem?    @relation(fields: [floorPlaneItemId], references: [id])
+  deviceSchemaId   String
+  DeviceSchema     DeviceSchema       @relation(fields: [deviceSchemaId], references: [id])
+  TreatLevelSetup  TreatLevelSetup[]
+  DeviceValueSetup DeviceValueSetup[]
+  DeviceValues     DeviceValue[]
+}
+
+model DeviceSchema {
+  id               String             @id @default(cuid())
+  name             String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  deviceTypeId     String
+  updateTime       Int // milliseconds
+  DeviceType       DeviceType         @relation(fields: [deviceTypeId], references: [id])
+  Devices          Device[]
+  DeviceValueSetup DeviceValueSetup[]
+}
+
+model DeviceType {
+  id            String         @id @default(cuid())
+  type          String
+  kind          String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  DeviceSchemas DeviceSchema[]
+}
+
+model DeviceValueSetup {
+  id              String            @id @default(cuid())
+  createdAt       DateTime          @default(now())
+  displayName     String
+  isPrimary       Boolean           @default(false)
+  key             String
+  mesure          String?
+  updatedAt       DateTime          @updatedAt
+  valueType       ValueType
+  max             Int?
+  min             Int?
+  sensitivity     Int?
+  falseInfo       String?
+  trueInfo        String?
+  deviceId        String?
+  Device          Device?           @relation(fields: [deviceId], references: [id])
+  DeviceSchemaId  String
+  DeviceSchema    DeviceSchema      @relation(fields: [DeviceSchemaId], references: [id])
+  DeviceValue     DeviceValue[]
+  TreatLevelSetup TreatLevelSetup[]
+}
+
+model DeviceValue {
+  id                 String           @id @default(cuid())
+  createdAt          DateTime         @default(now())
+  treatLevel         TreatLevel       @default(INFO)
+  value              String
+  deviceId           String
+  Device             Device           @relation(fields: [deviceId], references: [id])
+  deviceValueSetupId String
+  DeviceValueSetup   DeviceValueSetup @relation(fields: [deviceValueSetupId], references: [id])
+}
+
+model FloorPlaneItem {
+  id        String             @id @default(cuid())
+  type      FloorPlaneItemType
+  x         Float
+  y         Float
+  width     Float
+  height    Float
+  angle     Float              @default(0)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  Device    Device?
+  floorId   String
+  Floor     Floor              @relation(fields: [floorId], references: [id])
+}
+
+model Floor {
+  id             String           @id @default(cuid())
+  name           String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  homeId         String
+  Home           Home             @relation(fields: [homeId], references: [id])
+  FloorPlaneItem FloorPlaneItem[]
+}
+
+model Guest {
+  id           String   @id @default(cuid())
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  ipAddress    String
+  userAgent    String?
+  device       String?
+  refreshToken String?
+  Home         Home[]
 }
 
 model Home {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  secured   Boolean
+  securedAt DateTime?
+  shareCode String?
   addressId String
-  address   Address  @relation(fields: [addressId], references: [id])
+  address   Address    @relation(fields: [addressId], references: [id])
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user      User       @relation(fields: [userId], references: [id])
+  Algoritm  Algoritm[]
+  Floors    Floor[]
+  Guests    Guest[]
+}
+
+model TreatLevelSetup {
+  id                 String           @id @default(cuid())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  level              TreatLevel
+  color              String
+  icon               String?
+  deviceValueSetupId String
+  DeviceValueSetup   DeviceValueSetup @relation(fields: [deviceValueSetupId], references: [id])
+  deviceId           String?
+  Device             Device?          @relation(fields: [deviceId], references: [id])
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  homes     Home[]
+  id           String   @id @default(cuid())
+  email        String   @unique
+  fullName     String?
+  firstName    String?
+  lastName     String?
+  password     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  refreshToken String?
+  Homes        Home[]
 }
