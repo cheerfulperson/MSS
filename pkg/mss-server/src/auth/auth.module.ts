@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { SharedModule } from '../shared/shared.module';
 import { AuthService } from './auth.service';
-import { jwtConstants } from './constants';
+import { authConstants } from './constants';
 import { AuthController } from './auth.controller';
 import { AccessTokenStrategy } from './strategies/accessToken.strategy';
 import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
@@ -13,8 +13,8 @@ import { RefreshTokenStrategy } from './strategies/refreshToken.strategy';
     SharedModule,
     JwtModule.register({
       global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: jwtConstants.jwtExpiration },
+      secret: authConstants.secret,
+      signOptions: { expiresIn: authConstants.jwtExpiration },
     }),
   ],
   providers: [AuthService, AccessTokenStrategy, RefreshTokenStrategy],

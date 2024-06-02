@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { PrismaService } from '../shared/prisma/prisma.service'
+import { PrismaService } from '../shared/prisma/prisma.service';
 
 interface GetUserInput {
   id?: string;
@@ -16,6 +16,14 @@ export class UserService {
       where: {
         id,
         email,
+      },
+    });
+    return user;
+  }
+  async getGuest({ id }: GetUserInput) {
+    const user = await this.prisma.guest.findUnique({
+      where: {
+        id,
       },
     });
     return user;

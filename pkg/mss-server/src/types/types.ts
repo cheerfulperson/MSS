@@ -1,4 +1,4 @@
-import { JwtUserPayload } from "../auth/strategies/accessToken.strategy";
+import { JwtUserPayload } from '../auth/strategies/accessToken.strategy';
 
 export enum UserType {
   GUEST = 'GUEST',
@@ -9,6 +9,13 @@ export type UserUnionType = `${UserType}`;
 
 declare global {
   type AuthRequest = Request & {
-    user: JwtUserPayload
+    user: JwtUserPayload;
+  };
+
+  type RefreshAuthRequest = Request & {
+    user: {
+      sub: string;
+      refreshToken: string;
+    };
   };
 }

@@ -168,15 +168,14 @@ model Floor {
 }
 
 model Guest {
-  id           String   @id @default(cuid())
-  name         String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  ipAddress    String
-  userAgent    String?
-  device       String?
-  refreshToken String?
-  Home         Home[]
+  id             String        @id @default(cuid())
+  name           String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  device         String?
+  Home           Home[]
+  refreshTokenId String?       @unique
+  RefreshToken   RefreshToken? @relation(fields: [refreshTokenId], references: [token], onDelete: Cascade)
 }
 
 model Home {
@@ -210,14 +209,27 @@ model TreatLevelSetup {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  fullName     String?
-  firstName    String?
-  lastName     String?
-  password     String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  refreshToken String?
-  Homes        Home[]
+  id            String         @id @default(cuid())
+  email         String         @unique
+  fullName      String?
+  firstName     String?
+  lastName      String?
+  password      String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  RefreshTokens RefreshToken[]
+  Homes         Home[]
+}
+
+model RefreshToken {
+  token     String   @unique
+  ipv4      String
+  userAgent String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String?
+  User      User?    @relation(fields: [userId], references: [id])
+  Guest     Guest?
+
+  @@id([ipv4, userAgent])
 }

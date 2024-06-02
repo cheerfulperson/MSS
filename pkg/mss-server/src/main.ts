@@ -15,7 +15,6 @@ async function bootstrap() {
     }),
   );
   app.useGlobalGuards(new AccessTokenGuard(reflector));
-
   await app.listen(port);
   console.log('Listening on: http://localhost:' + port);
 }
