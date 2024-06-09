@@ -1,0 +1,20 @@
+{
+  "shortWeekDays": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "date": "Date",
+  "time": "Time",
+  "dateAndTime": "Date and time"
+}

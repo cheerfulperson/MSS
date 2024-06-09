@@ -1,0 +1,52 @@
+.layout {
+  height: 100vh;
+  width: 100vw;
+}
+.sider {
+  position: fixed !important;
+  height: 100%;
+  z-index: 1000;
+}
+.siderActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ant-padding-xs);
+  height: 64px;
+
+  &__collapsed {
+    justify-content: center;
+  }
+}
+.header {
+  padding: 0 var(--ant-padding);
+  background: var(--ant-color-bg-container);
+}
+.underground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--ant-color-text-quaternary);
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.3s ease-in-out;
+
+  &__visible {
+    z-index: 500;
+    opacity: 1;
+  }
+}
+.item {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 16px 1fr;
+  column-gap: var(--ant-padding-xs);
+  padding: 0;
+}
+.switch {
+  :global(.ant-switch-inner-unchecked) {
+    margin-top: -26px !important;
+  }
+}

@@ -9,7 +9,7 @@ import * as crypto from 'crypto';
 import { authConstants } from './constants';
 import { PrismaService } from 'shared/prisma/prisma.service';
 import { JwtUserPayload } from './strategies/accessToken.strategy';
-import { UserUnionType } from '../types';
+import { UserUnionRoles } from '../types';
 
 type User = {
   email?: string;
@@ -41,7 +41,7 @@ type UserSignInInput = {
 type UpdateRefreshToken = {
   userId: string;
   refreshToken?: string | null;
-  role: UserUnionType;
+  role: UserUnionRoles;
 } & ({ oldRefreshToken: string } | RefreshData);
 
 @Injectable()
@@ -168,7 +168,7 @@ export class AuthService {
 
   async logout(data: {
     userId: string;
-    role: UserUnionType;
+    role: UserUnionRoles;
     ipv4: string;
     userAgent: string;
   }) {

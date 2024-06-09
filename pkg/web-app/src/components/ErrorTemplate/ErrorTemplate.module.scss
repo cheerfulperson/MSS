@@ -1,0 +1,11 @@
+.container {
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  :global(.ant-result-image) {
+    margin: 0 !important;
+  }
+}

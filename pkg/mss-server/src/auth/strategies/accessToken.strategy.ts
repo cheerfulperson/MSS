@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { UserUnionType } from '../../types/types';
+import { UserUnionRoles } from '../../types/types';
 import { authConstants } from '../constants';
 
 export type JwtUserPayload = {
   /** User id */
   sub: string;
-  role: UserUnionType;
+  role: UserUnionRoles;
   email?: string;
   fullName?: string;
 };

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "config": ["./src/config"],
+      "config/*": ["./src/config/*"],
+      "context/*": ["./src/context/*"],
+      "data_layer/*": ["./src/data_layer/*"],
+      "layouts/*": ["./src/layouts/*"],
+      "locales": ["./src/locales"],
+      "locales/*": ["./src/locales/*"],
+      "router": ["./src/router"],
+      "router/*": ["./src/router/*"],
+      "src/*": ["./src/*"],
+      "types/*": ["./src/types/*"],
+      "utils/*": ["./src/utils/*"],
+      "views/*": ["./src/views/*"]
+    }
+  },
+  "include": ["src"]
+}
