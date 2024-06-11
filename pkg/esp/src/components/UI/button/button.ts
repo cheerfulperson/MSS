@@ -6,6 +6,7 @@ import "./button.scss";
 interface IButtonProps {
   children?: string;
   className?: string;
+  type?: "button" | "submit" | "reset";
   onClick?: (e: MouseEvent) => void;
   customAttr?: Record<string, string>;
 }
@@ -27,6 +28,9 @@ export class Button<T extends HTMLElement = HTMLButtonElement> extends Component
     }
     if (this.props.onClick) {
       element.addEventListener("click", this.props.onClick);
+    }
+    if (this.props.type) {
+      element.setAttribute("type", this.props.type);
     }
     Object.entries(customAttrs).forEach(([attr, value]) => {
       element.setAttribute(attr, value);

@@ -20,6 +20,16 @@ struct BMPData {
     float seaLevelMeters;
 };
 
+struct AllSensorsData {
+    float temperature;
+    float co;
+    float humidity;
+    float pressure;
+    float aht20Temperature;
+    float aht20Humidity;
+    float bmpTemperature;
+};
+
 class AppSensors
 {
 public:
@@ -28,6 +38,8 @@ public:
     float getDHTTemperature();
     float getCOGassPPM();
     float getHumidity();
+    float getAverageTemperature();
+    float getAverageHumidity();
     AHT20Data getAHT20Data();
     BMPData getBMPData();
     String getAHT20DataJson();

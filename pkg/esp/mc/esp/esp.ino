@@ -21,11 +21,8 @@ void setup() {
   bool isConnected = wifiTools.waitForConnect(config);
   if (!isConnected) {
     // Set in station mode
-    WiFi.mode(WIFI_AP_STA);
     wifiTools.startPoint();
-  } else {
   }
-  Serial.println("Connected: " + isConnected);
   handler.init();
   digitalWrite(LED_BUILTIN, LOW);
 }

@@ -1,4 +1,4 @@
-import { Button } from "../../components";
+import { Button, Input } from "../../components";
 import { useAuth, useFetch, useLocation } from "../../hooks";
 import { setRepeater } from "../../utils";
 import { Page } from "../template";
@@ -31,6 +31,7 @@ export const MainPage = new Page<HTMLDivElement>({
   },
   onTreeRender(props) {
     const network = props.element.querySelector<HTMLSpanElement>(".Main__network span")!;
+    const home = props.element.querySelector<HTMLSpanElement>(".Main__home span")!;
     const temperature = props.element.querySelector<HTMLSpanElement>(".Main__temperature span")!;
     const dhtTemperature = props.element.querySelector<HTMLSpanElement>(".Main__dhtTemperature span")!;
     const ahtTemperature = props.element.querySelector<HTMLSpanElement>(".Main__ahtTemperature span")!;
@@ -41,9 +42,25 @@ export const MainPage = new Page<HTMLDivElement>({
     const seaLevelMeters = props.element.querySelector<HTMLSpanElement>(".Main__seaLevelMeters span")!;
     const co = props.element.querySelector<HTMLSpanElement>(".Main__co span")!;
 
-    const { config } = useAuth();
+    const { config, registerAuthListener } = useAuth();
     const { request } = useFetch();
     const { goTo } = useLocation();
+
+    let homeSlugData: string = "";
+
+    const homeSlug = new Input({
+      label: "Id вашего дома:",
+      placeholder: "home-name.io",
+      className: "Login__input",
+      onChange(e) {
+        homeSlugData = (e.target as HTMLInputElement).value;
+      },
+    });
+    const addHome = new Button({
+      children: "Добавить", className: "Main__button", type: 'button', customAttr: { type: "submit" }, onClick(e) {
+        request({ type: "post", body: { slug: homeSlugData }, path: "/config/home" })
+      },
+    });
 
     const updateSensorData = () => {
       request<SensorsData>({ path: "sensors", type: "get" }).then((data) => {
@@ -55,7 +72,7 @@ export const MainPage = new Page<HTMLDivElement>({
         bmpTemperature.textContent = `${bmp.temperature.toFixed(3) || "-"} °C`;
         humidity.textContent = `${data.humidity || "-"} %`;
         ahtHumidity.textContent = `${aht.humidity || "-"} %`;
-        co.textContent = `${(data.co).toFixed(3)  || "-"} ppm`;
+        co.textContent = `${data.co.toFixed(3) || "-"} ppm`;
         pressure.textContent = `${bmp.pressure ? (bmp.pressure * 0.00750063755419211).toFixed(3) : "-"} мм рт.ст.`;
         seaLevelMeters.textContent = `${bmp.seaLevelMeters ? Math.floor(bmp.seaLevelMeters) : "-"} м`;
       });
@@ -76,12 +93,16 @@ export const MainPage = new Page<HTMLDivElement>({
       },
       customAttr: { type: "button" },
     });
-    network.textContent = config.ssid || "-";
+
+    registerAuthListener(() => {
+      network.textContent = config.ssid || "-";
+      home.textContent = config.homeSlug || "-";
+    });
 
     repeat(updateSensorData, { callImmediately: true });
 
     return {
-      tree: [{ selector: ".Main__body", tree: [button, goToLoginButton] }],
+      tree: [{ selector: ".Main__body", tree: [button, goToLoginButton, homeSlug, addHome] }],
     };
   },
 });

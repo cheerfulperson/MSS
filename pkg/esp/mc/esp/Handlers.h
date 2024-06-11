@@ -11,6 +11,7 @@
 #include "Storage.h"
 #include "WiFiUtils.h"
 #include "AppSensors.h"
+#include "Mqtt.h"
 
 #ifndef HANDLERS_H
 #define HANDLERS_H

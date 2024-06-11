@@ -10,6 +10,7 @@ void WiFiUtils::startPoint()
 {
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
   WiFi.softAP(STASSID);
+  WiFi.mode(WIFI_AP_STA);
   // WiFi.softAPdisconnect
   // modify TTL associated  with the domain name (in seconds)
   // default is 60 seconds`
@@ -21,7 +22,7 @@ void WiFiUtils::startPoint()
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
 
   // start DNS server for a specific domain name
-  dnsServer.start(DNS_PORT, "www.sha.com", apIP);
+  dnsServer.start(DNS_PORT, "www.ihome.com", apIP);
 }
 
 void WiFiUtils::nextRequest()

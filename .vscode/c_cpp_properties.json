@@ -51,6 +51,7 @@
                 "/home/egor/Arduino/libraries/SPI",
                 "/home/egor/Arduino/libraries/Adafruit_Unified_Sensor",
                 "/home/egor/Arduino/libraries/Adafruit_BMP085_Library",
+                "/home/egor/Arduino/libraries/PubSubClient/src",
                 "/home/egor/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/3.1.0-gcc10.3-e5f9fec/xtensa-lx106-elf/include/c++/10.3.0",
                 "/home/egor/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/3.1.0-gcc10.3-e5f9fec/xtensa-lx106-elf/include/c++/10.3.0/xtensa-lx106-elf",
                 "/home/egor/.arduino15/packages/esp8266/tools/xtensa-lx106-elf-gcc/3.1.0-gcc10.3-e5f9fec/xtensa-lx106-elf/include/c++/10.3.0/backward",

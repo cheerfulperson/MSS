@@ -76,3 +76,47 @@ String AppSensors::getBMPDataJson() {
   serializeJson(doc, json);
   return json;
 }
+
+float AppSensors::getAverageTemperature()
+{
+  float t, i = 0;
+  float temp = getTemperature();
+  float dhtTemp = getDHTTemperature();
+  float ahtTemp = getAHT20Data().temperature;
+  float bmpTemp = getBMPData().temperature;
+
+  if (temp != 0) {
+    i += 1;
+    t += temp;
+  }
+  if (dhtTemp != 0) {
+    i += 1;
+    t += dhtTemp;
+  }
+  if (ahtTemp != 0) {
+    i += 1;
+    t += ahtTemp;
+  }
+  if (bmpTemp != 0) {
+    i += 1;
+    t += bmpTemp;
+  }
+  return (t) / i;
+}
+
+float AppSensors::getAverageHumidity()
+{
+  float h, i = 0;
+  float hum = getHumidity();
+  float ahtHum = getAHT20Data().humidity;
+
+  if (hum != 0) {
+    i += 1;
+    h += hum;
+  }
+  if (ahtHum != 0) {
+    i += 1;
+    h += ahtHum;
+  }
+  return (h) / i;
+}

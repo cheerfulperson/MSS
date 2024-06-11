@@ -9,7 +9,7 @@
 struct Config
 {
   char* ssid;
-  char* serverUrl;
+  char* homeSlug;
   char* password;
 };
 
@@ -18,7 +18,6 @@ class Storage
 public:
   struct Config getProperties();
   void overwriteProperties(Config data);
-  String hasConfigFile();
   void init();
 
 protected:

@@ -6,6 +6,7 @@ Storage appStorage;
 DynamicJsonDocument JSONDoc(1024);
 WiFiUtils wifiUtils;
 AppSensors sensors;
+Mqtt mqtt;
 
 char* enryptionType(int i)
 {
@@ -89,8 +90,29 @@ void handleApiConfig()
   String json;
   Config config = appStorage.getProperties();
   JSONDoc["ssid"] = config.ssid;
+  JSONDoc["homeSlug"] = config.homeSlug;
   serializeJson(JSONDoc, json);
   webServer.send(200, "application/json", json);
+}
+
+void handleUpdateSlug()
+{
+  if (webServer.hasArg("plain") == false)
+  {
+    webServer.send(400, "application/json", "{\"error\":\"Body not received\"}");
+    return;
+  }
+  String json = webServer.arg("plain");
+  DynamicJsonDocument doc(1024);
+  deserializeJson(doc, json);
+  Config config = appStorage.getProperties();
+  int homeSlugLength = strlen(doc["slug"] | "") + 1;
+  config.homeSlug = (char*)malloc(homeSlugLength);
+  strlcpy(config.homeSlug, doc["slug"] | "", homeSlugLength);
+  appStorage.overwriteProperties(config);
+  delay(500);
+  mqtt.init();
+  webServer.send(200, "application/json", "{\"status\":\"ok\"}");
 }
 
 void handleApiPostConfig()
@@ -108,17 +130,14 @@ void handleApiPostConfig()
       deserializeJson(doc, json);
       int passswordLength = strlen(doc["password"] | "") + 1;
       int ssidLength = strlen(doc["ssid"] | "") + 1;
-      int serverUrlLength = strlen(doc["serverUrl"] | "") + 1;
       if (ssidLength < 2 || passswordLength < 4) {
         webServer.send(400, "application/json", "{\"error\":\"Bad password or ssid\"}");
         return;
       }
       config.password = (char*)malloc(passswordLength);
       config.ssid = (char*)malloc(ssidLength);
-      config.serverUrl = (char*)malloc(1);
       strlcpy(config.password, doc["password"] | "", passswordLength);
       strlcpy(config.ssid, doc["ssid"] | "", ssidLength);
-      strlcpy(config.serverUrl, doc["serverUrl"] | "", serverUrlLength);
       appStorage.overwriteProperties(config);
       Serial.println(config.password);
 
@@ -145,24 +164,19 @@ void handleApiPostConfig()
 void Handlers::handleClient()
 {
   webServer.handleClient();
+  mqtt.checkingToPublish();
 }
 
 void Handlers::init()
 {
   appStorage.init();
   sensors.init();
+  mqtt.init();
   handleApiPostConfig();
+  webServer.on("/api/config/home", HTTP_POST, handleUpdateSlug);
   webServer.on("/api/config", HTTP_GET, handleApiConfig);
   webServer.on("/api/sensors", HTTP_GET, handleApiGetSensors);
   webServer.on("/api/networks", HTTP_GET, handleApiGetNetworks);
-  webServer.on("/api/check/fs", HTTP_GET, []()
-    {
-      String msg = appStorage.hasConfigFile();
-      String data = "{\"exist\":\"";
-      data += msg;
-      data += "\"}";
-      webServer.send(200, "application/json", data);
-    });
 
   // Static
   webServer.on("/", HTTP_GET, handleMainPage);

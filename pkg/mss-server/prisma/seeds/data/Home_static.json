@@ -1,0 +1,19 @@
+[
+  {
+    "name": "My House",
+    "slug": "home",
+    "secured": false,
+    "addressId": {
+      "type": "Address",
+      "where": {
+        "id": "ckm7z1z7z0000b3i6c1z1z1z1"
+      }
+    },
+    "userId": {
+      "type": "User",
+      "where": {
+        "email": "yagor.baradavkin@gmail.com"
+      }
+    }
+  }
+]

@@ -34,6 +34,7 @@ const generateSeeds = async () => {
       const seed = model.fields.reduce((seedData, field) => {
         const generator = modelGenerators[
           field.name as keyof typeof modelGenerators
+          // eslint-disable-next-line @typescript-eslint/ban-types
         ] as string | Function | undefined;
 
         if (typeof generator === 'function') {

@@ -1,9 +1,4 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { parseArgs } from 'node:util';
-
-const options = {
-  environment: { type: 'string' },
-} as const;
 
 const SERVICE_FIELDS = ['__no_auto'];
 
@@ -14,13 +9,7 @@ const prisma = new PrismaClient();
 const decapitalize = (str: string) =>
   str.charAt(0).toLowerCase() + str.slice(1);
 
-const language = process.env.SEEDS_LANGUAGE || 'en';
-
 const seed = async () => {
-  const {
-    values: { environment },
-  } = parseArgs({ options });
-
   const noAutoIds: string[] = [];
 
   while (queue.length) {
@@ -33,18 +22,16 @@ const seed = async () => {
     let staticData = [];
 
     try {
-      if (environment === 'production') {
-        staticData = require(
-          `./seeds/data/demo/${language}/${model.name}.json`,
-        );
-      } else {
-        generated = require(`./seeds/data/${model.name}.json`);
-        staticData = require(`./seeds/data/${model.name}_static.json`);
-      }
+      staticData = require(`./seeds/data/${model.name}_static.json`);
+    } catch (e) {}
+
+    try {
+      generated = require(`./seeds/data/${model.name}.json`);
     } catch (e) {}
 
     const data = [...staticData, ...generated];
 
+    console.log(model.name, data);
     const firstItem = data.reduce(
       (firstItem, item) => ({ ...firstItem, ...item }),
       {},

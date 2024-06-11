@@ -9,6 +9,7 @@ interface IInputProps {
   customAttrs?: Record<string, string>;
   initialValue?: string;
   label?: string;
+  placeholder?: string;
   onChange?: (e: InputEvent) => void;
 }
 
@@ -29,7 +30,7 @@ export class Input<T extends HTMLElement = HTMLDivElement> extends Component {
   }
 
   public render(): RenderResult<T> & InputResult {
-    const { className, customAttrs = {}, initialValue, label, onChange } = this.props;
+    const { className, customAttrs = {}, placeholder, initialValue, label, onChange } = this.props;
     const element = this.element;
     const input = element.querySelector<HTMLInputElement>("input")!;
     const labelEl = element.querySelector(".Input__label")!;
@@ -41,6 +42,9 @@ export class Input<T extends HTMLElement = HTMLDivElement> extends Component {
     input.value = initialValue || "";
     if (className) {
       element.classList.add(className);
+    }
+    if (placeholder) {
+      input.placeholder = placeholder;
     }
     if (onChange) {
       input.addEventListener("change", onChange);

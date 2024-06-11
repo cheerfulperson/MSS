@@ -69,32 +69,6 @@ bool Storage::checkFile(const char* fileN)
   return false;
 }
 
-String Storage::hasConfigFile()
-{
-  String json;
-  bool isExist = checkFile("storage.txt");
-
-  if (!isWrited) {
-    isWrited = true;
-    JsonDocument JSONData;
-    JSONData["password"] = "passsword";
-    JSONData["ssid"] = "ssid";
-    JSONData["serverUrl"] = "serverUrl";
-    serializeJson(JSONData, json);
-    writeFile(STORAGE_PATH, json);
-    return json;
-  }
-  if (isExist) {
-    String data = readFile(STORAGE_PATH);
-    // deserializeJson(JSONData, data);
-    // int ssidLength = strlen(JSONData["ssid"] | "") + 4;
-    // data = (char*)malloc(ssidLength);
-    // strlcpy(data, JSONData["ssid"] | "", ssidLength);
-    return data;
-  }
-  return "not found";
-}
-
 Config Storage::getProperties()
 {
   Config config;
@@ -102,11 +76,11 @@ Config Storage::getProperties()
   deserializeJson(JSONData, data);
   int passswordLength = strlen(JSONData["password"] | "") + 4;
   int ssidLength = strlen(JSONData["ssid"] | "") + 4;
-  int serverUrlLength = strlen(JSONData["serverUrl"] | "") + 4;
+  int serverUrlLength = strlen(JSONData["homeSlug"] | "") + 4;
   config.password = (char*)malloc(passswordLength);
   config.ssid = (char*)malloc(ssidLength);
-  config.serverUrl = (char*)malloc(serverUrlLength);
-  strlcpy(config.serverUrl, JSONData["serverUrl"] | "", serverUrlLength);
+  config.homeSlug = (char*)malloc(serverUrlLength);
+  strlcpy(config.homeSlug, JSONData["homeSlug"] | "", serverUrlLength);
   strlcpy(config.password, JSONData["password"] | "", passswordLength);
   strlcpy(config.ssid, JSONData["ssid"] | "", ssidLength);
 
@@ -115,10 +89,12 @@ Config Storage::getProperties()
 
 void Storage::overwriteProperties(Config data)
 {
+  Config config = getProperties();
   String json;
-  JSONData["password"] = data.password;
-  JSONData["ssid"] = data.ssid;
-  JSONData["serverUrl"] = data.serverUrl;
+
+  JSONData["password"] = data.password != NULL && data.password != "" ? data.password : config.password;
+  JSONData["ssid"] = data.ssid != NULL && data.ssid != "" ? data.ssid : config.ssid;
+  JSONData["homeSlug"] = data.homeSlug != NULL && data.homeSlug != "" ? data.homeSlug : config.homeSlug;
 
   serializeJson(JSONData, json);
   writeFile(STORAGE_PATH, json);

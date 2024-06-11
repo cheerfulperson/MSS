@@ -2,6 +2,7 @@ import { useFetch } from "./useFetch";
 
 interface IConfig {
   ssid?: string | null;
+  homeSlug?: string | null;
 }
 
 interface IListenerParams {
