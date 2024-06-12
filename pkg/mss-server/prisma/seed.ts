@@ -31,7 +31,6 @@ const seed = async () => {
 
     const data = [...staticData, ...generated];
 
-    console.log(model.name, data);
     const firstItem = data.reduce(
       (firstItem, item) => ({ ...firstItem, ...item }),
       {},

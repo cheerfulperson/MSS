@@ -4,6 +4,8 @@ import { EPermission } from "config/router";
 import { useAuthContext } from "context/authContext";
 import { ErrorTemplate } from "components/ErrorTemplate";
 import { UserRoles } from "types/user";
+import { EmptyLayout } from "layouts/EmptyLayout";
+import { AppLoader } from "components/AppLoader";
 
 interface IProtectedRoutesProps {
   children: ReactElement;
@@ -15,14 +17,18 @@ interface IProtectedRoutesProps {
  */
 
 export const ProtectedRoute = ({ children, permissions }: IProtectedRoutesProps): ReactElement | null => {
-  const { isAuthorized, isLoading, role } = useAuthContext();
+  const { isAuthorized, isLoading, session } = useAuthContext();
 
   if (permissions.includes(EPermission.AUTH_NOT_REQUIRED)) {
     return children;
   }
 
   if (isLoading) {
-    return <div>loading....</div>;
+    return (
+      <EmptyLayout>
+        <AppLoader />
+      </EmptyLayout>
+    );
   }
 
   if (isAuthorized && permissions.includes(EPermission.AUTH_LOGIN)) {
@@ -33,7 +39,7 @@ export const ProtectedRoute = ({ children, permissions }: IProtectedRoutesProps)
     return <ErrorTemplate errorCode={404} />;
   }
 
-  if (isAuthorized && permissions.includes(EPermission.AUTH_OWNER) && role !== UserRoles.OWNER) {
+  if (isAuthorized && permissions.includes(EPermission.AUTH_OWNER) && session.role !== UserRoles.OWNER) {
     return <ErrorTemplate errorCode={404} />;
   }
 

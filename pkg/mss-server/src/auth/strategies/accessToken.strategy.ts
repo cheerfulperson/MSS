@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { UserUnionRoles } from '../../types/types';
-import { authConstants } from '../constants';
+import { AuthEnvs } from '../constants';
 
 export type JwtUserPayload = {
   /** User id */
@@ -18,7 +18,7 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: authConstants.secret,
+      secretOrKey: AuthEnvs.secret,
     });
   }
 

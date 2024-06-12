@@ -5,10 +5,17 @@ export enum EPermission {
   AUTH_LOGIN = "auth_login",
 }
 
-export enum AppRoutes {
-  ONBOARDING = "/onboarding",
-  LOG_IN = "/log-in",
-  SIGN_UP = "/sign-up",
-  HOME = "home/:id",
-  PAGE_NOT_FOUND = "*",
-}
+export const AppRoutes = {
+  auth: {
+    logIn: "/auth/log-in",
+    logInGuest: "/auth/guest/log-in",
+    signUp: "/auth/sign-up",
+    url: "/auth",
+  },
+  dashboard: {
+    url: "/dashboard/:id",
+    get: (id: string) => `/dashboard/${id}`,
+  },
+  onboarding: "/onboarding",
+  pageNotFound: "*",
+};

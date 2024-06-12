@@ -1,6 +1,5 @@
-export enum EAuthCookies {
+export enum AuthCookies {
   ACCESS_TOKEN = "accessToken",
   REFRESH_TOKEN = "refreshToken",
-  ROLE = "userRole",
-  EXPIRES_TIME = "expiresIn",
+  ROLE = "role",
 }

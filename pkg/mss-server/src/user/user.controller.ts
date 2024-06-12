@@ -8,7 +8,7 @@ export class UserController {
 
   @Get('profile')
   getUserProfile(@Req() req: AuthRequest) {
-    if (req.user.role === 'GUEST') {
+    if (req.user.role === 'guest') {
       return this.userService.getGuest({ id: req.user.sub });
     }
     return this.userService.getUser({ id: req.user.sub });

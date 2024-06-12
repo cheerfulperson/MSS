@@ -2,16 +2,21 @@ import { MutateFunction, QueryFunction } from "@tanstack/react-query";
 import axios from "axios";
 
 import { authToken } from "context/authContext";
+import type { AuthRefreshBody } from "data_layer/mutations/useAuthMutations";
+import { env } from "./env";
 
 // Define a default query function that will receive the query key
 export const defaultQueryFn: QueryFunction = async ({ queryKey }) => {
-  const [url, params] = queryKey;
+  const [url, params, isPublic] = queryKey;
   if (typeof url === "string" && (!params || (!!params && typeof params === "object"))) {
-    const { data } = await axios.get(`${process.env.API_URL!}${url[0] === "/" ? url : `/${url}`}`, {
+    const { data } = await axios.get(`${env.API_URL}${url[0] === "/" ? url : `/${url}`}`, {
       params,
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
+      headers:
+        authToken && !isPublic
+          ? {
+              Authorization: `Bearer ${authToken}`,
+            }
+          : {},
     });
     return data;
   }
@@ -21,15 +26,17 @@ export const defaultQueryFn: QueryFunction = async ({ queryKey }) => {
 export type MutationMethod = "POST" | "PUT" | "DELETE" | "PATCH";
 export type MutationVariables<Body extends Record<string, string | boolean | number | null | undefined | object> = {}> =
   {
+    body: Body;
+    isPublic?: boolean;
     /** [url, body, method] */
     mutationKey: [string, MutationMethod];
-    body: Body;
   };
 
 // Define a default query function that will receive the query key
 export const defaultMutationFn: MutateFunction<unknown, Error, MutationVariables, unknown> = async ({
-  mutationKey,
   body,
+  isPublic,
+  mutationKey,
 }) => {
   const [url, method = "POST"] = mutationKey;
   if (
@@ -38,13 +45,17 @@ export const defaultMutationFn: MutateFunction<unknown, Error, MutationVariables
     typeof body === "object" &&
     (method === "POST" || method === "PUT" || method === "DELETE" || method === "PATCH")
   ) {
+    const refreshToken = url.includes("auth/refresh") ? (body as AuthRefreshBody).refreshToken : undefined;
     const { data } = await axios[method.toLowerCase() as Lowercase<MutationMethod>](
-      `${process.env.API_URL!}${url[0] === "/" ? url : `/${url}`}`,
+      `${env.API_URL}${url[0] === "/" ? url : `/${url}`}`,
       body,
       {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+        headers:
+          authToken && !isPublic
+            ? {
+                Authorization: `Bearer ${refreshToken || authToken}`,
+              }
+            : {},
       }
     );
     return data;

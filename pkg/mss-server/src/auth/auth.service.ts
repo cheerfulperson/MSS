@@ -6,10 +6,11 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as crypto from 'crypto';
 
-import { authConstants } from './constants';
+import { AuthEnvs } from './constants';
 import { PrismaService } from 'shared/prisma/prisma.service';
 import { JwtUserPayload } from './strategies/accessToken.strategy';
-import { UserUnionRoles } from '../types';
+import { UserRoles, UserUnionRoles } from '../types';
+import { CryptoService } from 'shared/crypto/crypto.service';
 
 type User = {
   email?: string;
@@ -25,6 +26,9 @@ type RefreshData = {
 
 type GuestSignUpInput = RefreshData & {
   name: string;
+  homeSlug?: string;
+  password?: string;
+  token?: string;
 };
 
 type UserSignUpInput = {
@@ -48,10 +52,42 @@ type UpdateRefreshToken = {
 export class AuthService {
   constructor(
     private jwtService: JwtService,
+    private cryptoService: CryptoService,
     private prisma: PrismaService,
   ) {}
 
-  async signUpGuest({ ipv4, name, userAgent }: GuestSignUpInput) {
+  async signUpGuest({
+    ipv4,
+    name,
+    userAgent,
+    homeSlug,
+    token,
+  }: GuestSignUpInput) {
+    if (!homeSlug && !token) {
+      throw new BadRequestException('Invalid token or home slug');
+    }
+    let slug = homeSlug;
+
+    if (!slug) {
+      try {
+        slug = JSON.parse(this.cryptoService.decrypt(token)).homeSlug;
+      } catch (error) {
+        throw new BadRequestException('Invalid token');
+      }
+    }
+    const home = await this.prisma.home.findFirst({
+      where: {
+        slug: homeSlug,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!home) {
+      throw new BadRequestException('Home does not exist');
+    }
+
     let guest = await this.prisma.guest.findFirst({
       where: {
         RefreshToken: {
@@ -69,6 +105,28 @@ export class AuthService {
       guest = await this.prisma.guest.create({
         data: {
           name,
+          Home: {
+            connect: {
+              id: home.id,
+            },
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+    } else {
+      guest = await this.prisma.guest.update({
+        where: {
+          id: guest.id,
+        },
+        data: {
+          Home: {
+            connect: {
+              id: home.id,
+            },
+          },
         },
         select: {
           id: true,
@@ -76,20 +134,24 @@ export class AuthService {
         },
       });
     }
+
     const tokens = await this.getTokens({
       sub: guest.id,
-      role: 'GUEST',
+      role: UserRoles.GUEST,
       email: null,
       fullName: guest.name,
     });
     await this.updateRefreshToken({
       refreshToken: tokens.refreshToken,
-      role: 'GUEST',
+      role: UserRoles.GUEST,
       userId: guest.id,
       ipv4,
       userAgent,
     });
-    return tokens;
+    return {
+      ...tokens,
+      role: UserRoles.GUEST,
+    };
   }
 
   async signUpUser({
@@ -127,18 +189,21 @@ export class AuthService {
     });
     const tokens = await this.getTokens({
       sub: user.id,
-      role: 'USER',
+      role: UserRoles.OWNER,
       email: user.email,
       fullName: user.fullName,
     });
     await this.updateRefreshToken({
       refreshToken: tokens.refreshToken,
-      role: 'USER',
+      role: UserRoles.OWNER,
       userId: user.id,
       ipv4,
       userAgent,
     });
-    return tokens;
+    return {
+      ...tokens,
+      role: UserRoles.OWNER,
+    };
   }
 
   async signIn({ email, password, ipv4, userAgent }: UserSignInInput) {
@@ -147,11 +212,11 @@ export class AuthService {
       select: { password: true, id: true, fullName: true },
     });
     if (!user) throw new BadRequestException('User does not exist');
-    const passwordMatches = await this.compareHash(password, user.password);
+    const passwordMatches = this.compareHash(password, user.password);
     if (!passwordMatches)
       throw new BadRequestException('Password is incorrect');
     const tokens = await this.getTokens({
-      role: 'USER',
+      role: UserRoles.OWNER,
       email,
       fullName: user.fullName,
       sub: user.id,
@@ -159,11 +224,14 @@ export class AuthService {
     await this.updateRefreshToken({
       ipv4,
       refreshToken: tokens.refreshToken,
-      role: 'USER',
+      role: UserRoles.OWNER,
       userAgent,
       userId: user.id,
     });
-    return tokens;
+    return {
+      tokens,
+      role: UserRoles.OWNER,
+    };
   }
 
   async logout(data: {
@@ -172,7 +240,7 @@ export class AuthService {
     ipv4: string;
     userAgent: string;
   }) {
-    if (data.role === 'GUEST') {
+    if (data.role === UserRoles.GUEST) {
       const guest = await this.prisma.guest.findFirst({
         where: { id: data.userId },
       });
@@ -194,7 +262,7 @@ export class AuthService {
 
   hashData(data: string) {
     return crypto
-      .createHmac('md5', authConstants.hashSecret)
+      .createHmac('md5', AuthEnvs.hashSecret)
       .update(data)
       .digest('hex');
   }
@@ -231,7 +299,7 @@ export class AuthService {
     }
     const hashedRefreshToken = this.hashRefreshToken(refreshToken);
 
-    if (role === 'GUEST' && !('oldRefreshToken' in otherData)) {
+    if (role === UserRoles.GUEST && !('oldRefreshToken' in otherData)) {
       await this.prisma.guest.update({
         where: {
           id: userId,
@@ -255,7 +323,7 @@ export class AuthService {
         },
       });
     }
-    if (role === 'USER') {
+    if (role === UserRoles.OWNER) {
       await this.prisma.refreshToken.upsert({
         where: tokenUnique,
         update: {
@@ -320,7 +388,7 @@ export class AuthService {
       throw new ForbiddenException('Token does not exist');
     }
 
-    const role = user.email ? 'USER' : 'GUEST';
+    const role = user.email ? UserRoles.OWNER : UserRoles.GUEST;
     const tokens = await this.getTokens({
       sub: user.id,
       role,
@@ -339,12 +407,12 @@ export class AuthService {
   async getTokens(data: JwtUserPayload) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(data, {
-        secret: authConstants.secret,
-        expiresIn: authConstants.jwtExpiration,
+        secret: AuthEnvs.secret,
+        expiresIn: AuthEnvs.jwtExpiration,
       }),
       this.jwtService.signAsync(data, {
-        secret: authConstants.secret,
-        expiresIn: authConstants.jwtRefreshExpiration,
+        secret: AuthEnvs.secret,
+        expiresIn: AuthEnvs.jwtRefreshExpiration,
       }),
     ]);
 
