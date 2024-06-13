@@ -1,5 +1,5 @@
 import { ReactElement, Suspense } from "react";
-import { Route, Routes as ReactRoutes } from "react-router-dom";
+import { Route, Routes as ReactRoutes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -72,6 +72,9 @@ export const Routes = (): ReactElement => {
                 {recursiveNestedRoutesReducer(guestRoutes)}
                 {recursiveNestedRoutesReducer(commonRoutes)}
               </Route>
+            )}
+            {!session.role && (
+              <Route element={<Navigate replace to={AppRoutes.auth.logIn} />} path={AppRoutes.pageNotFound} />
             )}
             <Route element={<AuthLayout />} path={AppRoutes.auth.url}>
               {recursiveNestedRoutesReducer(authRoutes)}

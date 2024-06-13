@@ -1,13 +1,17 @@
 {
   "fields": {
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "home_slug": "Unique home name",
+    "name": "Name"
   },
   "errors": {
     "required": "This field is required",
     "invalid": {
       "email": "Invalid email",
-      "password": "Invalid password"
+      "home_slug": "Invalid unique home name",
+      "password": "Invalid password",
+      "name": "Invalid name, at least 2 characters"
     },
     "invalid_credentials": {
       "login": "Invalid email or password"

@@ -11,7 +11,7 @@ export class LoginDto {
 
 export class SignUpGuestDto {
   @IsString()
-  @MinLength(3)
+  @MinLength(2)
   name: string;
 
   @IsString()

@@ -4,12 +4,14 @@ import app_layout from "./app_layout.json";
 import common from "./common.json";
 import date from "./date.json";
 import form from "./forms.json";
+import toast from "./toast.json";
 
 export const ru = {
   app_layout,
   common,
   date,
   form,
+  toast,
 };
 
 export const dayjsRuLocale: typeof localeRu = {

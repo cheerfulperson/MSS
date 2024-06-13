@@ -220,6 +220,7 @@ model User {
 }
 
 model RefreshToken {
+  id        String   @id @default(cuid())
   token     String   @unique
   ipv4      String
   userAgent String
@@ -229,5 +230,5 @@ model RefreshToken {
   User      User?    @relation(fields: [userId], references: [id])
   Guest     Guest?
 
-  @@id([ipv4, userAgent])
+  @@unique([ipv4, userAgent])
 }

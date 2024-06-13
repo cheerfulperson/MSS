@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { Public } from 'decorators/public.decorator';
-import { CheckLinkDto, GetHomeDto } from './dto/home.dto';
+import { CheckLinkDto } from './dto/home.dto';
 
 @Controller('home')
 export class HomeController {
@@ -22,11 +22,13 @@ export class HomeController {
     return home;
   }
 
-  @Post('link')
+  @Get(':id/link')
   @HttpCode(HttpStatus.OK)
-  async getHomeLink(@Body() data: GetHomeDto) {
-    const home = await this.home.getHomeLink({ id: data.homeId });
-    return home;
+  async getHomeLink(@Param('id') id: string) {
+    const link = await this.home.getHomeLink({ id });
+    return {
+      link,
+    };
   }
 
   @Public()

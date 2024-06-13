@@ -30,18 +30,16 @@ export class CryptoService {
     ).toString('base64');
   }
 
-  decrypt(data: string): string {
+  decrypt(encryptedData: string): string {
+    const buff = Buffer.from(encryptedData, 'base64');
     const decipher = crypto.createDecipheriv(
       this.algorithm,
       this.secretKey,
       this.encryptionIV,
     );
-    return Buffer.from(
-      decipher.update(
-        Buffer.from(data, 'base64').toString('hex'),
-        'hex',
-        'utf8',
-      ) + decipher.final('utf8'),
-    ).toString();
+    return (
+      decipher.update(buff.toString('utf8'), 'hex', 'utf8') +
+      decipher.final('utf8')
+    );
   }
 }

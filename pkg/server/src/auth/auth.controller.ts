@@ -40,7 +40,6 @@ export class AuthController {
     });
   }
 
-  @Public()
   @UseGuards(RefreshTokenGuard)
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
@@ -51,7 +50,7 @@ export class AuthController {
   ) {
     return this.authService.refreshTokens(
       req.user.sub,
-      body.refreshToken || req.headers.get('Authorization').split(' ')[1],
+      req.headers['authorization']?.split(' ')[1] || body.refreshToken,
       {
         ipv4,
         userAgent: req.headers['user-agent'],

@@ -12,9 +12,9 @@ export const AppRoutes = {
   },
   algorithms: "/algorithms",
   auth: {
-    logIn: "/auth/log-in",
-    logInGuest: "/auth/guest/log-in",
-    signUp: "/auth/sign-up",
+    logIn: "/auth/login",
+    logInGuest: "/auth/guest/login",
+    signUp: "/auth/signup",
     url: "/auth",
   },
   dashboard: {

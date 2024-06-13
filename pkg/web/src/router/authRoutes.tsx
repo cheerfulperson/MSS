@@ -1,7 +1,6 @@
 import { ErrorTemplate } from "src/views/ErrorTemplate";
 import { AppRoutes, EPermission } from "config/router";
 import { TRoutes } from "types/router";
-import { EmptyLayout } from "layouts/EmptyLayout";
 import { Login } from "views/auth/Login";
 import { GuestLogin } from "views/auth/GuestLogin";
 import { Singup } from "views/auth/Singup";
@@ -20,11 +19,7 @@ export const authRoutes: TRoutes = {
     permissions: [EPermission.AUTH_LOGIN],
   },
   [AppRoutes.pageNotFound]: {
-    element: (
-      <EmptyLayout>
-        <ErrorTemplate errorCode={404} />
-      </EmptyLayout>
-    ),
+    element: <ErrorTemplate errorCode={404} />,
     permissions: [EPermission.AUTH_NOT_REQUIRED],
   },
 };

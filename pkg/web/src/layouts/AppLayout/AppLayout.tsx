@@ -1,4 +1,4 @@
-import { Button, Dropdown, Layout, Menu, Switch, theme as antdTheme } from "antd";
+import { Button, Dropdown, Flex, Layout, Menu, Switch, theme as antdTheme } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -10,9 +10,10 @@ import {
   SettingOutlined,
   EditOutlined,
   PlusOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-import { useMemo, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { useCallback, useMemo, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { ItemType } from "antd/es/menu/interface";
@@ -23,16 +24,18 @@ import { languages } from "locales";
 import { useThemeContext } from "context/themeContext";
 import { AppRoutes } from "config/router";
 import { useHomeContext } from "context/homeContext";
+import { UserRoles } from "types/user";
 import styles from "./AppLayout.module.scss";
 
 const { Content, Header, Sider } = Layout;
 
 export const AppLayout = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { changeTheme, theme } = useThemeContext();
   const { i18n, t } = useTranslation(["app_layout", "common"]);
-  const { isAuthorized } = useAuthContext();
-  const { availableHomes, home, homeId } = useHomeContext();
+  const { isAuthorized, logout, session } = useAuthContext();
+  const { availableHomes, changeHome, home, homeId } = useHomeContext();
 
   const [broken, setBroken] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -52,10 +55,10 @@ export const AppLayout = () => {
     }));
   }, [i18n.language]);
 
-  const menuItems = useMemo<ItemType[]>(() => {
-    return [
+  const menuItems = useMemo(() => {
+    const items: ItemType[] = [
       {
-        key: AppRoutes.dashboard.get(homeId || ""),
+        key: `home_${homeId || ""}`,
         icon: <HomeFilled />,
         label: home?.name || t("app_layout:menu_items.main"),
       },
@@ -66,37 +69,62 @@ export const AppLayout = () => {
         type: "submenu",
         children: availableHomes
           ?.map<ItemType>((h) => ({
-            key: AppRoutes.dashboard.get(h.id),
+            key: `home_${h.id}`,
             label: h.name,
           }))
-          .concat([{ key: "add_home", label: t("common:actions.add_house"), icon: <PlusOutlined /> }]),
+          .concat(
+            session.role === UserRoles.OWNER
+              ? [{ key: AppRoutes.onboarding, label: t("common:actions.add_house"), icon: <PlusOutlined /> }]
+              : []
+          ),
       },
       {
         key: AppRoutes.devices,
         icon: <ApartmentOutlined />,
         label: t("app_layout:menu_items.devices"),
       },
-      {
-        key: AppRoutes.algorithms,
-        icon: <MergeOutlined />,
-        label: t("app_layout:menu_items.algorithms"),
-      },
-      {
-        key: AppRoutes.homeSettings,
-        icon: <SettingOutlined />,
-        label: t("app_layout:menu_items.settings"),
-      },
-      {
-        key: AppRoutes.planeEditor,
-        icon: <EditOutlined />,
-        label: t("app_layout:menu_items.plan_editor"),
-      },
     ];
-  }, [availableHomes, home?.name, homeId, t]);
+
+    if (session.role === UserRoles.OWNER) {
+      items.push(
+        {
+          key: AppRoutes.algorithms,
+          icon: <MergeOutlined />,
+          label: t("app_layout:menu_items.algorithms"),
+        },
+        {
+          key: AppRoutes.homeSettings,
+          icon: <SettingOutlined />,
+          label: t("app_layout:menu_items.settings"),
+        },
+        {
+          key: AppRoutes.planeEditor,
+          icon: <EditOutlined />,
+          label: t("app_layout:menu_items.plan_editor"),
+        }
+      );
+    }
+    return items;
+  }, [availableHomes, home?.name, homeId, session.role, t]);
 
   const activeItem =
     menuItems.find((item) => item?.key && pathname.includes(item.key.toString()))?.key?.toString() ||
     menuItems[0]!.key!.toString();
+
+  const handleMenuSelect = useCallback(
+    (item: { key: string }) => {
+      const isRoute = Object.values(AppRoutes).some((route) =>
+        typeof route === "string" ? route === item.key : route.url === item.key
+      );
+      if (isRoute) {
+        return navigate(item.key);
+      }
+      if (item.key.includes("home_")) {
+        return changeHome(item.key.replace("home_", ""));
+      }
+    },
+    [changeHome, navigate]
+  );
 
   if (!isAuthorized) {
     return <Outlet />;
@@ -153,7 +181,48 @@ export const AppLayout = () => {
             type="text"
           />
         </div>
-        <Menu defaultSelectedKeys={[activeItem]} items={menuItems} mode="inline" theme={theme} />
+        <div className={styles.siderMenus}>
+          <Menu
+            defaultSelectedKeys={[activeItem]}
+            items={menuItems}
+            mode="inline"
+            onSelect={handleMenuSelect}
+            theme={theme}
+          />
+          {!collapsed && <Flex className={styles.bottomSiderMenu}>
+            <Switch
+              checkedChildren={<Sun height={22} width={22} />}
+              className={styles.menuSwitch}
+              onChange={(v) => {
+                changeTheme(v ? "light" : "dark");
+              }}
+              unCheckedChildren={<Moon height={14} width={14} />}
+              value={theme === "light"}
+            />
+            <Dropdown
+              menu={{
+                items: languagesItems,
+                onClick: ({ key }) => {
+                  i18n.changeLanguage(key as string);
+                },
+              }}
+              placement="topRight"
+              trigger={["click"]}
+            >
+              <Button className={styles.menuButton} icon={<Language color={colorText} />} type="text">
+                {languages.find(({ key }) => key === i18n.language)?.label}
+              </Button>
+            </Dropdown>
+            <Button
+              className={styles.menuButton}
+              icon={<LogoutOutlined color={colorText} style={{ width: 18, height: 18 }} />}
+              onClick={logout}
+              type="text"
+            >
+              {t("common:actions.logout")}
+            </Button>
+          </Flex>}
+        </div>
       </Sider>
       <Layout>
         <Header className={styles.header}>
@@ -181,28 +250,7 @@ export const AppLayout = () => {
               type="text"
             />
           )}
-          <div>
-            <Switch
-              checkedChildren={<Sun height={22} width={22} />}
-              className={styles.switch}
-              onChange={(v) => {
-                changeTheme(v ? "light" : "dark");
-              }}
-              unCheckedChildren={<Moon height={14} width={14} />}
-              value={theme === "light"}
-            />
-            <Dropdown
-              menu={{
-                items: languagesItems,
-                onClick: ({ key }) => {
-                  i18n.changeLanguage(key as string);
-                },
-              }}
-              trigger={["click"]}
-            >
-              <Language color={colorText} />
-            </Dropdown>
-          </div>
+          <div></div>
         </Header>
         <Content>
           <Outlet />

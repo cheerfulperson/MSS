@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
 
 import styles from "./EmptyLayout.module.scss";
+import { Flex } from "antd";
 
 interface EmptyLayoutProps {
   children: ReactNode;
 }
 
 export const EmptyLayout = ({ children }: EmptyLayoutProps) => {
-  return <div className={styles.emptyLayout}>{children}</div>;
+  return <Flex className={styles.emptyLayout}>{children}</Flex>;
 };

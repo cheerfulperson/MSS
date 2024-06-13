@@ -44,9 +44,10 @@ type UserSignInInput = {
 
 type UpdateRefreshToken = {
   userId: string;
-  refreshToken?: string | null;
+  newRefreshToken?: string | null;
   role: UserUnionRoles;
-} & ({ oldRefreshToken: string } | RefreshData);
+  oldRefreshToken?: string;
+} & RefreshData;
 
 @Injectable()
 export class AuthService {
@@ -142,7 +143,7 @@ export class AuthService {
       fullName: guest.fullName,
     });
     await this.updateRefreshToken({
-      refreshToken: tokens.refreshToken,
+      newRefreshToken: tokens.refreshToken,
       role: UserRoles.GUEST,
       userId: guest.id,
       ipv4,
@@ -190,7 +191,7 @@ export class AuthService {
       fullName: user.fullName,
     });
     await this.updateRefreshToken({
-      refreshToken: tokens.refreshToken,
+      newRefreshToken: tokens.refreshToken,
       role: UserRoles.OWNER,
       userId: user.id,
       ipv4,
@@ -219,7 +220,7 @@ export class AuthService {
     });
     await this.updateRefreshToken({
       ipv4,
-      refreshToken: tokens.refreshToken,
+      newRefreshToken: tokens.refreshToken,
       role: UserRoles.OWNER,
       userAgent,
       userId: user.id,
@@ -249,7 +250,7 @@ export class AuthService {
         },
       });
     }
-    await this.updateRefreshToken({ ...data, refreshToken: null });
+    await this.updateRefreshToken({ ...data, newRefreshToken: null });
   }
 
   compareHash(data: string, hash: string) {
@@ -268,34 +269,38 @@ export class AuthService {
   }
 
   async updateRefreshToken({
-    refreshToken,
+    newRefreshToken,
     role,
     userId,
-    ...otherData
+    ipv4,
+    userAgent,
+    oldRefreshToken,
   }: UpdateRefreshToken) {
-    const tokenUnique =
-      'oldRefreshToken' in otherData
-        ? {
-            token: this.hashRefreshToken(otherData.oldRefreshToken),
-          }
-        : {
-            ipv4_userAgent: {
-              ipv4: otherData.ipv4,
-              userAgent: otherData.userAgent,
-            },
-          };
+    const oldHashedToken = oldRefreshToken
+      ? this.hashRefreshToken(oldRefreshToken)
+      : undefined;
+    const where = oldHashedToken
+      ? {
+          token: oldHashedToken,
+        }
+      : {
+          ipv4_userAgent: {
+            ipv4,
+            userAgent,
+          },
+        };
 
-    if (!refreshToken) {
+    if (!newRefreshToken) {
       return await this.prisma.refreshToken.delete({
-        where: tokenUnique,
+        where,
         select: {
-          userId: true,
+          ipv4: true,
         },
       });
     }
-    const hashedRefreshToken = this.hashRefreshToken(refreshToken);
+    const hashedRefreshToken = this.hashRefreshToken(newRefreshToken);
 
-    if (role === UserRoles.GUEST && !('oldRefreshToken' in otherData)) {
+    if (role === UserRoles.GUEST) {
       await this.prisma.guest.update({
         where: {
           id: userId,
@@ -305,8 +310,8 @@ export class AuthService {
             upsert: {
               create: {
                 token: hashedRefreshToken,
-                ipv4: otherData.ipv4,
-                userAgent: otherData.userAgent,
+                ipv4,
+                userAgent,
               },
               update: {
                 token: hashedRefreshToken,
@@ -320,14 +325,32 @@ export class AuthService {
       });
     }
     if (role === UserRoles.OWNER) {
+      let oldToken = await this.prisma.refreshToken.findFirst({
+        where: {
+          token: oldHashedToken,
+        },
+      });
+      if (!oldToken) {
+        oldToken = await this.prisma.refreshToken.findUnique({
+          where: {
+            ipv4_userAgent: {
+              ipv4,
+              userAgent,
+            },
+          },
+        });
+      }
       await this.prisma.refreshToken.upsert({
-        where: tokenUnique,
+        where: {
+          token: oldToken?.token || '',
+        },
         update: {
           token: hashedRefreshToken,
         },
         create: {
+          ipv4,
+          userAgent,
           token: hashedRefreshToken,
-          ...tokenUnique.ipv4_userAgent,
           User: {
             connect: {
               id: userId,
@@ -396,7 +419,7 @@ export class AuthService {
       fullName: user.fullName || user.name,
     });
     await this.updateRefreshToken({
-      refreshToken: tokens.refreshToken,
+      newRefreshToken: tokens.refreshToken,
       role,
       userId: user.id,
       oldRefreshToken: refreshToken,

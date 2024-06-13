@@ -15,18 +15,23 @@ const useHome = () => {
   const { data, isLoading: isUserProfileLoading } = useUserProfileQuery({ enabled: isAuthorized });
   const availableHomes = data?.Homes || [];
 
-  const initialHomeId = localStorage.getItem(storageId) || availableHomes[0]?.id;
+  const storedHomeId = localStorage.getItem(storageId);
+  const validHomeId = !!availableHomes.find((h) => h.id === storedHomeId);
+  const firstHomeId = availableHomes[0]?.id;
+  const initialHomeId = validHomeId ? storedHomeId : firstHomeId;
+
   const [homeId, setHomeId] = useState<string | null>(initialHomeId);
 
   const { data: home, isLoading } = useHomeQuery({ enabled: !!homeId && isAuthorized, homeId: homeId || "" });
 
   const changeHome = useCallback(
     (newHomeId: string) => {
+      if (newHomeId === homeId) return navigate(AppRoutes.dashboard.get(newHomeId));
       localStorage.setItem(storageId, newHomeId);
       setHomeId(newHomeId);
       navigate(AppRoutes.dashboard.get(newHomeId));
     },
-    [navigate]
+    [homeId, navigate]
   );
 
   useEffect(() => {
@@ -34,6 +39,12 @@ const useHome = () => {
       setHomeId(initialHomeId);
     }
   }, [initialHomeId]);
+
+  useEffect(() => {
+    if (!validHomeId) {
+      localStorage.setItem(storageId, firstHomeId);
+    }
+  }, [validHomeId, firstHomeId]);
 
   return {
     isLoading: isUserProfileLoading || isLoading,

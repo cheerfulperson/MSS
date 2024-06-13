@@ -9,11 +9,12 @@ import styles from "./AuthLayout.module.scss";
 export const AuthLayout = () => {
   const { t } = useTranslation(["common"]);
   const { isLoading } = useAuthContext();
+
   if (isLoading) {
     return <Outlet />;
   }
   return (
-    <div className={styles.page}>
+    <Flex className={styles.page}>
       <div className={styles.container}>
         <Flex className={styles.head}>
           <AppLogo />
@@ -22,6 +23,6 @@ export const AuthLayout = () => {
         </Flex>
         <Outlet />
       </div>
-    </div>
+    </Flex>
   );
 };

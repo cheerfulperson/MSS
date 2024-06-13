@@ -49,7 +49,10 @@ export class HomeService {
     if (!home) {
       throw new BadRequestException();
     }
-    return this.encryptService.encrypt(JSON.stringify(home));
+    if (!process.env.GUEST_PUBLIC_LOGIN_URL) {
+      throw new Error('GUEST_PUBLIC_LOGIN_URL env is not set');
+    }
+    return `${process.env.GUEST_PUBLIC_LOGIN_URL}?token=${this.encryptService.encrypt(JSON.stringify(home))}`;
   }
 
   async checkHomeLink(token: string) {
