@@ -7,7 +7,7 @@
   "author": "cheerfulperson <yagor.baradavkin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build:web": "vite"
+    "build:web": "cd pkg/web && npm run build"
   },
   "workspaces": [
     "pkg/api",
