@@ -9,6 +9,7 @@ import {
   BlockOutlined,
   SettingOutlined,
   EditOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 import { useMemo, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -68,7 +69,7 @@ export const AppLayout = () => {
             key: AppRoutes.dashboard.get(h.id),
             label: h.name,
           }))
-          .concat([{ key: "add_home", label: t("common:actions.add_house"), icon:  }]),
+          .concat([{ key: "add_home", label: t("common:actions.add_house"), icon: <PlusOutlined /> }]),
       },
       {
         key: AppRoutes.devices,
