@@ -6,8 +6,12 @@
   "repository": "https://github.com/cheerfulperson/MSS.git",
   "author": "cheerfulperson <yagor.baradavkin@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build:web": "vite"
+  },
   "workspaces": [
     "pkg/api",
-    "pkg/esp"
+    "pkg/esp",
+    "pkg/web"
   ]
 }
