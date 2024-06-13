@@ -1,0 +1,16 @@
+{
+  "fields": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalid": {
+      "email": "Invalid email",
+      "password": "Invalid password"
+    },
+    "invalid_credentials": {
+      "login": "Invalid email or password"
+    }
+  }
+}

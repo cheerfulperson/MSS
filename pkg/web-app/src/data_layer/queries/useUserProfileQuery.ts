@@ -14,22 +14,21 @@ export const useUserProfileQuery = (props?: { enabled: boolean }) => {
 
 type UserProfileResponse =
   | {
-      createdAt: Date;
       email: string;
-      firstName: string;
       fullName: string;
+      Homes: {
+        id: string;
+        name: string;
+      }[];
       id: string;
-      lastName: string;
-      password: string;
       role: UserRoles.OWNER;
-      updatedAt: Date;
     }
   | {
-      createdAt: Date;
-      device: string;
+      fullName: string;
+      Homes: {
+        id: string;
+        name: string;
+      }[];
       id: string;
-      name: string;
-      refreshTokenId: string;
       role: UserRoles.GUEST;
-      updatedAt: Date;
     };

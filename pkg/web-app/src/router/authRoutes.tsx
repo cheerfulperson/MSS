@@ -1,21 +1,23 @@
-import { ErrorTemplate } from "components/ErrorTemplate";
+import { ErrorTemplate } from "src/views/ErrorTemplate";
 import { AppRoutes, EPermission } from "config/router";
-import { Home } from "views/Home";
 import { TRoutes } from "types/router";
 import { EmptyLayout } from "layouts/EmptyLayout";
+import { Login } from "views/auth/Login";
+import { GuestLogin } from "views/auth/GuestLogin";
+import { Singup } from "views/auth/Singup";
 
 export const authRoutes: TRoutes = {
   [AppRoutes.auth.logIn]: {
-    element: <Home />,
-    permissions: [EPermission.AUTH_GUEST],
+    element: <Login />,
+    permissions: [EPermission.AUTH_LOGIN],
   },
   [AppRoutes.auth.logInGuest]: {
-    element: <Home />,
-    permissions: [EPermission.AUTH_GUEST],
+    element: <GuestLogin />,
+    permissions: [EPermission.AUTH_LOGIN],
   },
   [AppRoutes.auth.signUp]: {
-    element: <Home />,
-    permissions: [EPermission.AUTH_GUEST],
+    element: <Singup />,
+    permissions: [EPermission.AUTH_LOGIN],
   },
   [AppRoutes.pageNotFound]: {
     element: (

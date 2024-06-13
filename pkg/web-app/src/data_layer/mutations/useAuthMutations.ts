@@ -21,8 +21,7 @@ export const useAuthMutations = () => {
     "auth/logout"
   );
   const { isPending: isRefreshing, mutate: refresh } = useMutation<AuthRefreshResponse, AuthRefreshBody>(
-    "auth/refresh",
-    { isPublic: true }
+    "auth/refresh"
   );
 
   return {

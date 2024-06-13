@@ -18,6 +18,17 @@ export class UserService {
         id,
         email,
       },
+      select: {
+        email: true,
+        id: true,
+        fullName: true,
+        Homes: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
     return {
       ...user,
@@ -28,6 +39,16 @@ export class UserService {
     const user = await this.prisma.guest.findUnique({
       where: {
         id,
+      },
+      select: {
+        id: true,
+        fullName: true,
+        Homes: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
     return {

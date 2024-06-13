@@ -2,13 +2,16 @@ import { Button, Dropdown, Layout, Menu, Switch, theme as antdTheme } from "antd
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  ApartmentOutlined,
   CheckOutlined,
+  HomeFilled,
+  MergeOutlined,
+  BlockOutlined,
+  SettingOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import { useMemo, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { ItemType } from "antd/es/menu/interface";
@@ -17,14 +20,19 @@ import { useAuthContext } from "context/authContext";
 import { AppLogo, Language, Moon, Sun } from "components/icons";
 import { languages } from "locales";
 import { useThemeContext } from "context/themeContext";
+import { AppRoutes } from "config/router";
+import { useHomeContext } from "context/homeContext";
 import styles from "./AppLayout.module.scss";
 
 const { Content, Header, Sider } = Layout;
 
 export const AppLayout = () => {
+  const { pathname } = useLocation();
   const { changeTheme, theme } = useThemeContext();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation(["app_layout", "common"]);
   const { isAuthorized } = useAuthContext();
+  const { availableHomes, home, homeId } = useHomeContext();
+
   const [broken, setBroken] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -42,6 +50,52 @@ export const AppLayout = () => {
       ),
     }));
   }, [i18n.language]);
+
+  const menuItems = useMemo<ItemType[]>(() => {
+    return [
+      {
+        key: AppRoutes.dashboard.get(homeId || ""),
+        icon: <HomeFilled />,
+        label: home?.name || t("app_layout:menu_items.main"),
+      },
+      {
+        key: "home",
+        icon: <BlockOutlined />,
+        label: t("app_layout:menu_items.change_house"),
+        type: "submenu",
+        children: availableHomes
+          ?.map((h) => ({
+            key: AppRoutes.dashboard.get(h.id),
+            label: h.name,
+          }))
+          .concat([{ key: "add_home", label: t("common:actions.add_house") }]),
+      },
+      {
+        key: AppRoutes.devices,
+        icon: <ApartmentOutlined />,
+        label: t("app_layout:menu_items.devices"),
+      },
+      {
+        key: AppRoutes.algorithms,
+        icon: <MergeOutlined />,
+        label: t("app_layout:menu_items.algorithms"),
+      },
+      {
+        key: AppRoutes.homeSettings,
+        icon: <SettingOutlined />,
+        label: t("app_layout:menu_items.settings"),
+      },
+      {
+        key: AppRoutes.planeEditor,
+        icon: <EditOutlined />,
+        label: t("app_layout:menu_items.plan_editor"),
+      },
+    ];
+  }, [availableHomes, home?.name, homeId, t]);
+
+  const activeItem =
+    menuItems.find((item) => item?.key && pathname.includes(item.key.toString()))?.key?.toString() ||
+    menuItems[0]!.key!.toString();
 
   if (!isAuthorized) {
     return <Outlet />;
@@ -98,28 +152,7 @@ export const AppLayout = () => {
             type="text"
           />
         </div>
-        <Menu
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <UserOutlined />,
-              label: "nav 1",
-            },
-            {
-              key: "2",
-              icon: <VideoCameraOutlined />,
-              label: "nav 2",
-            },
-            {
-              key: "3",
-              icon: <UploadOutlined />,
-              label: "nav 3",
-            },
-          ]}
-          mode="inline"
-          theme={theme}
-        />
+        <Menu defaultSelectedKeys={[activeItem]} items={menuItems} mode="inline" theme={theme} />
       </Sider>
       <Layout>
         <Header className={styles.header}>

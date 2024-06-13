@@ -97,15 +97,15 @@ export class AuthService {
       },
       select: {
         id: true,
-        name: true,
+        fullName: true,
       },
     });
 
     if (!guest) {
       guest = await this.prisma.guest.create({
         data: {
-          name,
-          Home: {
+          fullName: name,
+          Homes: {
             connect: {
               id: home.id,
             },
@@ -113,7 +113,7 @@ export class AuthService {
         },
         select: {
           id: true,
-          name: true,
+          fullName: true,
         },
       });
     } else {
@@ -122,7 +122,7 @@ export class AuthService {
           id: guest.id,
         },
         data: {
-          Home: {
+          Homes: {
             connect: {
               id: home.id,
             },
@@ -130,7 +130,7 @@ export class AuthService {
         },
         select: {
           id: true,
-          name: true,
+          fullName: true,
         },
       });
     }
@@ -139,7 +139,7 @@ export class AuthService {
       sub: guest.id,
       role: UserRoles.GUEST,
       email: null,
-      fullName: guest.name,
+      fullName: guest.fullName,
     });
     await this.updateRefreshToken({
       refreshToken: tokens.refreshToken,
@@ -163,8 +163,6 @@ export class AuthService {
   }: UserSignUpInput) {
     const hashedPassword = this.hashData(password);
 
-    const [firstName, lastName] = name.split(' ');
-
     const userExists = await this.prisma.user.findFirst({
       where: {
         email,
@@ -177,8 +175,6 @@ export class AuthService {
       data: {
         email,
         fullName: name,
-        firstName,
-        lastName,
         password: hashedPassword,
       },
       select: {
@@ -229,7 +225,7 @@ export class AuthService {
       userId: user.id,
     });
     return {
-      tokens,
+      ...tokens,
       role: UserRoles.OWNER,
     };
   }
@@ -345,7 +341,11 @@ export class AuthService {
     }
   }
 
-  async refreshTokens(userId: string, refreshToken: string) {
+  async refreshTokens(
+    userId: string,
+    refreshToken: string,
+    { ipv4, userAgent }: RefreshData,
+  ) {
     let user: User | undefined = await this.prisma.user.findFirst({
       where: {
         id: userId,
@@ -364,7 +364,7 @@ export class AuthService {
         },
         select: {
           id: true,
-          name: true,
+          fullName: true,
         },
       });
     }
@@ -399,7 +399,9 @@ export class AuthService {
       refreshToken: tokens.refreshToken,
       role,
       userId: user.id,
-      oldRefreshToken: oldRefreshData.token,
+      oldRefreshToken: refreshToken,
+      ipv4,
+      userAgent,
     });
     return tokens;
   }

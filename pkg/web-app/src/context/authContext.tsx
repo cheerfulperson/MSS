@@ -7,7 +7,12 @@ import * as jwt from "jwt-decode";
 import { UserUnionRoles } from "types/user";
 import { AuthCookies } from "config/auth";
 import { isJwtExpired } from "utils/isJwtExpired";
-import { AuthLoginBody, useAuthMutations } from "data_layer/mutations/useAuthMutations";
+import {
+  AuthLoginBody,
+  AuthLoginGuestBody,
+  AuthSignupBody,
+  useAuthMutations,
+} from "data_layer/mutations/useAuthMutations";
 import { AppRoutes } from "config/router";
 
 export let authToken: string | undefined = Cookies.get(AuthCookies.ACCESS_TOKEN);
@@ -25,12 +30,16 @@ const worker = new Worker(new URL("./refreshTokenWorker.js", import.meta.url));
 
 const useAuth = () => {
   const {
+    isGuestLoginProcessing,
     isLoginProcessing,
     isLogoutProcessing,
     isRefreshing,
+    isSignupProcessing,
     login: makeLogin,
+    loginGuest: makeGuestLogin,
     logout: makeLogout,
     refresh,
+    signup: makeSignup,
   } = useAuthMutations();
   const navigate = useNavigate();
   const workerRef = useRef<Parameters<(typeof worker)["addEventListener"]>[1]>();
@@ -101,6 +110,8 @@ const useAuth = () => {
 
   const login = useCallback(
     (payload: AuthLoginBody, cbs?: Parameters<typeof makeLogin>[1]) => {
+      if (isLoginProcessing) return;
+
       makeLogin(payload, {
         ...cbs,
         onSuccess: (data, ...args) => {
@@ -119,7 +130,57 @@ const useAuth = () => {
         },
       });
     },
-    [makeLogin]
+    [isLoginProcessing, makeLogin]
+  );
+
+  const loginGuest = useCallback(
+    (payload: AuthLoginGuestBody, cbs?: Parameters<typeof makeGuestLogin>[1]) => {
+      if (isGuestLoginProcessing) return;
+
+      makeGuestLogin(payload, {
+        ...cbs,
+        onSuccess: (data, ...args) => {
+          authToken = data.accessToken;
+          Cookies.set(AuthCookies.REFRESH_TOKEN, data.refreshToken);
+          Cookies.set(AuthCookies.ROLE, data.role);
+          Cookies.set(AuthCookies.ACCESS_TOKEN, data.accessToken);
+          setState((prev) => ({
+            ...prev,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+            isAuthorized: true,
+            role: data.role,
+          }));
+          cbs?.onSuccess?.(data, ...args);
+        },
+      });
+    },
+    [isGuestLoginProcessing, makeGuestLogin]
+  );
+
+  const signup = useCallback(
+    (payload: AuthSignupBody, cbs?: Parameters<typeof makeLogin>[1]) => {
+      if (isSignupProcessing) return;
+
+      makeSignup(payload, {
+        ...cbs,
+        onSuccess: (data, ...args) => {
+          authToken = data.accessToken;
+          Cookies.set(AuthCookies.REFRESH_TOKEN, data.refreshToken);
+          Cookies.set(AuthCookies.ROLE, data.role);
+          Cookies.set(AuthCookies.ACCESS_TOKEN, data.accessToken);
+          setState((prev) => ({
+            ...prev,
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+            isAuthorized: true,
+            role: data.role,
+          }));
+          cbs?.onSuccess?.(data, ...args);
+        },
+      });
+    },
+    [isSignupProcessing, makeSignup]
   );
 
   useEffect(() => {
@@ -155,13 +216,17 @@ const useAuth = () => {
   }, [state.accessToken]);
 
   return {
-    session: state,
-    isLoading: state.isLoading,
     isAuthorized: state.isAuthorized,
+    isGuestLoginProcessing,
+    isLoading: state.isLoading,
     isLoginProcessing,
     isLogoutProcessing,
+    isSignupProcessing,
     login,
+    loginGuest,
     logout,
+    session: state,
+    signup,
   };
 };
 

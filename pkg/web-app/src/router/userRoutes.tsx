@@ -1,16 +1,14 @@
-import { ErrorTemplate } from "components/ErrorTemplate";
+import { ErrorTemplate } from "src/views/ErrorTemplate";
 import { AppRoutes, EPermission } from "config/router";
-import { Onboarding } from "views/Onboarding";
-import { Home } from "views/Home";
 import { TRoutes } from "types/router";
 
 export const userRoutes: TRoutes = {
   [AppRoutes.onboarding]: {
-    element: <Onboarding />,
+    element: <></>,
     permissions: [EPermission.AUTH_OWNER],
   },
   [AppRoutes.dashboard.url]: {
-    element: <Home />,
+    element: <></>,
     permissions: [EPermission.AUTH_OWNER, EPermission.AUTH_GUEST],
   },
   [AppRoutes.pageNotFound]: {

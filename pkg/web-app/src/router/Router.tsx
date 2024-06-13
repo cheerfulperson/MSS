@@ -1,19 +1,26 @@
-import { ReactElement } from "react";
+import { ReactElement, Suspense } from "react";
 import { Route, Routes as ReactRoutes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import { ProtectedRoute } from "./ProtectedRoute";
-import { AppLayout } from "layouts/AppLayout/index";
+import { AppLayout as AppLayoutDefault } from "layouts/AppLayout/index";
+import { HOCs } from "hocs";
+import { withUserProfile } from "hocs/withUserProfile";
 import { TRoutes } from "types/router";
-import { userRoutes } from "./userRoutes";
 import { useAuthContext } from "context/authContext";
 import { UserRoles } from "types/user";
-import styles from "./Router.module.scss";
-import { guestRoutes } from "./guestRoutes";
 import { AppRoutes } from "config/router";
-import { authRoutes } from "./authRoutes";
 import { EmptyLayout } from "layouts/EmptyLayout";
-import { ErrorTemplate } from "components/ErrorTemplate";
+import { AuthLayout } from "layouts/AuthLayout";
+import { AppLoader } from "components/AppLoader";
+import { ErrorTemplate } from "views/ErrorTemplate";
+import { userRoutes } from "./userRoutes";
+import { guestRoutes } from "./guestRoutes";
+import { authRoutes } from "./authRoutes";
+import { commonRoutes } from "./commonRoutes";
+import styles from "./Router.module.scss";
+
+const AppLayout = HOCs(AppLayoutDefault, withUserProfile);
 
 const recursiveNestedRoutesReducer = (routes: TRoutes) => {
   return Object.keys(routes).reduce((acc, key) => {
@@ -46,29 +53,39 @@ export const Routes = (): ReactElement => {
   return (
     <>
       <main className={styles.main}>
-        <ReactRoutes>
-          {session.role === UserRoles.OWNER && (
-            <Route element={<AppLayout />} path="/">
-              {recursiveNestedRoutesReducer(userRoutes)}
+        <Suspense
+          fallback={
+            <EmptyLayout>
+              <AppLoader />
+            </EmptyLayout>
+          }
+        >
+          <ReactRoutes>
+            {session.role === UserRoles.OWNER && (
+              <Route element={<AppLayout />} path="/">
+                {recursiveNestedRoutesReducer(userRoutes)}
+                {recursiveNestedRoutesReducer(commonRoutes)}
+              </Route>
+            )}
+            {session.role === UserRoles.GUEST && (
+              <Route element={<AppLayout />} path="/">
+                {recursiveNestedRoutesReducer(guestRoutes)}
+                {recursiveNestedRoutesReducer(commonRoutes)}
+              </Route>
+            )}
+            <Route element={<AuthLayout />} path={AppRoutes.auth.url}>
+              {recursiveNestedRoutesReducer(authRoutes)}
             </Route>
-          )}
-          {session.role === UserRoles.GUEST && (
-            <Route element={<AppLayout />} path="/">
-              {recursiveNestedRoutesReducer(guestRoutes)}
-            </Route>
-          )}
-          <Route element={<AppLayout />} path={AppRoutes.auth.url}>
-            {recursiveNestedRoutesReducer(authRoutes)}
-          </Route>
-          <Route
-            element={
-              <EmptyLayout>
-                <ErrorTemplate errorCode={404} />
-              </EmptyLayout>
-            }
-            path={AppRoutes.pageNotFound}
-          />
-        </ReactRoutes>
+            <Route
+              element={
+                <EmptyLayout>
+                  <ErrorTemplate errorCode={404} />
+                </EmptyLayout>
+              }
+              path={AppRoutes.pageNotFound}
+            />
+          </ReactRoutes>
+        </Suspense>
       </main>
       <Toaster />
     </>

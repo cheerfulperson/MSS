@@ -132,7 +132,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     // https://github.com/mthadley/eslint-plugin-sort-destructure-keys
-    'sort-destructure-keys/sort-destructure-keys': ['error', { caseSensitive: false }],
+    'sort-destructure-keys/sort-destructure-keys': ['error', { caseSensitive: true }],
   },
   settings: {
     react: {

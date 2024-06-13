@@ -1,20 +1,29 @@
 {
   "actions": {
-    "submit": "Submit",
-    "back_home": "Back home"
+    "add_house": "Add house",
+    "back_home": "Back home",
+    "login": "Login",
+    "login_as_guest": "Login as a guest",
+    "logout": "Logout",
+    "signup": "Sign up",
+    "submit": "Submit"
   },
+  "or": "or",
+  "do_not_have_account": "Don't have an account?",
   "page_error_result": {
     "403": {
-      "title": "Access denied",
-      "message": "You do not have permission to access this page."
+      "message": "You do not have permission to access this page.",
+      "title": "Access denied"
     },
     "404": {
-      "title": "Page not found",
-      "message": "The page you are looking for does not exist."
+      "message": "The page you are looking for does not exist.",
+      "title": "Page not found"
     },
     "500": {
-      "title": "Internal server error",
-      "message": "An error occurred while processing your request. Please try again later."
+      "message": "An error occurred while processing your request. Please try again later.",
+      "title": "Internal server error"
     }
-  }
+  },
+  "remember_me": "Remember me",
+  "slogan": "Security for your home with iHomeMaster"
 }

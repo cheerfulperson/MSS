@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { EPermission } from "config/router";
 import { useAuthContext } from "context/authContext";
-import { ErrorTemplate } from "components/ErrorTemplate";
+import { ErrorTemplate } from "src/views/ErrorTemplate";
 import { UserRoles } from "types/user";
 import { EmptyLayout } from "layouts/EmptyLayout";
 import { AppLoader } from "components/AppLoader";
@@ -39,7 +39,12 @@ export const ProtectedRoute = ({ children, permissions }: IProtectedRoutesProps)
     return <ErrorTemplate errorCode={404} />;
   }
 
-  if (isAuthorized && permissions.includes(EPermission.AUTH_OWNER) && session.role !== UserRoles.OWNER) {
+  if (
+    isAuthorized &&
+    permissions.includes(EPermission.AUTH_OWNER) &&
+    !permissions.includes(EPermission.AUTH_GUEST) &&
+    session.role !== UserRoles.OWNER
+  ) {
     return <ErrorTemplate errorCode={404} />;
   }
 

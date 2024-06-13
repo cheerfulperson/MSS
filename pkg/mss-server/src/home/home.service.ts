@@ -19,7 +19,26 @@ export class HomeService {
   ) {}
 
   async getHome({ id }: HomeCommonParams) {
-    return await this.prisma.home.findUnique({ where: { id } });
+    return await this.prisma.home.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        address: {
+          select: {
+            address1: true,
+            address2: true,
+            city: true,
+            id: true,
+            state: true,
+            zip: true,
+          },
+        },
+        secured: true,
+        slug: true,
+        securedAt: true,
+      },
+    });
   }
 
   async getHomeLink({ id }: HomeCommonParams) {

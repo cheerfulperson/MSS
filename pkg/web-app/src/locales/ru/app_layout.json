@@ -1,0 +1,10 @@
+{
+  "menu_items": {
+    "main": "Главная",
+    "change_house": "Сменить дом",
+    "devices": "Устройства",
+    "algorithms": "Алгоритмы",
+    "settings": "Настройки",
+    "plan_editor": "Редактор плана"
+  }
+}

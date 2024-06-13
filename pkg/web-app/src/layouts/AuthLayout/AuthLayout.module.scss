@@ -1,0 +1,28 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 16px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+
+.name {
+  font-weight: 500;
+  color: var(--ant-color-text);
+}
+
+.slogan {
+  color: var(--ant-color-text-tertiary);
+}

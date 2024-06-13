@@ -8,6 +8,7 @@ import { defaultMutationFn, defaultQueryFn } from "config/queryClient";
 import { AuthProvider } from "context/authContext";
 import { ThemeProvider } from "context/themeContext";
 import { Routes } from "router/Router";
+import { HomeProvider } from "context/homeContext";
 
 i18n.init();
 initDayjsLocales();
@@ -32,7 +33,9 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <ThemeProvider>
-            <Routes />
+            <HomeProvider>
+              <Routes />
+            </HomeProvider>
           </ThemeProvider>
         </AuthProvider>
       </BrowserRouter>

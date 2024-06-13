@@ -169,11 +169,10 @@ model Floor {
 
 model Guest {
   id             String        @id @default(cuid())
-  name           String
+  fullName       String
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-  device         String?
-  Home           Home[]
+  Homes          Home[]
   refreshTokenId String?       @unique
   RefreshToken   RefreshToken? @relation(fields: [refreshTokenId], references: [token], onDelete: Cascade)
 }
@@ -185,8 +184,8 @@ model Home {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   secured   Boolean    @default(false)
+  password  String?
   securedAt DateTime?
-  shareCode String?
   addressId String
   address   Address    @relation(fields: [addressId], references: [id])
   userId    String
@@ -213,8 +212,6 @@ model User {
   id            String         @id @default(cuid())
   email         String         @unique
   fullName      String?
-  firstName     String?
-  lastName      String?
   password      String
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

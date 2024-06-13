@@ -6,6 +6,11 @@ export enum EPermission {
 }
 
 export const AppRoutes = {
+  algorithm: {
+    url: "/algorithm/:algorithmId",
+    get: (id: string) => `/algorithm/${id}`,
+  },
+  algorithms: "/algorithms",
   auth: {
     logIn: "/auth/log-in",
     logInGuest: "/auth/guest/log-in",
@@ -13,9 +18,17 @@ export const AppRoutes = {
     url: "/auth",
   },
   dashboard: {
-    url: "/dashboard/:id",
+    url: "/dashboard/:homeId",
     get: (id: string) => `/dashboard/${id}`,
   },
+  device: {
+    url: "/device/:deviceId",
+    get: (id: string) => `/device/${id}`,
+  },
+  homeSettings: "/home/settings",
+  planeEditor: "/plane-editor",
+  devices: "/devices",
   onboarding: "/onboarding",
+  overview: "/",
   pageNotFound: "*",
 };

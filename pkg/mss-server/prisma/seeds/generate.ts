@@ -9,8 +9,8 @@ const generators = {
     _qty: 10,
     email: faker.internet.email,
     password: () =>
-      bcrypt.hashSync('password', process.env.SECRET_KEY || 'key'),
-    name: faker.person.fullName,
+      bcrypt.hashSync('password', process.env.HASH_SECRET || 'key'),
+    fullName: faker.person.fullName,
     role: 'USER',
   },
 };
