@@ -64,11 +64,11 @@ export const AppLayout = () => {
         label: t("app_layout:menu_items.change_house"),
         type: "submenu",
         children: availableHomes
-          ?.map((h) => ({
+          ?.map<ItemType>((h) => ({
             key: AppRoutes.dashboard.get(h.id),
             label: h.name,
           }))
-          .concat([{ key: "add_home", label: t("common:actions.add_house") }]),
+          .concat([{ key: "add_home", label: t("common:actions.add_house"), icon:  }]),
       },
       {
         key: AppRoutes.devices,
