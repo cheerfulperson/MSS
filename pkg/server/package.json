@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:seeds:generate": "ts-node ./prisma/seeds/generate.ts",
+    "db:reset": "npx prisma migrate reset",
     "db:seeds": "npx prisma db seed",
     "db:generate": "npx prisma generate",
     "db:deploy": "prisma migrate dev --create-only && prisma migrate deploy && prisma generate"

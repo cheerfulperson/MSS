@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { EPermission } from "config/router";
 import { useAuthContext } from "context/authContext";
-import { ErrorTemplate } from "src/views/ErrorTemplate";
+import { ErrorTemplate } from "src/views/common/ErrorTemplate";
 import { UserRoles } from "types/user";
 import { EmptyLayout } from "layouts/EmptyLayout";
 import { AppLoader } from "components/AppLoader";

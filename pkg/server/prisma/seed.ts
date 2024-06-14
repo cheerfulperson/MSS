@@ -41,7 +41,7 @@ const seed = async () => {
     if (firstItem) {
       relations = Object.keys(firstItem).reduce((relations, dataKey) => {
         const value = firstItem[dataKey];
-        if (typeof value.type === 'string') return [...relations, value.type];
+        if (typeof value?.type === 'string') return [...relations, value.type];
         return relations;
       }, [] as string[]);
     }
@@ -86,7 +86,7 @@ const seed = async () => {
       const item = data[i];
       const relations = Object.keys(item).reduce(
         (relations, fieldName) => {
-          if (item[fieldName].type) {
+          if (item[fieldName]?.type) {
             const type = item[fieldName].type.split('.')[0];
             const relationField = item[fieldName].type.split('.')[1] || 'id';
             const relationData: any[] = relationsMap[type];

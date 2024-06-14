@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Первый этаж",
+    "homeId": {
+      "type": "Home",
+      "where": {
+        "id": "ckm7z1z7z0000b3i6c1z1z1z11"
+      }
+    }
+  },
+  {
+    "name": "Квартира",
+    "homeId": {
+      "type": "Home",
+      "where": {
+        "id": "qiweiiuqweuuq123euuqweioui"
+      }
+    }
+  }
+]

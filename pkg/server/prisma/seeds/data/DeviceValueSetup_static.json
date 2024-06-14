@@ -1,0 +1,400 @@
+[
+  {
+    "id": "cuid1",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Влажность",
+    "isPrimary": true,
+    "key": "humidity1",
+    "measure": "%",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 60,
+    "min": 30,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid2",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Влажность",
+    "isPrimary": true,
+    "key": "humidity2",
+    "measure": "%",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 60,
+    "min": 30,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid3",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Температура",
+    "isPrimary": true,
+    "key": "temperature1",
+    "measure": "°C",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 40,
+    "min": 15,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid4",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Температура",
+    "isPrimary": true,
+    "key": "temperature2",
+    "measure": "°C",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 40,
+    "min": 15,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid5",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Температура",
+    "isPrimary": true,
+    "key": "temperature3",
+    "measure": "°C",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 40,
+    "min": 15,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid6",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Температура",
+    "isPrimary": true,
+    "key": "temperature4",
+    "measure": "°C",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 40,
+    "min": 15,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid7",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Движение",
+    "isPrimary": true,
+    "key": "motion",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": 5,
+    "falseInfo": "Движения нет",
+    "trueInfo": "Движение есть",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid8",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Содержание газа",
+    "isPrimary": true,
+    "key": "gas",
+    "measure": "ppm",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 70,
+    "min": 5,
+    "sensitivity": 5,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid9",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Уровень воды",
+    "isPrimary": true,
+    "key": "waterLevel",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 100,
+    "min": 20,
+    "sensitivity": 10,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid10",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Состояние",
+    "isPrimary": true,
+    "key": "magneticContact1",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Закрыто",
+    "trueInfo": "Открыто",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid11",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Состояние",
+    "isPrimary": true,
+    "key": "magneticContact2",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Закрыто",
+    "trueInfo": "Открыто",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid12",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light1",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid13",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light2",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid14",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light3",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid15",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light4",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid16",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light5",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid17",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light6",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid18",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Свет",
+    "isPrimary": true,
+    "key": "light7",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#FADB14",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid19",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Состояние",
+    "isPrimary": true,
+    "key": "motor",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Закрыт",
+    "falseInfoColor": "#ff7875",
+    "trueInfo": "Открыт",
+    "trueInfoColor": "#389e0d",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "cuid20",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Состояние",
+    "isPrimary": true,
+    "key": "switch",
+    "measure": null,
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "BOOLEAN",
+    "max": null,
+    "min": null,
+    "sensitivity": null,
+    "falseInfo": "Выключен",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfo": "Включен",
+    "trueInfoColor": "#389e0d",
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  }
+]

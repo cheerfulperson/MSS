@@ -1,0 +1,16 @@
+[
+  {
+    "id": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "esp8266 sensors",
+    "updateTime": 15000,
+    "deviceType": "MULTI_DEVICE",
+    "deviceKind": "SENSOR"
+  },
+  {
+    "id": "cjs0fd0b0000l3mz1z1121z",
+    "name": "esp8266 actuators",
+    "updateTime": 15000,
+    "deviceType": "MULTI_DEVICE",
+    "deviceKind": "ACTUATOR"
+  }
+]

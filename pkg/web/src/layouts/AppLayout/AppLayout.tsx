@@ -58,7 +58,7 @@ export const AppLayout = () => {
   const menuItems = useMemo(() => {
     const items: ItemType[] = [
       {
-        key: `home_${homeId || ""}`,
+        key: homeId || "",
         icon: <HomeFilled />,
         label: home?.name || t("app_layout:menu_items.main"),
       },
@@ -119,11 +119,11 @@ export const AppLayout = () => {
       if (isRoute) {
         return navigate(item.key);
       }
-      if (item.key.includes("home_")) {
+      if (item.key.includes("home_") || item.key === homeId) {
         return changeHome(item.key.replace("home_", ""));
       }
     },
-    [changeHome, navigate]
+    [changeHome, homeId, navigate]
   );
 
   if (!isAuthorized) {

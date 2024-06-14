@@ -1,4 +1,4 @@
-import { ErrorTemplate } from "src/views/ErrorTemplate";
+import { ErrorTemplate } from "src/views/common/ErrorTemplate";
 import { AppRoutes, EPermission } from "config/router";
 import { TRoutes } from "types/router";
 import { Login } from "views/auth/Login";

@@ -3,13 +3,14 @@
     "id": "ckm7z1z7z0000b3i6c1z1z1z1",
     "address1": "ул. Качинска 7, г. Минск",
     "city": "Минск",
-    "state": "NY",
+    "state": "Минск",
     "zip": "12345"
   },
   {
-    "address1": "456 Elm St",
-    "city": "Othertown",
-    "state": "CA",
+    "id": "ckm7z1z7z0000b3i6c1z1z1z2",
+    "address1": "ул. Мирошниченко 10, г. Минск",
+    "city": "Минск",
+    "state": "Минск",
     "zip": "54321"
   }
 ]

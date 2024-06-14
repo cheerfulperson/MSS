@@ -1,7 +1,8 @@
-import { ErrorTemplate } from "src/views/ErrorTemplate";
 import { AppRoutes, EPermission } from "config/router";
 import { TRoutes } from "types/router";
 import { HomeSettings } from "views/owner/HomeSettings";
+import { ErrorTemplate } from "views/common/ErrorTemplate";
+import { Dashboard } from "views/common/Dashboard";
 
 export const userRoutes: TRoutes = {
   [AppRoutes.onboarding]: {
@@ -9,7 +10,7 @@ export const userRoutes: TRoutes = {
     permissions: [EPermission.AUTH_OWNER],
   },
   [AppRoutes.dashboard.url]: {
-    element: <></>,
+    element: <Dashboard />,
     permissions: [EPermission.AUTH_OWNER, EPermission.AUTH_GUEST],
   },
   [AppRoutes.homeSettings]: {

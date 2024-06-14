@@ -13,7 +13,7 @@ import { AppRoutes } from "config/router";
 import { EmptyLayout } from "layouts/EmptyLayout";
 import { AuthLayout } from "layouts/AuthLayout";
 import { AppLoader } from "components/AppLoader";
-import { ErrorTemplate } from "views/ErrorTemplate";
+import { ErrorTemplate } from "src/views/common/ErrorTemplate";
 import { userRoutes } from "./userRoutes";
 import { guestRoutes } from "./guestRoutes";
 import { authRoutes } from "./authRoutes";
