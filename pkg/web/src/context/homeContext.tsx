@@ -6,6 +6,7 @@ import { useAuthContext } from "./authContext";
 import { useUserProfileQuery } from "data_layer/queries/useUserProfileQuery";
 import { AppRoutes } from "config/router";
 import { useHomeQuery } from "data_layer/queries/useHomeQuery";
+import { useFloorsQuery } from "data_layer/queries/useFloorsQuery";
 
 const storageId = "homeId";
 
@@ -23,6 +24,10 @@ const useHome = () => {
   const [homeId, setHomeId] = useState<string | null>(initialHomeId);
 
   const { data: home, isLoading } = useHomeQuery({ enabled: !!homeId && isAuthorized, homeId: homeId || "" });
+  const { floors, isLoading: isFloorsLoading } = useFloorsQuery(homeId || "");
+
+  const firstFloor = floors[0]?.id;
+  const [floorId, setFloorId] = useState<string | null>(firstFloor);
 
   const changeHome = useCallback(
     (newHomeId: string) => {
@@ -33,6 +38,10 @@ const useHome = () => {
     },
     [homeId, navigate]
   );
+
+  const changeFloor = useCallback((id: string) => {
+    setFloorId(id);
+  }, []);
 
   useEffect(() => {
     if (initialHomeId) {
@@ -46,12 +55,20 @@ const useHome = () => {
     }
   }, [validHomeId, firstHomeId]);
 
+  useEffect(() => {
+    setFloorId((floorId) => (floorId ? floorId : firstFloor));
+  }, [firstFloor]);
+
   return {
-    isLoading: isUserProfileLoading || isLoading,
     availableHomes,
-    homeId,
-    home,
+    changeFloor,
     changeHome,
+    floors,
+    floor: floors.find((f) => f.id === floorId),
+    home,
+    homeId,
+    isFloorsLoading,
+    isLoading: isUserProfileLoading || isLoading,
   };
 };
 

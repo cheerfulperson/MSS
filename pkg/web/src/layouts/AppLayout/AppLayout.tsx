@@ -1,9 +1,8 @@
-import { Button, Dropdown, Flex, Layout, Menu, Switch, theme as antdTheme } from "antd";
+import { Button, Flex, Layout, Menu, Switch, theme as antdTheme } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   ApartmentOutlined,
-  CheckOutlined,
   HomeFilled,
   MergeOutlined,
   BlockOutlined,
@@ -19,21 +18,22 @@ import { useTranslation } from "react-i18next";
 import { ItemType } from "antd/es/menu/interface";
 
 import { useAuthContext } from "context/authContext";
-import { AppLogo, Language, Moon, Sun } from "components/icons";
-import { languages } from "locales";
+import { AppLogo, Moon, Sun } from "components/icons";
 import { useThemeContext } from "context/themeContext";
 import { AppRoutes } from "config/router";
 import { useHomeContext } from "context/homeContext";
 import { UserRoles } from "types/user";
+import { Header } from "./Header";
+import { ChangeLanguageButton } from "./ChangeLanguageButton";
 import styles from "./AppLayout.module.scss";
 
-const { Content, Header, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export const AppLayout = () => {
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { changeTheme, theme } = useThemeContext();
-  const { i18n, t } = useTranslation(["app_layout", "common"]);
+  const { t } = useTranslation(["app_layout", "common"]);
   const { isAuthorized, logout, session } = useAuthContext();
   const { availableHomes, changeHome, home, homeId } = useHomeContext();
 
@@ -42,18 +42,6 @@ export const AppLayout = () => {
   const {
     token: { colorText },
   } = antdTheme.useToken();
-
-  const languagesItems = useMemo<ItemType[]>(() => {
-    return languages.map((lang) => ({
-      key: lang?.key,
-      label: (
-        <span className={styles.item}>
-          {i18n.language === lang.key ? <CheckOutlined /> : <span />}
-          <span>{lang?.label}</span>
-        </span>
-      ),
-    }));
-  }, [i18n.language]);
 
   const menuItems = useMemo(() => {
     const items: ItemType[] = [
@@ -189,69 +177,32 @@ export const AppLayout = () => {
             onSelect={handleMenuSelect}
             theme={theme}
           />
-          {!collapsed && <Flex className={styles.bottomSiderMenu}>
-            <Switch
-              checkedChildren={<Sun height={22} width={22} />}
-              className={styles.menuSwitch}
-              onChange={(v) => {
-                changeTheme(v ? "light" : "dark");
-              }}
-              unCheckedChildren={<Moon height={14} width={14} />}
-              value={theme === "light"}
-            />
-            <Dropdown
-              menu={{
-                items: languagesItems,
-                onClick: ({ key }) => {
-                  i18n.changeLanguage(key as string);
-                },
-              }}
-              placement="topRight"
-              trigger={["click"]}
-            >
-              <Button className={styles.menuButton} icon={<Language color={colorText} />} type="text">
-                {languages.find(({ key }) => key === i18n.language)?.label}
+          {!collapsed && (
+            <Flex className={styles.bottomSiderMenu}>
+              <Switch
+                checkedChildren={<Sun height={22} width={22} />}
+                className={styles.menuSwitch}
+                onChange={(v) => {
+                  changeTheme(v ? "light" : "dark");
+                }}
+                unCheckedChildren={<Moon height={14} width={14} />}
+                value={theme === "light"}
+              />
+              <ChangeLanguageButton />
+              <Button
+                className={styles.menuButton}
+                icon={<LogoutOutlined color={colorText} style={{ width: 18, height: 18 }} />}
+                onClick={logout}
+                type="text"
+              >
+                {t("common:actions.logout")}
               </Button>
-            </Dropdown>
-            <Button
-              className={styles.menuButton}
-              icon={<LogoutOutlined color={colorText} style={{ width: 18, height: 18 }} />}
-              onClick={logout}
-              type="text"
-            >
-              {t("common:actions.logout")}
-            </Button>
-          </Flex>}
+            </Flex>
+          )}
         </div>
       </Sider>
       <Layout>
-        <Header className={styles.header}>
-          {broken && (
-            <Button
-              icon={
-                collapsed ? (
-                  <MenuUnfoldOutlined
-                    style={{
-                      fontSize: "20px",
-                    }}
-                  />
-                ) : (
-                  <MenuFoldOutlined
-                    style={{
-                      fontSize: "20px",
-                    }}
-                  />
-                )
-              }
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                color: colorText,
-              }}
-              type="text"
-            />
-          )}
-          <div></div>
-        </Header>
+        <Header broken={broken} collapsed={collapsed} onCollapse={setCollapsed} />
         <Content>
           <Outlet />
         </Content>

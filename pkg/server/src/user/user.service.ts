@@ -19,9 +19,10 @@ export class UserService {
         email,
       },
       select: {
+        avatarColor: true,
         email: true,
-        id: true,
         fullName: true,
+        id: true,
         Homes: {
           select: {
             id: true,
@@ -41,6 +42,7 @@ export class UserService {
         id,
       },
       select: {
+        avatarColor: true,
         id: true,
         fullName: true,
         Homes: {

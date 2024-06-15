@@ -1,0 +1,276 @@
+[
+  {
+    "id": "floorPlaneItem1Image",
+    "type": "IMAGE",
+    "x": 0,
+    "y": 0,
+    "width": 1200,
+    "height": 600,
+    "angle": 0,
+    "imageId": { "type": "Image", "where": { "id": "home1_image" } },
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem1",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem2",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem3",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem4",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem5",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem6",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem7",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem8",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem9",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem10",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem11",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem12",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem13",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem14",
+    "type": "DEVICE",
+    "x": 0,
+    "y": 0,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem15",
+    "type": "DEVICE",
+    "x": 330,
+    "y": 174,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem16",
+    "type": "DEVICE",
+    "x": 98,
+    "y": 174,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem17",
+    "type": "DEVICE",
+    "x": 846,
+    "y": 540,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem18",
+    "type": "DEVICE",
+    "x": 846,
+    "y": 186,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem19",
+    "type": "DEVICE",
+    "x": 384,
+    "y": 672,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  },
+  {
+    "id": "device_floorPlaneItem20",
+    "type": "DEVICE",
+    "x": 996.5,
+    "y": 629.3,
+    "width": 10,
+    "height": 10,
+    "angle": 0,
+    "floorId": {
+      "type": "Floor",
+      "where": { "id": "ckm7z1z7z0000b3i6c1z1z1z11" }
+    }
+  }
+]

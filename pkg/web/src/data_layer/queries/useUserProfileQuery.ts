@@ -14,6 +14,7 @@ export const useUserProfileQuery = (props?: { enabled: boolean }) => {
 
 type UserProfileResponse =
   | {
+      avatarColor: string;
       email: string;
       fullName: string;
       Homes: {
@@ -24,6 +25,7 @@ type UserProfileResponse =
       role: UserRoles.OWNER;
     }
   | {
+      avatarColor: string;
       fullName: string;
       Homes: {
         id: string;

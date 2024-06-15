@@ -1,5 +1,16 @@
 import { Node } from "reactflow";
 import { FlowNodeType } from "../items";
+import { ValueType as ApiValueType } from "types/api";
+
+type TValueType = {
+  [key in keyof typeof ApiValueType]: key;
+};
+
+export const ValueType: TValueType = {
+  BOOLEAN: "BOOLEAN",
+  NUMBER: "NUMBER",
+  STRING: "STRING",
+};
 
 export type NodeData<T extends keyof typeof FlowNodeType> = T extends "IMAGE"
   ? {
@@ -8,7 +19,9 @@ export type NodeData<T extends keyof typeof FlowNodeType> = T extends "IMAGE"
     }
   : T extends "DEVICE"
   ? {
-      value: string;
+      displayValue: string;
+      icon: string;
+      iconColor?: string;
     }
   : T extends "DOOR"
   ? {}
@@ -27,10 +40,12 @@ export type NodeData<T extends keyof typeof FlowNodeType> = T extends "IMAGE"
 export type NodeFields<T extends keyof typeof FlowNodeType> = {
   color?: string;
   data: NodeData<T>;
+  draggable?: boolean;
   height: number;
   id: string;
-  name: string;
+  name?: string;
   rotation: number;
+  selectable?: boolean;
   type: T;
   width: number;
   x: number;

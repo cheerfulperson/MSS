@@ -16,13 +16,15 @@ export const FloorPlane = ({ nodes: defaultNodes }: FloorPlaneProps) => {
     const nodes: NodeState[] = defaultNodes.map((n) => {
       const node: NodeState = {
         data: n.data,
-        draggable: false,
-        height: n.height,
+        draggable: n.draggable || false,
         id: n.id,
         position: { x: n.x, y: n.y },
-        selectable: false,
+        selectable: n.selectable || false,
+        style: {
+          width: n.width,
+          height: n.height,
+        },
         type: n.type,
-        width: n.width,
       };
       return node;
     });
@@ -34,6 +36,8 @@ export const FloorPlane = ({ nodes: defaultNodes }: FloorPlaneProps) => {
   //   [],
   // );
 
+  console.log("nodes", nodes);
+
   useEffect(() => {
     setNodes(initialNodes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,6 +48,8 @@ export const FloorPlane = ({ nodes: defaultNodes }: FloorPlaneProps) => {
       attributionPosition="top-right"
       className={styles.overview}
       fitView
+      maxZoom={4}
+      minZoom={0.2}
       nodes={nodes}
       nodeTypes={nodeTypes}
       // onConnect={onConnect}

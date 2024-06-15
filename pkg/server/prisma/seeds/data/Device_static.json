@@ -1,3 +1,342 @@
-[{
-  
-}]
+[
+  {
+    "id": "device_unique_id_1",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Влажность",
+    "icon": "ThermometerSun",
+    "deviceKind": "SENSOR",
+    "deviceType": "HUMIDITY_SENSOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem1" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_2",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Влажность",
+    "icon": "ThermometerSun",
+    "deviceKind": "SENSOR",
+    "deviceType": "HUMIDITY_SENSOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem2" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_3",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Температура",
+    "icon": "ThermometerHalf",
+    "deviceKind": "SENSOR",
+    "deviceType": "THERMOSTAT",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem3" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_4",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Температура",
+    "icon": "ThermometerHalf",
+    "deviceKind": "SENSOR",
+    "deviceType": "THERMOSTAT",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem4" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_5",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Температура",
+    "icon": "ThermometerHalf",
+    "deviceKind": "SENSOR",
+    "deviceType": "THERMOSTAT",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem5" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_6",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Температура",
+    "icon": "ThermometerHalf",
+    "deviceKind": "SENSOR",
+    "deviceType": "THERMOSTAT",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem6" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_7",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Движение",
+    "icon": "Vignette",
+    "deviceKind": "SENSOR",
+    "deviceType": "MOTION_SENSOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem7" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_8",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Содержание газа",
+    "icon": "RecordCircle",
+    "deviceKind": "SENSOR",
+    "deviceType": "GAS_DETECTOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem8" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_9",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Уровень воды",
+    "icon": "Moisture",
+    "deviceKind": "SENSOR",
+    "deviceType": "WATER_LEAK_DETECTOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem9" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_10",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Состояние",
+    "icon": "ViewStacked",
+    "deviceKind": "SENSOR",
+    "deviceType": "MAGNETIC_CONTACT_SENSOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem10" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_11",
+    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "name": "Состояние",
+    "icon": "ViewStacked",
+    "deviceKind": "SENSOR",
+    "deviceType": "MAGNETIC_CONTACT_SENSOR",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem11" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_12",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem12" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_13",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem13" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_14",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem14" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_15",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem15" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_16",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem16" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_17",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem17" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_18",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Свет",
+    "icon": "Lightbulb",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "LIGHT_SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem18" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_19",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Состояние",
+    "icon": "OpticalAudio",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "SWITCH",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem19" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  },
+  {
+    "id": "device_unique_id_20",
+    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "name": "Состояние",
+    "icon": "Plug",
+    "deviceKind": "ACTUATOR",
+    "deviceType": "SMART_PLUG",
+    "butteryId": { "type": "Buttery" },
+    "floorPlaneItemId": {
+      "type": "FloorPlaneItem",
+      "where": { "id": "device_floorPlaneItem20" }
+    },
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    }
+  }
+]

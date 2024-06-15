@@ -1,0 +1,222 @@
+[
+  {
+    "id": "device_value_unique_id_1",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.83",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_1" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid1" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_2",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.53",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_2" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid2" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_3",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.87",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_3" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid3" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_4",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.06",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_4" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid4" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_5",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.80",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_5" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid5" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_6",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.48",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_6" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid6" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_7",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_7" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid7" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_8",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.72",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_8" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid8" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_9",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "0.89",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_9" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid9" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_10",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_10" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid10" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_11",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "false",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_11" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid11" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_12",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_12" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid12" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_13",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_13" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid13" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_14",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_14" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid14" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_15",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "false",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_15" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid15" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_16",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "false",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_16" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid16" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_17",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_17" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid17" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_18",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_18" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid18" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_19",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_19" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid19" }
+    }
+  },
+  {
+    "id": "device_value_unique_id_20",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "true",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_20" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid20" }
+    }
+  }
+]

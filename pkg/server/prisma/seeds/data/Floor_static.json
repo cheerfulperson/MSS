@@ -1,5 +1,6 @@
 [
   {
+    "id": "ckm7z1z7z0000b3i6c1z1z1z11",
     "name": "Первый этаж",
     "homeId": {
       "type": "Home",
@@ -9,6 +10,7 @@
     }
   },
   {
+    "id": "qiweiiuqweuuq123euuqweioui",
     "name": "Квартира",
     "homeId": {
       "type": "Home",

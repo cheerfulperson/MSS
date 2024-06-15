@@ -1,7 +1,12 @@
 import ImageNode from "./ImageNode/ImageNode";
-import type { FloorPlaneItemType } from "../../../../../server/src/types/exported";
+import type { FloorPlaneItemType } from "types/api";
+import DeviceNode from "./DeviceNode/DeviceNode";
 
-export const FlowNodeType: Record<FloorPlaneItemType, FloorPlaneItemType> = {
+type TFlowNodeType = {
+  [key in FloorPlaneItemType]: key;
+}
+
+export const FlowNodeType: TFlowNodeType = {
   DEVICE: "DEVICE",
   IMAGE: "IMAGE",
   DOOR: "DOOR",
@@ -12,7 +17,7 @@ export const FlowNodeType: Record<FloorPlaneItemType, FloorPlaneItemType> = {
 };
 
 export const nodeTypes = {
-  [FlowNodeType.DEVICE]: ImageNode,
+  [FlowNodeType.DEVICE]: DeviceNode,
   [FlowNodeType.IMAGE]: ImageNode,
   [FlowNodeType.DOOR]: ImageNode,
   [FlowNodeType.FLOOR]: ImageNode,
