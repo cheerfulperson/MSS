@@ -3,7 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import { AccessTokenGuard } from './auth/guards/accessToken.guard';
-import MqttBrokerAdapter from './adapters/mqtt-broker.adapter';
+import { mqttBroker } from './adapters/mqtt-broker.adapter';
 
 const port = process.env.PORT || 3000;
 
@@ -15,7 +15,6 @@ async function bootstrap() {
     credentials: true,
   });
   const reflector = app.get(Reflector);
-  const mqttBroker = new MqttBrokerAdapter();
 
   app.useGlobalPipes(
     new ValidationPipe({

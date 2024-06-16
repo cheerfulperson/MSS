@@ -51,14 +51,14 @@ export const LoginPage = new Page<HTMLDivElement>({
       },
     });
     const button = new Button({ children: "Подключиться", className: "Login__button", customAttr: { type: "submit" } });
-    const buttonClose = new Button({
-      children: "На главную",
-      className: "Login__close",
-      onClick() {
-        goTo("/");
-      },
-      customAttr: { type: "button" },
-    });
+    // const buttonClose = new Button({
+    //   children: "На главную",
+    //   className: "Login__close",
+    //   onClick() {
+    //     goTo("/");
+    //   },
+    //   customAttr: { type: "button" },
+    // });
 
     request<Array<string>>({ type: "get", path: "/networks" }).then((data) => {
       select.setOptions(
@@ -74,7 +74,7 @@ export const LoginPage = new Page<HTMLDivElement>({
             if (!isAuth) {
               errors.textContent = "Не удалось подключиться к сети";
             } else {
-              buttonClose.element.style.display = "block";
+              // buttonClose.element.style.display = "block";
             }
           });
         })
@@ -83,13 +83,10 @@ export const LoginPage = new Page<HTMLDivElement>({
         });
     });
 
-    if (!isAuthorized) {
-      buttonClose.element.style.display = "none";
-    }
     const tree: TTreeRenderElement[] = [
       {
         selector: "form",
-        tree: [select, password, button, buttonClose],
+        tree: [select, password, button],
       },
     ];
     return {

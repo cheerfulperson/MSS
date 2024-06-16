@@ -2,6 +2,7 @@ import { CheckLinkDto } from './dto/home.dto';
 import { HomeController } from './home.controller';
 
 export * from './floor/types';
+export * from './device/types';
 
 export type CheckHomeLinkBody = CheckLinkDto;
 export type CheckHomeLinkResponse = Awaited<

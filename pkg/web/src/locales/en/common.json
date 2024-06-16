@@ -6,8 +6,17 @@
     "login_as_guest": "Login as a guest",
     "logout": "Logout",
     "signup": "Sign up",
-    "submit": "Submit"
+    "submit": "Submit",
+    "change_state_to": "Change state to \"{{ state, lowercase }}\"" 
   },
+  "device": "Device",
+  "buttery_level": "Buttery level",
+  "connected": "Connected",
+  "disconnected": "Disconnected",
+  "state": "State",
+  "device_kind": "Device kind",
+  "device_type": "Device type",
+  "image": "Image",
   "or": "or",
   "do_not_have_account": "Don't have an account?",
   "page_error_result": {

@@ -171,6 +171,25 @@
     }
   },
   {
+    "id": "cuid21",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Атмосферное давление",
+    "isPrimary": true,
+    "key": "pressure",
+    "measure": "мм рт.ст.",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 760,
+    "min": 720,
+    "sensitivity": 10,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    }
+  },
+  {
     "id": "cuid10",
     "createdAt": "2024-06-14T13:18:39.327Z",
     "displayName": "Состояние",
@@ -184,6 +203,8 @@
     "sensitivity": null,
     "falseInfo": "Закрыто",
     "trueInfo": "Открыто",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfoColor": "#FADB14",
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
@@ -203,6 +224,8 @@
     "sensitivity": null,
     "falseInfo": "Закрыто",
     "trueInfo": "Открыто",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfoColor": "#FADB14",
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }

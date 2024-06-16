@@ -28,4 +28,8 @@ i18n
     fallbackLng: "ru",
   });
 
+i18n.services.formatter?.add("lowercase", (value) => {
+  return value.toLowerCase();
+});
+
 export default i18n;

@@ -1,4 +1,4 @@
-import { LoginPage, MainPage } from "../pages";
+import { LoginPage } from "../pages";
 import { PageComponent } from "../types";
 
 interface TRouterConfig {
@@ -11,7 +11,7 @@ type TRouter = Record<ERoutes, TRouterConfig>;
 export enum ERoutes {
   ANY = "*",
   LOGIN = "/login",
-  MAIN = '/',
+  // MAIN = '/',
 }
 
 export const routes: TRouter = {
@@ -19,9 +19,9 @@ export const routes: TRouter = {
     component: LoginPage,
   },
   [ERoutes.ANY]: {
-    component: MainPage,
+    component: LoginPage,
   },
-  [ERoutes.MAIN]: {
-    component: MainPage,
-  },
+  // [ERoutes.MAIN]: {
+  //   component: MainPage,
+  // },
 };

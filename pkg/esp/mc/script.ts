@@ -13,9 +13,16 @@ async function addBuildToC() {
   const html = (await fs.readFile("./static/index.html", "utf-8")).replace(/["]/g, '\\"');
   const js = (await fs.readFile("./static/index.js", "utf-8")).replace(/["]/g, '\\"').replace(/\\n/g, "");
   let cpp = await fs.readFile(cppFile, "utf-8");
+  let cpp1 = await fs.readFile("./esp_sensors/StaticFiles.cpp", "utf-8");
+  let cpp2 = await fs.readFile("./esp_actuators/StaticFiles.cpp", "utf-8");
 
   cpp = replace(replaceConnectHTML, "//::end", cpp, `const char* connectHTML = "${html}";\n`);
   cpp = replace(replaceConnectJS, "//::end", cpp, `const char* connectJS = "${js}";\n`);
+  cpp1 = replace(replaceConnectHTML, "//::end", cpp1, `const char* connectHTML = "${html}";\n`);
+  cpp1 = replace(replaceConnectJS, "//::end", cpp1, `const char* connectJS = "${js}";\n`);
+  cpp2 = replace(replaceConnectHTML, "//::end", cpp2, `const char* connectHTML = "${html}";\n`);
+  cpp2 = replace(replaceConnectJS, "//::end", cpp2, `const char* connectJS = "${js}";\n`);
+
   await fs.writeFile(cppFile, cpp);
 }
 

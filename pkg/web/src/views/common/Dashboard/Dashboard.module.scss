@@ -3,3 +3,29 @@
   align-items: center;
   justify-content: center;
 }
+.modalContent {
+ :global(.ant-modal-close) {
+    left: 50%;
+    top: calc(100% + 12px) !important;
+    transform: translateX(-50%);
+    background-color: var(--ant-modal-content-bg);
+    border-radius: 100%;
+ }
+}
+.infoList {
+  display: grid;
+  grid-template-columns: auto 2fr;
+  column-gap: 8px;
+  row-gap: 4px;
+  padding-top: 8px;
+}
+.value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionButton {
+  margin-top: 24px;
+  width: 100%;
+}

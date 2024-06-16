@@ -45,6 +45,8 @@ export class FloorService {
             icon: true,
             clientId: true,
             deviceType: true,
+            deviceKind: true,
+            connected: true,
             Buttery: {
               select: {
                 capacity: true,
@@ -56,6 +58,7 @@ export class FloorService {
                 createdAt: 'desc',
               },
               select: {
+                id: true,
                 treatLevel: true,
                 value: true,
                 DeviceValueSetup: {

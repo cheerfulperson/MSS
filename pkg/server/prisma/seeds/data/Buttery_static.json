@@ -1,6 +1,7 @@
 [
   { "maxCapacity": 100, "capacity": 100, "state": "FULL" },
   { "maxCapacity": 100, "capacity": 20, "state": "CHARGING" },
+  { "maxCapacity": 100, "capacity": 20, "state": "CHARGING" },
   { "maxCapacity": 100, "capacity": 100, "state": "FULL" },
   { "maxCapacity": 100, "capacity": 100, "state": "FULL" },
   { "maxCapacity": 100, "capacity": 100, "state": "FULL" },

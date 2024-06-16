@@ -218,5 +218,16 @@
       "type": "DeviceValueSetup",
       "where": { "id": "cuid20" }
     }
+  },
+  {
+    "id": "device_value_unique_id_21",
+    "createdAt": "2024-06-14T20:59:02.117Z",
+    "treatLevel": "INFO",
+    "value": "750",
+    "deviceId": { "type": "Device", "where": { "id": "device_unique_id_21" } },
+    "deviceValueSetupId": {
+      "type": "DeviceValueSetup",
+      "where": { "id": "cuid21" }
+    }
   }
 ]

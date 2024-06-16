@@ -38,7 +38,7 @@ export const AppLayout = () => {
   const { availableHomes, changeHome, home, homeId } = useHomeContext();
 
   const [broken, setBroken] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorText },
   } = antdTheme.useToken();

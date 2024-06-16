@@ -1,4 +1,6 @@
 {
   "copied_to_clipboard": "Link copied to clipboard!",
-  "something_went_wrong": "Something went wrong. Please try again later."
+  "something_went_wrong": "Something went wrong. Please try again later",
+  "success_updated": "Updated successfully",
+  "successfully_connected_to": "Successfully connected to {{ to }}"
 }

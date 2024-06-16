@@ -37,6 +37,7 @@ enum DeviceType {
   SWITCH
   THERMOSTAT
   WATER_LEAK_DETECTOR
+  PRESSURE_SENSOR
   HUMIDITY_SENSOR
   MULTI_DEVICE
 }
@@ -102,14 +103,15 @@ model Device {
   icon             String             @default("Hdd")
   deviceKind       DeviceKind?
   deviceType       DeviceType?
+  connected        Boolean            @default(false)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   butteryId        String?            @unique
   Buttery          Buttery?           @relation(fields: [butteryId], references: [id], onDelete: Cascade)
   floorPlaneItemId String?            @unique
   FloorPlaneItem   FloorPlaneItem?    @relation(fields: [floorPlaneItemId], references: [id])
-  deviceSchemaId   String
-  DeviceSchema     DeviceSchema       @relation(fields: [deviceSchemaId], references: [id])
+  deviceSchemaId   String?
+  DeviceSchema     DeviceSchema?      @relation(fields: [deviceSchemaId], references: [id])
   TreatLevelSetup  TreatLevelSetup[]
   DeviceValueSetup DeviceValueSetup[]
   DeviceValues     DeviceValue[]
@@ -145,10 +147,12 @@ model DeviceValueSetup {
   trueInfoColor   String?
   deviceId        String?
   Device          Device?           @relation(fields: [deviceId], references: [id])
-  deviceSchemaId  String
-  DeviceSchema    DeviceSchema      @relation(fields: [deviceSchemaId], references: [id])
+  deviceSchemaId  String?
+  DeviceSchema    DeviceSchema?      @relation(fields: [deviceSchemaId], references: [id])
   DeviceValue     DeviceValue[]
   TreatLevelSetup TreatLevelSetup[]
+
+  @@unique([deviceId, key])
 }
 
 model DeviceValue {

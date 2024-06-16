@@ -9,9 +9,10 @@ import styles from "./FloorPlane.module.scss";
 
 interface FloorPlaneProps {
   nodes: PlaneNode[];
+  onNodeClick?: (node: NodeState) => void;
 }
 
-export const FloorPlane = ({ nodes: defaultNodes }: FloorPlaneProps) => {
+export const FloorPlane = ({ nodes: defaultNodes, onNodeClick }: FloorPlaneProps) => {
   const initialNodes = useMemo(() => {
     const nodes: NodeState[] = defaultNodes.map((n) => {
       const node: NodeState = {
@@ -36,8 +37,6 @@ export const FloorPlane = ({ nodes: defaultNodes }: FloorPlaneProps) => {
   //   [],
   // );
 
-  console.log("nodes", nodes);
-
   useEffect(() => {
     setNodes(initialNodes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,6 +52,7 @@ export const FloorPlane = ({ nodes: defaultNodes }: FloorPlaneProps) => {
       nodes={nodes}
       nodeTypes={nodeTypes}
       // onConnect={onConnect}
+      onNodeClick={(event, node) => onNodeClick?.(node as NodeState)}
       onNodesChange={onNodesChange}
     >
       <Controls />

@@ -6,8 +6,17 @@
     "login_as_guest": "Войти как гость",
     "logout": "Выход",
     "signup": "Регистрация",
-    "submit": "Отправить"
+    "submit": "Отправить",
+    "change_state_to": "Изменить состояние на \"{{ state, lowercase }}\"" 
   },
+  "device": "Устройство",
+  "buttery_level": "Уровень заряда",
+  "connected": "Подключено",
+  "disconnected": "Отключено",
+  "state": "Состояние",
+  "device_kind": "Вид устройства",
+  "device_type": "Тип устройства",
+  "image": "Изображение",
   "or": "или",
   "do_not_have_account": "Нет аккаунта?",
   "page_error_result": {

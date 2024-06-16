@@ -3,7 +3,10 @@ import { useQuery } from "data_layer/hooks/useQuery";
 import { GetFloorItemsResponse, GetFloorItemsResponseItem } from "types/api";
 
 export const useFloorItemsQuery = ({ floorId, homeId }: { floorId: string; homeId: string }) => {
-  const { data, isLoading } = useQuery<GetFloorItemsResponse>(`home/${homeId}/floor/${floorId}/items`, {});
+  const { data, isLoading } = useQuery<GetFloorItemsResponse>(`home/${homeId}/floor/${floorId}/items`, {
+    enabled: !!homeId && !!floorId,
+    retry: 3,
+  });
 
   const floorDevices: Omit<GetFloorItemsResponseItem, "Image">[] = (
     data?.floorItems.filter((item) => item.type === FlowNodeType.DEVICE) || []

@@ -1,0 +1,22 @@
+{
+  "DeviceType": {
+    "MULTI_DEVICE": "Несколько устройств",
+    "ALARM": "Тревога",
+    "CAMERA": "Камера",
+    "GAS_DETECTOR": "Детектор газа",
+    "LIGHT_SWITCH": "Выключатель света",
+    "LOCK": "Замок",
+    "MAGNETIC_CONTACT_SENSOR": "Магнитоконтактный датчик",
+    "MOTION_SENSOR": "Датчик движения",
+    "SMART_PLUG": "Умная розетка",
+    "SWITCH": "Переключатель",
+    "THERMOSTAT": "Термостат",
+    "WATER_LEAK_DETECTOR": "Детектор утечки воды",
+    "HUMIDITY_SENSOR": "Датчик влажности"
+  },
+  "DeviceKind": {
+    "ACTUATOR": "Привод",
+    "SENSOR": "Датчик",
+    "MULTI_DEVICE": "Несколько устройств"
+  }
+}

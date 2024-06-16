@@ -1,0 +1,22 @@
+{
+  "DeviceType": {
+    "MULTI_DEVICE": "Multi Device",
+    "ALARM": "Alarm",
+    "CAMERA": "Camera",
+    "GAS_DETECTOR": "Gas Detector",
+    "LIGHT_SWITCH": "Light Switch",
+    "LOCK": "Lock",
+    "MAGNETIC_CONTACT_SENSOR": "Magnetic Contact Sensor",
+    "MOTION_SENSOR": "Motion Sensor",
+    "SMART_PLUG": "Smart Plug",
+    "SWITCH": "Switch",
+    "THERMOSTAT": "Thermostat",
+    "WATER_LEAK_DETECTOR": "Water Leak Detector",
+    "HUMIDITY_SENSOR": "Humidity Sensor"
+  },
+  "DeviceKind": {
+    "ACTUATOR": "Actuator",
+    "SENSOR": "Sensor",
+    "MULTI_DEVICE": "Multi Device"
+  }
+}
