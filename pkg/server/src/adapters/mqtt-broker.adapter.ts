@@ -267,7 +267,7 @@ class MqttBrokerAdapter {
                 xvalue >= 29
               ) {
                 const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
-                  value: 'false',
+                  value: 'true',
                   treatLevel: TreatLevel.INFO,
                   Device: {
                     id: device.id,
