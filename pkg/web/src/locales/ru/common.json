@@ -7,9 +7,10 @@
     "logout": "Выход",
     "signup": "Регистрация",
     "submit": "Отправить",
-    "change_state_to": "Изменить состояние на \"{{ state, lowercase }}\"" 
+    "change_state_to": "Изменить состояние на \"{{ state, lowercase }}\""
   },
   "device": "Устройство",
+  "in_progress": "В процессе",
   "buttery_level": "Уровень заряда",
   "connected": "Подключено",
   "disconnected": "Отключено",

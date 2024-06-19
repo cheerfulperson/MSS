@@ -56,7 +56,7 @@ const useAuth = () => {
     isLoading: true,
     accessToken: cookiesData.accessToken,
     refreshToken: cookiesData.refreshToken,
-    role: cookiesData.role as UserUnionRoles,
+    // role: cookiesData.role as UserUnionRoles,
   });
 
   const logout = useCallback(() => {
@@ -192,6 +192,7 @@ const useAuth = () => {
       }
       setState((prev) => ({
         ...prev,
+        role: prev.role || cookiesData.role as UserUnionRoles,
         isLoading: false,
         isAuthorized: true,
       }));

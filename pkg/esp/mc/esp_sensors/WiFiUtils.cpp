@@ -1,13 +1,14 @@
 #include "WiFiUtils.h"
 
 #define STASSID "My Esp"
+#define MOBILE_SSID "Starlink"
+#define PASSWORD "egor1234567"
 
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 1, 1);
 DNSServer dnsServer;
 
-void WiFiUtils::startPoint()
-{
+void WiFiUtils::startPoint() {
   WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
   WiFi.softAP(STASSID);
   WiFi.mode(WIFI_AP_STA);
@@ -25,13 +26,9 @@ void WiFiUtils::startPoint()
   dnsServer.start(DNS_PORT, "www.ihome.com", apIP);
 }
 
-void WiFiUtils::nextRequest()
-{
-  dnsServer.processNextRequest();
-}
+void WiFiUtils::nextRequest() { dnsServer.processNextRequest(); }
 
-bool WiFiUtils::checkUntilConnected()
-{
+bool WiFiUtils::checkUntilConnected() {
 
   // Will try for about 10 seconds (5x 500ms)
   int tryDelay = 1000;
@@ -42,15 +39,17 @@ bool WiFiUtils::checkUntilConnected()
   return status == WL_CONNECTED;
 }
 
-bool WiFiUtils::waitForConnect(Config config)
-{
-  if (config.password != NULL || config.ssid != NULL)
-  {
-    WiFi.persistent(true);
-    WiFi.setAutoConnect(true);
+bool WiFiUtils::waitForConnect(Config config) {
+  WiFi.persistent(true);
+  WiFi.setAutoConnect(true);
+  if (config.password != NULL || config.ssid != NULL) {
     WiFi.begin(config.ssid, config.password);
     bool isConnected = checkUntilConnected();
-    return isConnected;
+    if (isConnected) {
+      return true;
+    }
   }
-  return false;
+  WiFi.begin(MOBILE_SSID, PASSWORD);
+  bool isConnected = checkUntilConnected();
+  return isConnected;
 }

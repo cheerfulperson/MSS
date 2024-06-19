@@ -1,8 +1,8 @@
 #include "AppDevices.h"
 
 #define WATER_LEVEL_PIN A0
-#define LIGHT1_PIN TX
-#define LIGHT2_PIN RX
+#define LIGHT1_PIN D0
+#define LIGHT2_PIN D7
 #define LIGHT3_PIN D1
 #define LIGHT4_PIN D2
 #define LIGHT5_PIN D3
@@ -14,6 +14,7 @@
 int pos = 0;
 
 Servo myservo;
+AllDevicesData result;
 
 void AppDevices::init() {
   // Start up the library
@@ -29,18 +30,18 @@ void AppDevices::init() {
 }
 
 float readWaterSensor() {
-	return analogRead(WATER_LEVEL_PIN);							// send current reading
+  return analogRead(WATER_LEVEL_PIN); // send current reading
 }
 
 void changeServoPosition(bool value) {
   if (value) {
-    for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+    for (pos = 0; pos <= 180; pos += 5) { // goes from 0 degrees to 180 degrees
       // in steps of 1 degree
       myservo.write(pos); // tell servo to go to position in variable 'pos'
       delay(15);          // waits 15ms for the servo to reach the position
     }
   } else {
-    for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    for (pos = 180; pos >= 0; pos -= 5) { // goes from 180 degrees to 0 degrees
       myservo.write(pos); // tell servo to go to position in variable 'pos'
       delay(15);          // waits 15ms for the servo to reach the position
     }
@@ -48,43 +49,48 @@ void changeServoPosition(bool value) {
 }
 
 void AppDevices::changeDeviceStateByKey(String key, bool value) {
-  int lightValue = value ? HIGH : LOW;
+  int lightValue = value == true ? HIGH : LOW;
 
-  if (key == "plug1") {
-    // change plug1 state
-    digitalWrite(PLUG1_PIN, value);
-  } else if (key == "alarm") {
-    // change audio state
-  } else if (key == "motor") {
-    // change motor state
+  if (strcmp(key.c_str(), "motor") == 0) {
     changeServoPosition(value);
-  } else if (key == "light1") {
-    // change light1 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light1") == 0) {
     digitalWrite(LIGHT1_PIN, lightValue);
-  } else if (key == "light2") {
-    // change light2 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light2") == 0) {
     digitalWrite(LIGHT2_PIN, lightValue);
-  } else if (key == "light3") {
-    // change light3 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light3") == 0) {
     digitalWrite(LIGHT3_PIN, lightValue);
-  } else if (key == "light4") {
-    // change light4 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light4") == 0) {
     digitalWrite(LIGHT4_PIN, lightValue);
-  } else if (key == "light5") {
-    // change light5 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light5") == 0) {
     digitalWrite(LIGHT5_PIN, lightValue);
-  } else if (key == "light6") {
-    // change light6 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light6") == 0) {
     digitalWrite(LIGHT6_PIN, lightValue);
-  } else if (key == "light7") {
-    // change light7 state
+    return;
+  }
+  if (strcmp(key.c_str(), "light7") == 0) {
     digitalWrite(LIGHT7_PIN, lightValue);
+    return;
+  }
+  if (strcmp(key.c_str(), "plug1") == 0) {
+    digitalWrite(PLUG1_PIN, value == true ? LOW : HIGH);
+    return;
   }
 }
 
 AllDevicesData AppDevices::getAllDevicesData() {
-  AllDevicesData result;
-  result.plug1 = digitalRead(PLUG1_PIN) == HIGH;
+  result.plug1 = digitalRead(PLUG1_PIN) == LOW;
   result.audio = false;
   result.motor = pos == 180;
   result.light1 = digitalRead(LIGHT1_PIN) == HIGH;

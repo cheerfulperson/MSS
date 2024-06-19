@@ -6,6 +6,7 @@
     "GAS_DETECTOR": "Gas Detector",
     "LIGHT_SWITCH": "Light Switch",
     "LOCK": "Lock",
+    "PRESSURE_SENSOR": "Pressure Sensor",
     "MAGNETIC_CONTACT_SENSOR": "Magnetic Contact Sensor",
     "MOTION_SENSOR": "Motion Sensor",
     "SMART_PLUG": "Smart Plug",

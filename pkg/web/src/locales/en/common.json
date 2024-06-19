@@ -7,10 +7,11 @@
     "logout": "Logout",
     "signup": "Sign up",
     "submit": "Submit",
-    "change_state_to": "Change state to \"{{ state, lowercase }}\"" 
+    "change_state_to": "Change state to \"{{ state, lowercase }}\""
   },
   "device": "Device",
   "buttery_level": "Buttery level",
+  "in_progress": "In progress",
   "connected": "Connected",
   "disconnected": "Disconnected",
   "state": "State",

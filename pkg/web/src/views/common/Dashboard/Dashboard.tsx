@@ -197,14 +197,14 @@ export const Dashboard = () => {
                 <Typography.Text
                   style={{
                     color:
-                      typeof parsedValue === "boolean"
+                    disabled ? 'var(--ant-color-text-quaternary)' : typeof parsedValue === "boolean"
                         ? parsedValue
                           ? deviceValueSetup?.trueInfoColor || green6
                           : deviceValueSetup?.falseInfoColor || red6
                         : green6,
                   }}
                 >
-                  {typeof parsedValue === "boolean"
+                  {disabled ? t('common:in_progress') : typeof parsedValue === "boolean"
                     ? parsedValue
                       ? deviceValueSetup?.trueInfo
                       : deviceValueSetup?.falseInfo

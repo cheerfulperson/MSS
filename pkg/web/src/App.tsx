@@ -9,6 +9,7 @@ import { AuthProvider } from "context/authContext";
 import { ThemeProvider } from "context/themeContext";
 import { Routes } from "router/Router";
 import { HomeProvider } from "context/homeContext";
+import { MqttProvider } from "context/mqttContext";
 
 i18n.init();
 initDayjsLocales();
@@ -34,7 +35,9 @@ function App() {
         <AuthProvider>
           <ThemeProvider>
             <HomeProvider>
-              <Routes />
+              <MqttProvider>
+                <Routes />
+              </MqttProvider>
             </HomeProvider>
           </ThemeProvider>
         </AuthProvider>

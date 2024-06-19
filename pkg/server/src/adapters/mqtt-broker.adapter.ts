@@ -1,11 +1,13 @@
 import * as net from 'net';
+import * as http from 'http';
 import type TAedes from 'aedes';
 import * as Aedes from 'aedes';
 import { PrismaClient, TreatLevel, ValueType } from '@prisma/client';
+import * as wsStream from 'websocket-stream';
 import { UpdateDeviceValueResponse } from 'types/exported';
 
-type Topics = 'client/devices/data' | 'actuators/data' | 'sensors/data';
-type TopicData<T extends Topics> = T extends 'client/devices/data'
+type Topics = 'clientDevicesData' | 'actuators/data' | 'sensors/data';
+type TopicData<T extends Topics> = T extends 'clientDevicesData'
   ? UpdateDeviceValueResponse['updatedValue']
   : Record<string, string | number | boolean>;
 
@@ -15,12 +17,15 @@ const prisma = new PrismaClient();
 
 class MqttBrokerAdapter {
   private server: net.Server;
+  private httpServer: http.Server;
 
   constructor() {
     if (!process.env.MQTT_PORT) {
       throw new Error('MQTT_PORT env is not defined');
     }
     this.server = net.createServer(aedes.handle);
+    this.httpServer = http.createServer();
+    wsStream.createServer({ server: this.httpServer }, aedes.handle as any);
   }
 
   sendMessage<T extends Topics>({
@@ -60,6 +65,11 @@ class MqttBrokerAdapter {
         `MQTT broker started on mqtt://localhost:${process.env.MQTT_PORT}`,
       );
     });
+    this.httpServer.listen(process.env.WS_PORT, () => {
+      console.log(
+        `MQTT broker started on ws://localhost:${process.env.WS_PORT}`,
+      );
+    });
     this.server.on('error', (err) => {
       console.error('MQTT server error:', err);
     });
@@ -88,6 +98,7 @@ class MqttBrokerAdapter {
 
     // fired when a client connects
     aedes.on('client', async (client) => {
+      console.log(client.id);
       if (!client.id || !client.id.includes('esp')) {
         return;
       }
@@ -107,10 +118,19 @@ class MqttBrokerAdapter {
           },
         });
       }
+      await prisma.device.updateMany({
+        where: {
+          clientId: client.id,
+        },
+        data: {
+          connected: true,
+        },
+      });
     });
 
     // fired when a client disconnects
     aedes.on('clientDisconnect', async (client) => {
+      console.log('Dicsonnected', client.id);
       await prisma.device.updateMany({
         where: {
           clientId: client.id,
@@ -127,12 +147,17 @@ class MqttBrokerAdapter {
     // fired when a message is published
     aedes.on('publish', async function (packet, client) {
       const topic = packet.topic.toString();
-
       if (topic === 'sensors/data' || topic === 'actuators/data') {
-        const jsonParse = JSON.parse(packet.payload.toString()) as Record<
-          string,
-          string | number | boolean
-        >;
+        let jsonParse: Record<string, string | number | boolean> = {};
+        try {
+          jsonParse = JSON.parse(packet.payload.toString()) as Record<
+            string,
+            string | number | boolean
+          >;
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+          return;
+        }
         const allKeys = Object.keys(jsonParse);
         const devices = await prisma.device.findMany({
           where: {
@@ -144,98 +169,118 @@ class MqttBrokerAdapter {
               select: {
                 id: true,
                 key: true,
+                valueType: true,
                 DeviceValue: {
                   orderBy: {
                     createdAt: 'desc',
                   },
                   take: 1,
+                  select: {
+                    id: true,
+                  },
                 },
               },
             },
           },
         });
 
-        const transactions = devices.reduce((all, device) => {
-          const existedKeys = device.DeviceValueSetup.map((v) => v.key);
+        const dataToPublish: UpdateDeviceValueResponse['updatedValue'][] = [];
+        if (!devices) {
+          return;
+        }
+        const transactions = devices?.reduce((all, device) => {
           const deviceValueSetup = device.DeviceValueSetup;
           allKeys.forEach((key) => {
-            if (!existedKeys.includes(key)) {
-              return all.push(
-                prisma.deviceValueSetup.create({
-                  data: {
-                    key,
-                    valueType: (typeof jsonParse[
-                      key
-                    ]).toUpperCase() as ValueType,
-                    displayName: 'Sensor',
+            const setup = deviceValueSetup.find((v) => v.key === key);
+            if (!setup) {
+              return;
+              // return all.push(
+              //   prisma.deviceValueSetup.create({
+              //     data: {
+              //       key,
+              //       valueType: (typeof jsonParse[
+              //         key
+              //       ]).toUpperCase() as ValueType,
+              //       displayName: 'Sensor',
+              //       Device: {
+              //         connect: {
+              //           id: device.id,
+              //         },
+              //       },
+              //       DeviceValue: {
+              //         create: {
+              //           value,
+              //           treatLevel: TreatLevel.INFO,
+              //           deviceId: device.id,
+              //         },
+              //       },
+              //     },
+              //   }),
+              // );
+            }
+            const value =
+              typeof jsonParse[key] === 'number'
+                ? (
+                    Math.round((jsonParse[key] as number) * 100) / 100
+                  ).toString()
+                : !jsonParse[key]
+                  ? setup?.valueType === ValueType.NUMBER
+                    ? '0'
+                    : 'false'
+                  : jsonParse[key].toString();
+            const setupId = deviceValueSetup.find((v) => v.key === key)?.id;
+            if (setupId) {
+              // if (topic === 'actuators/data') {
+
+              // } else {
+              //   all.push(
+              //     prisma.deviceValue.create({
+              //       data: {
+              //         value: jsonParse[key].toString(),
+              //         DeviceValueSetup: {
+              //           connect: {
+              //             id: setupId,
+              //           },
+              //         },
+              //         Device: {
+              //           connect: {
+              //             id: device.id,
+              //           },
+              //         },
+              //         treatLevel: TreatLevel.INFO,
+              //       },
+              //     }),
+              //   );
+              // }
+              all.push(
+                prisma.deviceValue.upsert({
+                  where: {
+                    id:
+                      deviceValueSetup.find((v) => v.key === key)
+                        ?.DeviceValue[0].id || '',
+                  },
+                  create: {
+                    value,
+                    DeviceValueSetup: {
+                      connect: {
+                        id: setupId,
+                      },
+                    },
                     Device: {
                       connect: {
                         id: device.id,
                       },
                     },
-                    DeviceValue: {
-                      create: {
-                        value: jsonParse[key].toString(),
-                        treatLevel: TreatLevel.INFO,
-                        deviceId: device.id,
-                      },
-                    },
+                    treatLevel: TreatLevel.INFO,
+                  },
+                  update: {
+                    value,
+                    treatLevel: TreatLevel.INFO,
                   },
                 }),
               );
-            }
-            const setupId = deviceValueSetup.find((v) => v.key === key)?.id;
-            if (setupId) {
-              if (topic === 'actuators/data') {
-                all.push(
-                  prisma.deviceValue.upsert({
-                    where: {
-                      id:
-                        deviceValueSetup.find((v) => v.key === key)
-                          ?.DeviceValue[0].id || '',
-                    },
-                    create: {
-                      value: jsonParse[key].toString(),
-                      DeviceValueSetup: {
-                        connect: {
-                          id: setupId,
-                        },
-                      },
-                      Device: {
-                        connect: {
-                          id: device.id,
-                        },
-                      },
-                      treatLevel: TreatLevel.INFO,
-                    },
-                    update: {
-                      value: jsonParse[key].toString(),
-                      treatLevel: TreatLevel.INFO,
-                    },
-                  }),
-                );
-              } else {
-                all.push(
-                  prisma.deviceValue.create({
-                    data: {
-                      value: jsonParse[key].toString(),
-                      DeviceValueSetup: {
-                        connect: {
-                          id: setupId,
-                        },
-                      },
-                      Device: {
-                        connect: {
-                          id: device.id,
-                        },
-                      },
-                      treatLevel: TreatLevel.INFO,
-                    },
-                  }),
-                );
-              }
               const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
-                value: jsonParse[key].toString(),
+                value,
                 treatLevel: TreatLevel.INFO,
                 Device: {
                   id: device.id,
@@ -244,26 +289,27 @@ class MqttBrokerAdapter {
                   key,
                 },
               };
-              const payload = JSON.stringify(payloadData);
-              const data = {
-                topic: 'client/devices/data',
-                payload,
-                cmd: 'publish' as const,
-                qos: 1 as const,
-                retain: false,
-                dup: false,
-                length: payload.length,
-              };
-              aedes.publish(data, (e) => {
-                if (e) {
-                  console.error('Error publishing message:', e);
-                }
-              });
+              dataToPublish.push(payloadData);
             }
           });
           return all;
         }, []);
 
+        const payload = JSON.stringify(dataToPublish);
+        const data = {
+          topic: 'clientDevicesData',
+          payload,
+          cmd: 'publish' as const,
+          qos: 1 as const,
+          retain: false,
+          dup: false,
+          length: payload.length,
+        };
+        aedes.publish(data, (e) => {
+          if (e) {
+            console.error('Error publishing message:', e);
+          }
+        });
         await prisma.$transaction(transactions);
       }
     });

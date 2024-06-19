@@ -1,6 +1,8 @@
 #include "WiFiUtils.h"
 
 #define STASSID "My Esp"
+#define MOBILE_SSID "Starlink"
+#define PASSWORD "egor1234567"
 
 const byte DNS_PORT = 53;
 IPAddress apIP(192, 168, 1, 1);
@@ -38,19 +40,21 @@ bool WiFiUtils::checkUntilConnected()
   int numberOfTries = 10;
 
   int status = WiFi.waitForConnectResult(numberOfTries * tryDelay);
-  Serial.println(status);
   return status == WL_CONNECTED;
 }
 
 bool WiFiUtils::waitForConnect(Config config)
 {
-  if (config.password != NULL || config.ssid != NULL)
-  {
-    WiFi.persistent(true);
-    WiFi.setAutoConnect(true);
+  WiFi.persistent(true);
+  WiFi.setAutoConnect(true);
+  if (config.password != NULL || config.ssid != NULL) {
     WiFi.begin(config.ssid, config.password);
     bool isConnected = checkUntilConnected();
-    return isConnected;
+    if (isConnected) {
+      return true;
+    }
   }
-  return false;
+  WiFi.begin(MOBILE_SSID, PASSWORD);
+  bool isConnected = checkUntilConnected();
+  return isConnected;
 }

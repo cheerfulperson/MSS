@@ -4,6 +4,7 @@
     "ALARM": "Тревога",
     "CAMERA": "Камера",
     "GAS_DETECTOR": "Детектор газа",
+    "PRESSURE_SENSOR": "Датчик давления",
     "LIGHT_SWITCH": "Выключатель света",
     "LOCK": "Замок",
     "MAGNETIC_CONTACT_SENSOR": "Магнитоконтактный датчик",

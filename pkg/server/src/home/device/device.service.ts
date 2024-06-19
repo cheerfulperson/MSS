@@ -37,8 +37,9 @@ export class DeviceService {
       },
     });
 
+    console.log(updatedValue);
     await mqttBroker.sendMessage({
-      topic: 'client/devices/data',
+      topic: 'clientDevicesData',
       payload: updatedValue,
     });
 

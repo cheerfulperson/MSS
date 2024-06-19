@@ -24,6 +24,8 @@ async function addBuildToC() {
   cpp2 = replace(replaceConnectJS, "//::end", cpp2, `const char* connectJS = "${js}";\n`);
 
   await fs.writeFile(cppFile, cpp);
+  await fs.writeFile("./esp_sensors/StaticFiles.cpp", cpp);
+  await fs.writeFile("./esp_actuators/StaticFiles.cpp", cpp);
 }
 
 addBuildToC().then(() => {

@@ -3,7 +3,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -27,7 +27,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -51,7 +51,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -75,7 +75,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -99,7 +99,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -123,7 +123,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -147,7 +147,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -171,7 +171,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -195,7 +195,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -219,7 +219,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -243,7 +243,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0v5z0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {
@@ -267,7 +267,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -291,7 +291,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -315,7 +315,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -339,7 +339,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -363,7 +363,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -387,7 +387,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -411,7 +411,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -435,7 +435,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -459,7 +459,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-24:D7:EB:CA:7E:7C",
     "connected": true,
     "deviceKind": "ACTUATOR",
     "deviceSchemaId": {
@@ -483,7 +483,7 @@
     "butteryId": {
       "type": "Buttery"
     },
-    "clientId": "cjs0fd0b0000l3mz1z1121z",
+    "clientId": "esp8266-home-08:3A:8D:D3:97:63",
     "connected": true,
     "deviceKind": "SENSOR",
     "deviceSchemaId": {

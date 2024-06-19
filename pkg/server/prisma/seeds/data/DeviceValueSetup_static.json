@@ -16,6 +16,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_1" }
     }
   },
   {
@@ -35,6 +39,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_2" }
     }
   },
   {
@@ -54,6 +62,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_3" }
     }
   },
   {
@@ -73,6 +85,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_4" }
     }
   },
   {
@@ -92,6 +108,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_5" }
     }
   },
   {
@@ -111,6 +131,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_6" }
     }
   },
   {
@@ -127,9 +151,15 @@
     "sensitivity": 5,
     "falseInfo": "Движения нет",
     "trueInfo": "Движение есть",
+    "falseInfoColor": "rgba(0, 0, 0, 0.45)",
+    "trueInfoColor": "#FADB14",
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_7" }
     }
   },
   {
@@ -149,6 +179,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_8" }
     }
   },
   {
@@ -168,25 +202,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
-    }
-  },
-  {
-    "id": "cuid21",
-    "createdAt": "2024-06-14T13:18:39.327Z",
-    "displayName": "Атмосферное давление",
-    "isPrimary": true,
-    "key": "pressure",
-    "measure": "мм рт.ст.",
-    "updatedAt": "2024-06-14T13:18:39.327Z",
-    "valueType": "NUMBER",
-    "max": 760,
-    "min": 720,
-    "sensitivity": 10,
-    "falseInfo": null,
-    "trueInfo": null,
-    "deviceSchemaId": {
-      "type": "DeviceSchema",
-      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_9" }
     }
   },
   {
@@ -208,6 +227,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_10" }
     }
   },
   {
@@ -229,6 +252,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_11" }
     }
   },
   {
@@ -250,6 +277,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_12" }
     }
   },
   {
@@ -271,6 +302,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_13" }
     }
   },
   {
@@ -292,6 +327,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_14" }
     }
   },
   {
@@ -313,6 +352,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_15" }
     }
   },
   {
@@ -334,6 +377,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_16" }
     }
   },
   {
@@ -355,6 +402,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_17" }
     }
   },
   {
@@ -376,6 +427,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_18" }
     }
   },
   {
@@ -397,6 +452,10 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_19" }
     }
   },
   {
@@ -418,6 +477,33 @@
     "deviceSchemaId": {
       "type": "DeviceSchema",
       "where": { "id": "cjs0fd0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_20" }
+    }
+  },
+  {
+    "id": "cuid21",
+    "createdAt": "2024-06-14T13:18:39.327Z",
+    "displayName": "Атмосферное давление",
+    "isPrimary": true,
+    "key": "pressure",
+    "measure": "мм рт.ст.",
+    "updatedAt": "2024-06-14T13:18:39.327Z",
+    "valueType": "NUMBER",
+    "max": 760,
+    "min": 720,
+    "sensitivity": 10,
+    "falseInfo": null,
+    "trueInfo": null,
+    "deviceSchemaId": {
+      "type": "DeviceSchema",
+      "where": { "id": "cjs0v5z0b0000l3mz1z1121z" }
+    },
+    "deviceId": {
+      "type": "Device",
+      "where": { "id": "device_unique_id_21" }
     }
   }
 ]

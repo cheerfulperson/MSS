@@ -49,7 +49,7 @@ const recursiveNestedRoutesReducer = (routes: TRoutes) => {
 };
 
 export const Routes = (): ReactElement => {
-  const { session } = useAuthContext();
+  const { isAuthorized, isLoading, session } = useAuthContext();
   return (
     <>
       <main className={styles.main}>
@@ -73,7 +73,7 @@ export const Routes = (): ReactElement => {
                 {recursiveNestedRoutesReducer(commonRoutes)}
               </Route>
             )}
-            {!session.role && (
+            {!isAuthorized && !isLoading && (
               <Route element={<Navigate replace to={AppRoutes.auth.logIn} />} path={AppRoutes.pageNotFound} />
             )}
             <Route element={<AuthLayout />} path={AppRoutes.auth.url}>

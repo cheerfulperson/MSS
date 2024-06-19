@@ -13,10 +13,13 @@ const useMqtt = () => {
   const { t } = useTranslation(["toast"]);
   const mqttRef = useRef<mqtt.MqttClient | null>(null);
   const { floor, home } = useHomeContext();
-  const { updateFloorItemsCache } = useUpdateFloorItemsCache({ homeId: home?.id || "", floorId: floor?.id || "" });
+  const { updateFloorItemsCache, updateFloorItemsManyCache } = useUpdateFloorItemsCache({
+    homeId: home?.id || "",
+    floorId: floor?.id || "",
+  });
 
   useEffect(() => {
-    if (home) {
+    if (home && floor) {
       if (mqttRef.current) {
         mqttRef.current.end();
       }
@@ -24,25 +27,32 @@ const useMqtt = () => {
 
       mqttRef.current.on("connect", () => {
         toast.success(t("toast:successfully_connected_to", { to: home.name }));
+        mqttRef.current?.subscribe("clientDevicesData", () => {});
       });
 
       mqttRef.current.on("message", (topic, message) => {
-        if (topic === "client/devices/data") {
-          const data: UpdateDeviceValueResponse["updatedValue"] = JSON.parse(message.toString());
-          updateFloorItemsCache(data);
+        if (topic === "clientDevicesData") {
+          const data: UpdateDeviceValueResponse["updatedValue"] | UpdateDeviceValueResponse["updatedValue"][] =
+            JSON.parse(message.toString());
+          if (Array.isArray(data)) {
+            updateFloorItemsManyCache(data);
+          } else {
+            updateFloorItemsCache(data);
+          }
+          console.log(data);
         }
       });
 
-      return () => {
-        mqttRef.current?.end();
-        mqttRef.current = null;
-      };
+      // return () => {
+      //   mqttRef.current?.end();
+      //   mqttRef.current = null;
+      // };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [home]);
+  }, [updateFloorItemsCache]);
 };
 
 const MqttContainer = createContainer(useMqtt);
 
 export const useMqttContext = MqttContainer.useContainer;
-export const MattProvider = MqttContainer.Provider;
+export const MqttProvider = MqttContainer.Provider;

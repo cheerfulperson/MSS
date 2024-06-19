@@ -13,6 +13,7 @@ Storage storage;
 void setup() {
   Serial.begin(115200);
   storage.init();
+  Serial.print("Start");
   Config config = storage.getProperties();
   // Start up the library
   pinMode(LED_BUILTIN, OUTPUT);

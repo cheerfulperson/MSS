@@ -41,7 +41,8 @@ public:
     float getDHTTemperature();
     float getCOGassPPM();
     float getHumidity();
-    AllSensorsData getAllSensorsData();
+    AllSensorsData getAllSensorsData(bool includeDevices = false);
+    AllSensorsData getDevicesData();
     AHT20Data getAHT20Data();
     BMPData getBMPData();
     String getAHT20DataJson();

@@ -57,6 +57,11 @@ export class FloorService {
               orderBy: {
                 createdAt: 'desc',
               },
+              where: {
+                DeviceValueSetup: {
+                  isPrimary: true,
+                },
+              },
               select: {
                 id: true,
                 treatLevel: true,

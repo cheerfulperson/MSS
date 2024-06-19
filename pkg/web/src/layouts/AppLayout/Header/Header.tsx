@@ -73,7 +73,7 @@ export const Header = ({ broken, collapsed, onCollapse }: HeaderProps) => {
       <Flex align="center" gap={8}>
         <ChangeLanguageButton onlyIcon />
         <Avatar style={{ backgroundColor: data?.avatarColor || "#fde3cf", color: "#ffffff", cursor: "pointer" }}>
-          {data?.fullName.slice(0, 1).toUpperCase()}
+          {data?.fullName?.slice(0, 1)?.toUpperCase()}
         </Avatar>
         {!broken && <Typography.Text className={styles.userName}>{data?.fullName}</Typography.Text>}
       </Flex>

@@ -8,7 +8,6 @@ import { EmptyLayout } from "layouts/EmptyLayout";
 export const Overview = () => {
   const { availableHomes, homeId, isLoading } = useHomeContext();
 
-  console.log("Overview", availableHomes, homeId, isLoading);
   if (isLoading) {
     return (
       <EmptyLayout>

@@ -82,7 +82,7 @@ void handleUpdateSlug()
     return;
   }
   String json = webServer.arg("plain");
-  DynamicJsonDocument doc(1024);
+  DynamicJsonDocument doc(512);
   deserializeJson(doc, json);
   Config config = appStorage.getProperties();
   int homeSlugLength = strlen(doc["slug"] | "") + 1;
@@ -105,7 +105,7 @@ void handleApiPostConfig()
       }
       String json = webServer.arg("plain");
       Config config;
-      DynamicJsonDocument doc(1024);
+      DynamicJsonDocument doc(512);
       deserializeJson(doc, json);
       int passswordLength = strlen(doc["password"] | "") + 1;
       int ssidLength = strlen(doc["ssid"] | "") + 1;
@@ -118,7 +118,6 @@ void handleApiPostConfig()
       strlcpy(config.password, doc["password"] | "", passswordLength);
       strlcpy(config.ssid, doc["ssid"] | "", ssidLength);
       appStorage.overwriteProperties(config);
-      Serial.println(config.password);
 
       bool isConnected = wifiUtils.waitForConnect(config);
       if (isConnected)
@@ -154,7 +153,7 @@ void Handlers::init()
   handleApiPostConfig();
   webServer.on("/api/config/home", HTTP_POST, handleUpdateSlug);
   webServer.on("/api/config", HTTP_GET, handleApiConfig);
-  webServer.on("/api/sensors", HTTP_GET, handleApiGetSensors);
+  // webServer.on("/api/sensors", HTTP_GET, handleApiGetSensors);
   webServer.on("/api/networks", HTTP_GET, handleApiGetNetworks);
 
   // Static
