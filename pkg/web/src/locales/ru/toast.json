@@ -2,5 +2,7 @@
   "copied_to_clipboard": " Скопировано в буфер обмена!",
   "something_went_wrong": "Что-то пошло не так!",
   "success_updated": "Обновлено успешно",
-  "successfully_connected_to": "Успешно подключено к {{ to }}"
+  "successfully_connected_to": "Успешно подключено к {{ to }}",
+  "home_secured": "Дом поставлен на охрану",
+  "home_unsecured": "Дом снят с охраны"
 }

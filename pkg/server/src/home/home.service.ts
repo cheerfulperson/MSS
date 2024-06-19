@@ -68,4 +68,15 @@ export class HomeService {
     }
     return true;
   }
+
+  async makeSecured({ id, secured }: { id: string; secured: boolean }) {
+    return await this.prisma.home.update({
+      where: { id },
+      data: { secured: true, securedAt: new Date() },
+      select: {
+        id: true,
+        secured,
+      },
+    });
+  }
 }

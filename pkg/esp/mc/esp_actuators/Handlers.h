@@ -6,6 +6,7 @@
 #include <LittleFS.h>
 #include <functional>
 #include <string.h>
+#include <Client.h>
 
 #include "StaticFiles.h"
 #include "Storage.h"

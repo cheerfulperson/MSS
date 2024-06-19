@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { Public } from 'decorators/public.decorator';
-import { CheckLinkDto } from './dto/home.dto';
+import { CheckLinkDto, MakeSecuredDto } from './dto/home.dto';
 
 @Controller('home')
 export class HomeController {
@@ -38,6 +38,18 @@ export class HomeController {
     const isSuccess = await this.home.checkHomeLink(data.token);
     return {
       valid: isSuccess,
+    };
+  }
+
+  @Post('secured')
+  @HttpCode(HttpStatus.OK)
+  async makeSecured(@Body() data: MakeSecuredDto) {
+    const res = await this.home.makeSecured({
+      id: data.id,
+      secured: data.secured,
+    });
+    return {
+      home: res,
     };
   }
 }

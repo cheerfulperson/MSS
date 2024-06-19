@@ -1,9 +1,10 @@
 #include <ESP8266WiFi.h>
-#include <PubSubClient.h>
 #include <ArduinoJson.h>
 #include <BlockNot.h>
+#include <WebSocketsClient.h>
 #include "AppDevices.h"
 #include "Storage.h"
+#include <Hash.h>
 
 #ifndef MQTT_H
 #define MQTT_H

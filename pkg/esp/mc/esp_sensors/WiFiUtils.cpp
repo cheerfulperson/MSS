@@ -32,7 +32,7 @@ bool WiFiUtils::checkUntilConnected() {
 
   // Will try for about 10 seconds (5x 500ms)
   int tryDelay = 1000;
-  int numberOfTries = 10;
+  int numberOfTries = 5;
 
   int status = WiFi.waitForConnectResult(numberOfTries * tryDelay);
   Serial.println(status);

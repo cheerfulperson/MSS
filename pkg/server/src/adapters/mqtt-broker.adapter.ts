@@ -15,6 +15,19 @@ type TopicData<T extends Topics> = T extends 'clientDevicesData'
 const aedes: TAedes = Aedes();
 const prisma = new PrismaClient();
 
+const prepareData = <T = unknown>(d: T) => {
+  const payload = JSON.stringify(d);
+  return {
+    topic: 'clientDevicesData',
+    payload,
+    cmd: 'publish' as const,
+    qos: 1 as const,
+    retain: false,
+    dup: false,
+    length: payload.length,
+  };
+};
+
 class MqttBrokerAdapter {
   private server: net.Server;
   private httpServer: http.Server;
@@ -60,6 +73,7 @@ class MqttBrokerAdapter {
   start(server: http.Server) {
     this.httpServer = server;
     wsStream.createServer({ server: this.httpServer }, aedes.handle as any);
+
     this.server.listen(Number(process.env.MQTT_PORT), () => {
       console.log(
         `MQTT broker started on mqtt://localhost:${process.env.MQTT_PORT}`,
@@ -93,7 +107,7 @@ class MqttBrokerAdapter {
 
     // fired when a client connects
     aedes.on('client', async (client) => {
-      console.log(client.id);
+      console.log('Connected', client.id);
       if (!client.id || !client.id.includes('esp')) {
         return;
       }
@@ -142,7 +156,10 @@ class MqttBrokerAdapter {
     // fired when a message is published
     aedes.on('publish', async function (packet, client) {
       const topic = packet.topic.toString();
-      if (topic === 'sensors/data' || topic === 'actuators/data') {
+      if (
+        (topic === 'sensors/data' || topic === 'actuators/data') &&
+        client?.id
+      ) {
         let jsonParse: Record<string, string | number | boolean> = {};
         try {
           jsonParse = JSON.parse(packet.payload.toString()) as Record<
@@ -153,6 +170,16 @@ class MqttBrokerAdapter {
           console.error('Error parsing JSON:', e);
           return;
         }
+        const home = await prisma.home.findFirst({
+          where: {
+            slug: client.id.split('-')[1],
+          },
+          select: {
+            id: true,
+            secured: true,
+          },
+        });
+
         const allKeys = Object.keys(jsonParse);
         const devices = await prisma.device.findMany({
           where: {
@@ -223,8 +250,97 @@ class MqttBrokerAdapter {
                     ? '0'
                     : 'false'
                   : jsonParse[key].toString();
+
             const setupId = deviceValueSetup.find((v) => v.key === key)?.id;
             if (setupId) {
+              const xvalue =
+                setup?.valueType === ValueType.NUMBER
+                  ? parseFloat(value)
+                  : setup?.valueType === ValueType.BOOLEAN
+                    ? value === 'true'
+                      ? true
+                      : false
+                    : value;
+              if (
+                key.includes('temperature') &&
+                typeof xvalue === 'number' &&
+                xvalue >= 29
+              ) {
+                const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
+                  value: 'false',
+                  treatLevel: TreatLevel.INFO,
+                  Device: {
+                    id: device.id,
+                  },
+                  DeviceValueSetup: {
+                    key: 'plug1',
+                  },
+                };
+                const data = prepareData(payloadData);
+                aedes.publish(data, (e) => {
+                  if (e) {
+                    console.error('Error publishing message:', e);
+                  }
+                });
+              }
+              if (
+                key.includes('water') &&
+                typeof xvalue === 'number' &&
+                xvalue >= 30
+              ) {
+                const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
+                  value: 'false',
+                  treatLevel: TreatLevel.INFO,
+                  Device: {
+                    id: device.id,
+                  },
+                  DeviceValueSetup: {
+                    key: 'motor',
+                  },
+                };
+                const data = prepareData(payloadData);
+                aedes.publish(data, (e) => {
+                  if (e) {
+                    console.error('Error publishing message:', e);
+                  }
+                });
+              }
+              if (key.includes('motion') && typeof xvalue === 'boolean') {
+                const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
+                  value: xvalue === true ? 'true' : 'false',
+                  treatLevel: TreatLevel.INFO,
+                  Device: {
+                    id: device.id,
+                  },
+                  DeviceValueSetup: {
+                    key: 'light3',
+                  },
+                };
+                const data = prepareData(payloadData);
+                aedes.publish(data, (e) => {
+                  if (e) {
+                    console.error('Error publishing message:', e);
+                  }
+                });
+              }
+              if (home?.secured && key.includes('magnetic')) {
+                const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
+                  value: xvalue === true ? 'true' : 'false',
+                  treatLevel: TreatLevel.INFO,
+                  Device: {
+                    id: device.id,
+                  },
+                  DeviceValueSetup: {
+                    key: 'light6',
+                  },
+                };
+                const data = prepareData(payloadData);
+                aedes.publish(data, (e) => {
+                  if (e) {
+                    console.error('Error publishing message:', e);
+                  }
+                });
+              }
               // if (topic === 'actuators/data') {
 
               // } else {

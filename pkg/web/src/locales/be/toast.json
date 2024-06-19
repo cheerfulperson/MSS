@@ -2,5 +2,7 @@
   "copied_to_clipboard": "Спасылка скапіравана ў буфер абмену!",
   "something_went_wrong": "Нешта пайшло не так. ",
   "success_updated": "Паспяхова абноўлена",
-  "successfully_connected_to": "Паспяхова падключана да {{ to }}"
+  "successfully_connected_to": "Паспяхова падключана да {{ to }}",
+  "home_secured": "Дом пастаўлены на ахову",
+  "home_unsecured": "Дом зняты з аховы"
 }

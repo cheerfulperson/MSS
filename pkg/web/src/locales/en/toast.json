@@ -2,5 +2,7 @@
   "copied_to_clipboard": "Link copied to clipboard!",
   "something_went_wrong": "Something went wrong. Please try again later",
   "success_updated": "Updated successfully",
-  "successfully_connected_to": "Successfully connected to {{ to }}"
+  "successfully_connected_to": "Successfully connected to {{ to }}",
+  "home_secured": "The house is guarded",
+  "home_unsecured": "The house has been removed from security"
 }

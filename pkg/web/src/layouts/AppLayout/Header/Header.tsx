@@ -2,11 +2,13 @@ import { ReactNode, useMemo } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Avatar, Button, Flex, Layout, Typography, theme as AntTheme, Select } from "antd";
 import { matchPath, useLocation } from "react-router-dom";
+import { Lock, Unlock } from "react-bootstrap-icons";
 
 import { useUserProfileQuery } from "data_layer/queries/useUserProfileQuery";
 import { ChangeLanguageButton } from "../ChangeLanguageButton";
 import { useHomeContext } from "context/homeContext";
 import { AppRoutes } from "config/router";
+import { useMakeHomeSecuredMutations } from "data_layer/mutations/useMakeHomeSecuredMutations";
 import styles from "./Header.module.scss";
 
 const { Header: AntdHeader } = Layout;
@@ -20,22 +22,37 @@ interface HeaderProps {
 export const Header = ({ broken, collapsed, onCollapse }: HeaderProps) => {
   const { pathname } = useLocation();
   const { data } = useUserProfileQuery();
-  const { changeFloor, floor, floors } = useHomeContext();
+  const { changeFloor, floor, floors, home } = useHomeContext();
+  const { isLoading, makeSecured } = useMakeHomeSecuredMutations();
 
   const middleContent = useMemo<ReactNode>(() => {
-    if (matchPath(AppRoutes.dashboard.url, pathname)) {
+    if (matchPath(AppRoutes.dashboard.url, pathname) && home?.id) {
       return (
-        <Select
-          className={styles.select}
-          onChange={changeFloor}
-          options={floors.map((province) => ({ label: province.name, value: province.id }))}
-          value={floor?.id}
-          variant="filled"
-        />
+        <Flex align="center" gap={16}>
+          <Select
+            className={styles.select}
+            onChange={changeFloor}
+            options={floors.map((province) => ({ label: province.name, value: province.id }))}
+            value={floor?.id}
+            variant="filled"
+          />
+          <Button
+            loading={isLoading}
+            onClick={() => {
+              makeSecured({ id: home!.id, secured: !home?.secured });
+            }}
+            style={{
+              padding: 2,
+            }}
+            type="text"
+          >
+            {home?.secured ? <Lock style={{ width: 20, height: 16 }} /> : <Unlock style={{ width: 20, height: 16 }} />}
+          </Button>
+        </Flex>
       );
     }
     return null;
-  }, [changeFloor, floor?.id, floors, pathname]);
+  }, [changeFloor, floor?.id, floors, home, isLoading, makeSecured, pathname]);
 
   const {
     token: { colorText },
