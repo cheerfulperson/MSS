@@ -14,6 +14,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
+
   const reflector = app.get(Reflector);
 
   app.useGlobalPipes(
@@ -22,7 +23,7 @@ async function bootstrap() {
     }),
   );
   app.useGlobalGuards(new AccessTokenGuard(reflector));
-  mqttBroker.start();
+  mqttBroker.start(app.getHttpServer());
   await app.listen(port);
   console.log('Listening on: http://localhost:' + port);
 }

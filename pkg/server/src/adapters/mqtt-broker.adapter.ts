@@ -24,8 +24,6 @@ class MqttBrokerAdapter {
       throw new Error('MQTT_PORT env is not defined');
     }
     this.server = net.createServer(aedes.handle);
-    this.httpServer = http.createServer();
-    wsStream.createServer({ server: this.httpServer }, aedes.handle as any);
   }
 
   sendMessage<T extends Topics>({
@@ -59,15 +57,12 @@ class MqttBrokerAdapter {
     });
   }
 
-  start() {
+  start(server: http.Server) {
+    this.httpServer = server;
+    wsStream.createServer({ server: this.httpServer }, aedes.handle as any);
     this.server.listen(Number(process.env.MQTT_PORT), () => {
       console.log(
         `MQTT broker started on mqtt://localhost:${process.env.MQTT_PORT}`,
-      );
-    });
-    this.httpServer.listen(process.env.WS_PORT, () => {
-      console.log(
-        `MQTT broker started on ws://localhost:${process.env.WS_PORT}`,
       );
     });
     this.server.on('error', (err) => {
