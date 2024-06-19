@@ -1,0 +1,23 @@
+{
+  "DeviceType": {
+    "MULTI_DEVICE": "Мультыпрылада",
+    "ALARM": "Сігналізацыя",
+    "CAMERA": "Камера",
+    "GAS_DETECTOR": "Дэтэктар газу",
+    "LIGHT_SWITCH": "Выключальнік святла",
+    "LOCK": "Замак",
+    "PRESSURE_SENSOR": "Датчык ціску",
+    "MAGNETIC_CONTACT_SENSOR": "Магнітны кантактны датчык",
+    "MOTION_SENSOR": "Датчык руху",
+    "SMART_PLUG": "Разумная разетка",
+    "SWITCH": "Пераключальнік",
+    "THERMOSTAT": "Тэрмастат",
+    "WATER_LEAK_DETECTOR": "Дэтэктар уцечкі вады",
+    "HUMIDITY_SENSOR": "Датчык вільготнасці"
+  },
+  "DeviceKind": {
+    "ACTUATOR": "Прывад",
+    "SENSOR": "Датчык",
+    "MULTI_DEVICE": "Мультыпрылада"
+  }
+}

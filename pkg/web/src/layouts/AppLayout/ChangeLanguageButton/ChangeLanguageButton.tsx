@@ -20,7 +20,7 @@ export const ChangeLanguageButton = ({ onlyIcon }: ChangeLanguageButtonProps) =>
       key: lang?.key,
       label: (
         <span className={styles.item}>
-          {i18n.language === lang.key ? <CheckOutlined /> : <span />}
+          {i18n.language.includes(lang.key) ? <CheckOutlined /> : <span />}
           <span>{lang?.label}</span>
         </span>
       ),
@@ -46,7 +46,7 @@ export const ChangeLanguageButton = ({ onlyIcon }: ChangeLanguageButtonProps) =>
         <Button icon={<Language color={colorText} />} type="text" />
       ) : (
         <Button className={styles.menuButton} icon={<Language color={colorText} />} type="text">
-          {languages.find(({ key }) => key === i18n.language)?.label}
+          {languages.find(({ key }) => i18n.language.includes(key))?.label}
         </Button>
       )}
     </Dropdown>

@@ -39,7 +39,6 @@ const useMqtt = () => {
           } else {
             updateFloorItemsCache(data);
           }
-          console.log(data);
         }
       });
 

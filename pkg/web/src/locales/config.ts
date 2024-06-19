@@ -3,12 +3,15 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import intervalPlural from "i18next-intervalplural-postprocessor";
 
-import { en, ru } from ".";
+import { en, ru, be } from ".";
 
 const namespaces = Object.keys(en) as Array<keyof typeof en>;
 
 export const resources = {
   en,
+  be,
+  be_BY: be,
+  'be-BY': be,
   ru,
 } as const;
 

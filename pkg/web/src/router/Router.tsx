@@ -80,11 +80,7 @@ export const Routes = (): ReactElement => {
               {recursiveNestedRoutesReducer(authRoutes)}
             </Route>
             <Route
-              element={
-                <EmptyLayout>
-                  <ErrorTemplate errorCode={404} />
-                </EmptyLayout>
-              }
+              element={<EmptyLayout>{isLoading ? <AppLoader /> : <ErrorTemplate errorCode={404} />}</EmptyLayout>}
               path={AppRoutes.pageNotFound}
             />
           </ReactRoutes>

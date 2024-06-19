@@ -66,15 +66,15 @@ export const AppLayout = () => {
               : []
           ),
       },
-      {
-        key: AppRoutes.devices,
-        icon: <ApartmentOutlined />,
-        label: t("app_layout:menu_items.devices"),
-      },
     ];
 
     if (session.role === UserRoles.OWNER) {
       items.push(
+        {
+          key: AppRoutes.devices,
+          icon: <ApartmentOutlined />,
+          label: t("app_layout:menu_items.devices"),
+        },
         {
           key: AppRoutes.algorithms,
           icon: <MergeOutlined />,
@@ -188,7 +188,7 @@ export const AppLayout = () => {
                 unCheckedChildren={<Moon height={14} width={14} />}
                 value={theme === "light"}
               />
-              <ChangeLanguageButton />
+              <ChangeLanguageButton onlyIcon={false} />
               <Button
                 className={styles.menuButton}
                 icon={<LogoutOutlined color={colorText} style={{ width: 18, height: 18 }} />}
