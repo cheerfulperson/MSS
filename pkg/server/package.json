@@ -37,6 +37,7 @@
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
+    "mqtt": "^5.7.2",
     "mqtt-connection": "^4.1.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",

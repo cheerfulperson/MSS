@@ -25,13 +25,13 @@
 byte WS_MQTT_status = WIFI_FAIL;
 
 // MQTT Broker settings
-const char *mqtt_broker = "monorail.proxy.rlwy.net";
+const char *mqtt_broker = "viaduct.proxy.rlwy.net";
 const char *mqtt_topic = "actuators/data";       // MQTT topic
 const char *mqtt_topic_cb = "clientDevicesData"; // MQTT topic
 const char *mqtt_username = "sensors"; // MQTT username for authentication
 const char *mqtt_password = "public";  // MQTT password for authentication
 const char *mqtt_domain = "/";
-const int mqtt_port = 15431; // MQTT port (TCP)
+const int mqtt_port = 56292; // MQTT port (TCP)
 const int push_interval =
     20000; // Interval in milliseconds to push data to MQTT broker
 const static int MQTT_ALIVE_TIME = 30;
@@ -225,7 +225,7 @@ void Mqtt::init() {
   client_id = String("esp8266-") + globalConfig.homeSlug + String("-") +
               String(WiFi.macAddress());
   webSocket.setReconnectInterval(mqtt_reconnect_interval);
-  webSocket.begin(mqtt_broker, mqtt_port, mqtt_domain);
+  webSocket.begin(mqtt_broker, mqtt_port, "/");
   // wss / SSL is not natively supported !
   // webSocket.beginSSL(mqtt_server, mqtt_port,"/");
   webSocket.onEvent(wsCallbackEvent);

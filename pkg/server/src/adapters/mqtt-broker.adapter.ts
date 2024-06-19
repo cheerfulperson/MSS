@@ -5,8 +5,18 @@ import * as Aedes from 'aedes';
 import { PrismaClient, TreatLevel, ValueType } from '@prisma/client';
 import * as wsStream from 'websocket-stream';
 import { UpdateDeviceValueResponse } from 'types/exported';
+import mqtt from 'mqtt';
 
-type Topics = 'clientDevicesData' | 'actuators/data' | 'sensors/data';
+const mqttUrl = process.env.MQTT_CLIENT_URL || undefined;
+const client: mqtt.MqttClient | undefined = (
+  mqttUrl ? mqtt.connect(mqttUrl) : undefined
+) as mqtt.MqttClient | undefined;
+console.log(client);
+type Topics =
+  | 'web__clientDevicesData'
+  | 'clientDevicesData'
+  | 'actuators/data'
+  | 'sensors/data';
 type TopicData<T extends Topics> = T extends 'clientDevicesData'
   ? UpdateDeviceValueResponse['updatedValue']
   : Record<string, string | number | boolean>;
@@ -41,32 +51,33 @@ class MqttBrokerAdapter {
 
   sendMessage<T extends Topics>({
     payload,
-    topic,
   }: {
     topic: T;
     payload: TopicData<T>;
   }) {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve) => {
       const data = JSON.stringify(payload);
-      aedes.publish(
-        {
-          topic,
-          payload: data,
-          cmd: 'publish',
-          qos: 1,
-          retain: false,
-          dup: false,
-          length: data.length,
-        },
-        (e) => {
-          if (e) {
-            console.error('Error publishing message:', e);
-            reject(e);
-          } else {
-            resolve();
-          }
-        },
-      );
+      client?.publish('web__clientDevicesData', data);
+      resolve();
+      // aedes.publish(
+      //   {
+      //     topic,
+      //     payload: data,
+      //     cmd: 'publish',
+      //     qos: 1,
+      //     retain: false,
+      //     dup: false,
+      //     length: data.length,
+      //   },
+      //   (e) => {
+      //     if (e) {
+      //       console.error('Error publishing message:', e);
+      //       reject(e);
+      //     } else {
+      //       resolve();
+      //     }
+      //   },
+      // );
     });
   }
 
@@ -82,6 +93,31 @@ class MqttBrokerAdapter {
     this.server.on('error', (err) => {
       console.error('MQTT server error:', err);
     });
+
+    client?.on('connect', () => {
+      client?.subscribe('clientDevicesData', () => {});
+    });
+
+    client?.on('message', (topic, message) => {
+      if (topic === 'clientDevicesData' && message) {
+        const payload = message.toString();
+        const data = {
+          topic: 'clientDevicesData',
+          payload,
+          cmd: 'publish' as const,
+          qos: 1 as const,
+          retain: false,
+          dup: false,
+          length: payload.length,
+        };
+        aedes.publish(data, (e) => {
+          if (e) {
+            console.error('Error publishing message:', e);
+          }
+        });
+      }
+    });
+
     // aedes.publish({ topic: 'presence', payload: 'Hello MQTT broker' });
     aedes.on('subscribe', function (subscriptions, client) {
       console.log(
@@ -156,6 +192,24 @@ class MqttBrokerAdapter {
     // fired when a message is published
     aedes.on('publish', async function (packet, client) {
       const topic = packet.topic.toString();
+      if (topic === 'web__clientDevicesData') {
+        const payload = packet.payload.toString();
+        const data = {
+          topic: 'clientDevicesData',
+          payload,
+          cmd: 'publish' as const,
+          qos: 1 as const,
+          retain: false,
+          dup: false,
+          length: payload.length,
+        };
+        aedes.publish(data, (e) => {
+          if (e) {
+            console.error('Error publishing message:', e);
+          }
+        });
+        return;
+      }
       if (
         (topic === 'sensors/data' || topic === 'actuators/data') &&
         client?.id
@@ -284,6 +338,28 @@ class MqttBrokerAdapter {
                 });
               }
               if (
+                key === 'temperature1' &&
+                typeof xvalue === 'number' &&
+                xvalue < 30
+              ) {
+                const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
+                  value: 'false',
+                  treatLevel: TreatLevel.INFO,
+                  Device: {
+                    id: device.id,
+                  },
+                  DeviceValueSetup: {
+                    key: 'plug1',
+                  },
+                };
+                const data = prepareData(payloadData);
+                aedes.publish(data, (e) => {
+                  if (e) {
+                    console.error('Error publishing message:', e);
+                  }
+                });
+              }
+              if (
                 key.includes('water') &&
                 typeof xvalue === 'number' &&
                 xvalue >= 30
@@ -323,6 +399,7 @@ class MqttBrokerAdapter {
                   }
                 });
               }
+
               if (home?.secured && key.includes('magnetic')) {
                 const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
                   value: xvalue === true ? 'true' : 'false',
