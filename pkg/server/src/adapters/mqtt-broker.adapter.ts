@@ -8,10 +8,22 @@ import { UpdateDeviceValueResponse } from 'types/exported';
 import mqtt from 'mqtt';
 
 const mqttUrl = process.env.MQTT_CLIENT_URL || undefined;
-const client: mqtt.MqttClient | undefined = (
-  mqttUrl ? mqtt.connect(mqttUrl) : undefined
-) as mqtt.MqttClient | undefined;
-console.log(client);
+const clientId = `mqtt_server_${Math.random().toString(16).slice(3)}`;
+
+let client: mqtt.MqttClient | undefined;
+
+if (mqttUrl) {
+  client = mqtt.connect(mqttUrl, {
+    clientId,
+    clean: true,
+    connectTimeout: 4000,
+    username: 'emqx',
+    password: 'public',
+    reconnectPeriod: 1000,
+    protocol: 'ws',
+  });
+}
+
 type Topics =
   | 'web__clientDevicesData'
   | 'clientDevicesData'
@@ -95,7 +107,12 @@ class MqttBrokerAdapter {
     });
 
     client?.on('connect', () => {
+      console.error('connected to broker');
       client?.subscribe('clientDevicesData', () => {});
+    });
+
+    client?.on('error', (err) => {
+      console.error('MQTT client error:', err);
     });
 
     client?.on('message', (topic, message) => {

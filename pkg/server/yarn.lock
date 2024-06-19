@@ -4089,7 +4089,7 @@ mqtt-packet@^9.0.0:
     debug "^4.3.4"
     process-nextick-args "^2.0.1"
 
-mqtt@^5.2.0, mqtt@^5.7.2:
+mqtt@^5.2.0, mqtt@^5.7.0:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/mqtt/-/mqtt-5.7.2.tgz#2e89c466ddc5c1d7593689ac144738dd5b8ef179"
   integrity sha512-b5xIA9J/K1LTubSWKaNYYLxYIusQdip6o9/8bRWad2TelRr8xLifjQt+SnamDAwMp3O6NdvR9E8ae7VMuN02kg==
