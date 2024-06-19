@@ -26,8 +26,7 @@ void AppDevices::init() {
   pinMode(LIGHT5_PIN, OUTPUT);
   pinMode(LIGHT6_PIN, OUTPUT);
   pinMode(LIGHT7_PIN, OUTPUT);
-  pinMode(PLUG1_PIN, OUTPUT);
-  digitalWrite(PLUG1_PIN, HIGH);
+
 }
 
 float readWaterSensor() {

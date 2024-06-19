@@ -25,12 +25,12 @@
 byte WS_MQTT_status = WIFI_FAIL;
 
 // MQTT Broker settings
-const char *mqtt_broker = "viaduct.proxy.rlwy.net"; // EMQX broker endpoint
+const char *mqtt_broker = "viaduct.proxy.rlwy.net";
+const int mqtt_port = 44828; // MQTT port (TCP)
 const char *mqtt_topic = "sensors/data";   // MQTT topic
 const char *mqtt_username = "sensors";     // MQTT username for authentication
 const char *mqtt_password = "public";      // MQTT password for authentication
 const char *mqtt_domain = "/";
-const int mqtt_port = 56292;                // MQTT port (TCP)
 const int push_interval =
     20000; // Interval in milliseconds to push data to MQTT broker
 const static int MQTT_ALIVE_TIME = 30;

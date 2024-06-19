@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createContainer } from "unstated-next";
-import mqtt from "mqtt";
+import mqtt, { MqttProtocol } from "mqtt";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
@@ -23,7 +23,9 @@ const useMqtt = () => {
       if (mqttRef.current) {
         mqttRef.current.end();
       }
-      mqttRef.current = mqtt.connect(env.MQTT_BROKER_URL);
+      mqttRef.current = mqtt.connect(env.MQTT_BROKER_URL, {
+        protocol: env.PROTOCOL_MQTT as MqttProtocol || "ws",
+      });
 
       mqttRef.current.on("connect", () => {
         toast.success(t("toast:successfully_connected_to", { to: home.name }));

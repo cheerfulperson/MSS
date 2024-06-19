@@ -116,6 +116,7 @@ class MqttBrokerAdapter {
     });
 
     client?.on('message', (topic, message) => {
+      console.log('message', message.toString());
       if (topic === 'clientDevicesData' && message) {
         const payload = message.toString();
         const data = {

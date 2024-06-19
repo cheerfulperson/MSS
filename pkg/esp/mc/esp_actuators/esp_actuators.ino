@@ -6,6 +6,8 @@
 #include "Storage.h"
 #include "WiFiUtils.h"
 
+#define PLUG1_PIN D6
+
 WiFiUtils wifiTools;
 Handlers handler;
 Storage storage;
@@ -17,7 +19,9 @@ void setup() {
   Config config = storage.getProperties();
   // Start up the library
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(0, OUTPUT);
+  // setup plug
+  pinMode(PLUG1_PIN, OUTPUT);
+  digitalWrite(PLUG1_PIN, HIGH);
 
   bool isConnected = wifiTools.waitForConnect(config);
   if (!isConnected) {
