@@ -355,28 +355,28 @@ class MqttBrokerAdapter {
                   }
                 });
               }
-              if (
-                key === 'temperature1' &&
-                typeof xvalue === 'number' &&
-                xvalue < 30
-              ) {
-                const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
-                  value: 'false',
-                  treatLevel: TreatLevel.INFO,
-                  Device: {
-                    id: device.id,
-                  },
-                  DeviceValueSetup: {
-                    key: 'plug1',
-                  },
-                };
-                const data = prepareData(payloadData);
-                aedes.publish(data, (e) => {
-                  if (e) {
-                    console.error('Error publishing message:', e);
-                  }
-                });
-              }
+              // if (
+              //   key === 'temperature1' &&
+              //   typeof xvalue === 'number' &&
+              //   xvalue < 30
+              // ) {
+              //   const payloadData: UpdateDeviceValueResponse['updatedValue'] = {
+              //     value: 'false',
+              //     treatLevel: TreatLevel.INFO,
+              //     Device: {
+              //       id: device.id,
+              //     },
+              //     DeviceValueSetup: {
+              //       key: 'plug1',
+              //     },
+              //   };
+              //   const data = prepareData(payloadData);
+              //   aedes.publish(data, (e) => {
+              //     if (e) {
+              //       console.error('Error publishing message:', e);
+              //     }
+              //   });
+              // }
               if (
                 key.includes('water') &&
                 typeof xvalue === 'number' &&
